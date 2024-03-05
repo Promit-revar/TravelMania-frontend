@@ -1,0 +1,14 @@
+.gallery{
+    display: flex;
+    padding: 5px;
+    height: 50%;
+    width: 100%;
+    gap: 15px;
+}
+.sub-imgs{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 50%;
+    gap: 2%;
+}

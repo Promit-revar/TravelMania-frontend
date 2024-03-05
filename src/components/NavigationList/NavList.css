@@ -1,0 +1,23 @@
+.navigation-items-list{
+    display: flex;
+    flex-direction: row;
+    gap: 50px;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    align-items: flex-end;
+}
+.navigation-items-list a{
+    text-decoration: none;
+    color: #000;
+}
+.underline{
+    border-bottom: 2px solid #2406e9;
+    
+}
+.itembox{
+    display: flex;
+    align-items: center;
+    height: 62px;
+}
