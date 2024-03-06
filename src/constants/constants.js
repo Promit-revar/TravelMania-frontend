@@ -34,3 +34,31 @@ export const HotelDetailsNavigationList = [
         addr: "#",
     }
 ]
+
+export const AmenitiesList = [
+    {
+        name: 'Common Pool',
+        icon: '',
+    },{
+        name: 'Restaurants',
+        icon: '',
+    },{
+        name:'Kids Club',
+        icon:'',
+    },{
+        name: 'Spa',
+        icon: '',
+    },{
+        name: 'The concierge service',
+        icon:'',
+    },{
+        name: 'Fitness & gym',
+        icon:'',
+    },{
+        name: 'Security',
+        icon: '',
+    },{
+        name: 'Taxi services',
+        icon: '',
+    }
+]

@@ -1,0 +1,16 @@
+.schedule-block{
+    display: flex;
+    flex-direction: column;
+    border: 1px solid black;
+    padding: 20px;
+    border-radius: 10px;
+}
+.select-block{
+    display: flex;
+    gap: 20px;
+    width: 100%;
+}
+.travelers{
+    border: 1px solid black;
+    border-radius: 10px;
+}

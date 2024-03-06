@@ -1,0 +1,21 @@
+.title{
+    font-size: 500;
+}
+.amenities{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+.amenities-list{
+    display: flex;
+    flex-direction: row;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    align-items: flex-end;
+    flex-wrap: wrap;
+}
+.amenities-list-item{
+    width: 25%;
+}

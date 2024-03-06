@@ -1,5 +1,5 @@
 import './Gallery.css'
-import Image from '../Image/Image';
+import Image from '../../UI/components/Image/Image';
 const GalleryComponent = () =>{
     return (
         <div className="gallery">
