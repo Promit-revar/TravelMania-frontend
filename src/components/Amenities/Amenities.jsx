@@ -1,7 +1,8 @@
 import './Amenities.css';
+import GymIcon from '../../assets/Gym.svg';
 const AmenitiesComponent = ({amenities}) => {
     return (
-        <div className='amenities'>
+        <div className='amenities' id='Amenities'>
             <div className='title'>
                 Amenities
             </div>
@@ -9,7 +10,8 @@ const AmenitiesComponent = ({amenities}) => {
                 {
                     amenities.map(item=>(
                         <li className='amenities-list-item'>
-                            {item.name}
+                            <img src={item.icon} height={100} width={100}/>
+                            <div className='amenities-item-name'>{item.name}</div>
                         </li>
                     ))
                 }

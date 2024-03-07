@@ -5,6 +5,7 @@ import NavList from "../../components/NavigationList/NavList";
 import { HotelDetailsNavigationList, AmenitiesList } from "../../constants/constants";
 import HotelDescriptionComponent from "../../components/HotelDescription/HotelDescription";
 import AmenitiesComponent from "../../components/Amenities/Amenities";
+import CarouselComponent from "../../components/Carousel/Carousel";
 import { ChevronLeft } from 'lucide-react';
 import './index.css'
 const HotelPageComponent = () => {
@@ -25,6 +26,8 @@ const HotelPageComponent = () => {
         <hr />
             <HotelDescriptionComponent title='InterContinental Phuket' description={desc} location={location} ratings={5}/>
             <AmenitiesComponent amenities={AmenitiesList} />
+            <hr />
+            <CarouselComponent />
         </div>
     );
 }

@@ -1,5 +1,5 @@
 .title{
-    font-size: 500;
+    font-size: large;
 }
 .amenities{
     display: flex;
@@ -17,5 +17,11 @@
     flex-wrap: wrap;
 }
 .amenities-list-item{
+    display: flex;
+    flex-direction: row;
     width: 25%;
+}
+.amenities-item-name{
+    display: flex;
+    align-items: center;
 }
