@@ -1,0 +1,39 @@
+.policies{
+    margin-top: 20px;
+}
+.policy-description{
+    margin-top: 20px;
+    display: flex;
+    flex-direction: row !important;
+    width: 100%;
+    gap: 20px
+}
+.policies-description-left{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    width: 50%;
+}
+.policies-description-right{
+
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    width: 50%;
+}
+.policy-title{
+    font-size: 15px;
+    font-weight: 600;
+}
+.policy-desc{
+    gap: 20%;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+.policy{
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}

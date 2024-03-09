@@ -1,12 +1,12 @@
 import './Navbar.css'
-import NavList from '../NavigationList/NavList';
 import { NavbarList } from '../../constants/constants'
 import { Instagram, Mail } from 'lucide-react';
 const NavBarComponent = () => {
     return (
         <div className='nav'>
             <div className='logo'>
-                <b>Travel Mania</b>
+                <span style={{ marginBottom:'-14px'}}>Phuket</span>
+                <span >Concierge</span>
             </div>
             <ul className='nav-list'>
                 {NavbarList.map((listitem,i) => <li key={i}><a href={listitem.addr}>{listitem.name}</a></li>

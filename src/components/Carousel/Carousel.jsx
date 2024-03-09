@@ -50,13 +50,13 @@ const CarouselComponent = () => {
             indicators={false}
             >
                 <Carousel.Item>
-                    <Image src={Hotel1} height={'200px'} width={'300px'}/>
+                    <Image src={Hotel1} height={'200px'} width={'350px'}/>
                 </Carousel.Item>
                 <Carousel.Item>
-                    <Image src={Hotel2} height={'200px'} width={'300px'}/>
+                    <Image src={Hotel2} height={'200px'} width={'350px'}/>
                 </Carousel.Item>
                 <Carousel.Item>
-                    <Image src={Hotel3} height={'200px'} width={'300px'}/>
+                    <Image src={Hotel3} height={'200px'} width={'350px'}/>
                 </Carousel.Item>
                 
             </Carousel>

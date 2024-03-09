@@ -9,8 +9,9 @@ const SelectRoomComponent = () => {
                 <DatePickerComponent label='Check-in'/>
                 <DatePickerComponent label={'Check-out'}/>
             </div>
-            <DropdownComponent label={'Age'}/>
+            <DropdownComponent label={'Travelers'}/>
             <Button label='Reserve'/>
+            <div className='msg'>You won't be charged yet</div>
         </div>
     )
 }

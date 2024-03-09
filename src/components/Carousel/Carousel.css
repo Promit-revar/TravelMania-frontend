@@ -1,13 +1,13 @@
 .img-corousel{
     display: flex !important;
     flex-direction: column;
-    width: 300px !important;
+    width: 350px !important;
     height: 200px;
-    background-color: aquamarine;
     position: relative;
+    margin-top: 20px;
 }
 .custom-indicators{
-    width: 300px;
+    width: 350px;
     display: flex;
     justify-content: center;
     position: absolute;

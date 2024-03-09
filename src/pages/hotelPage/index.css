@@ -2,6 +2,8 @@
 .back-button{
     display: flex;
     flex-direction: row;
+    align-items: center;
+    font-weight: 400;
     padding: 20px;
 }
 .hotel-page{
@@ -14,4 +16,9 @@
     width: 100%;
     align-items: center;
     height: 50px;
+}
+.accomodation-section{
+    display: flex;
+    flex-direction: row;
+    gap: 60px;
 }

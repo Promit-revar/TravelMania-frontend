@@ -1,0 +1,77 @@
+.review-section{
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    margin-top: 20px;
+}
+.ratings-summary{
+    width: 30%;
+}
+.rating-label{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.rating-label-text{
+    font-size: 14px;
+    font-weight: 400;
+}
+.rating-received{
+    font-size: 15px;
+    font-weight: 500;
+}
+.rating-score{
+
+    font-size: 40px;
+    font-weight: 500;
+    color: #399a7a;
+}
+.review-card{
+    height: 170px;
+    width: 300px;
+    border: 2px solid rgb(145, 145, 145);
+    border-radius: 10px;
+    padding: 20px;
+}
+.review-ratings{
+    font-size: 25px;
+    font-weight: 500;
+}
+.review-comment{
+    margin-bottom: 25px;
+}
+.review-name{
+    font-size: 18px;
+    font-weight: 500;
+}
+.review-bottom-section{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    font-size: 14px;
+}
+.review-date{
+    font-size: 12px;
+}
+.recent-review-cards{
+    margin-top: 10px;
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+.recent-reviews-title{
+    font-size: 15px;
+    font-weight: 500;
+}
+.recent-reviews{
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+.all-reviews-button{
+    display: flex;
+    align-items: center;
+    font-size: 15px;
+    font-weight: 400;
+    padding-top: 10px;
+}

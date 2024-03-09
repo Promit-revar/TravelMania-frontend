@@ -1,0 +1,25 @@
+.hotels{
+    margin-top: 20px;
+}
+.hotel-address{
+    display: flex;
+    flex-direction: row;
+    font-size: 14px;
+    width: 100%;
+    text-wrap: wrap;
+    margin-top: 10px;
+}
+.hotel-card{
+    width: 350px;
+}
+.hotel-title{
+    margin-top: 10px;
+    font-size: 15px;
+    font-weight: 500;
+}
+.hotel-cards-list{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 40px;
+}
