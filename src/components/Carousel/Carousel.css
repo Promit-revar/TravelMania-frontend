@@ -1,0 +1,22 @@
+.img-corousel{
+    display: flex !important;
+    flex-direction: column;
+    width: 350px !important;
+    height: 200px;
+    position: relative;
+    margin-top: 20px;
+}
+.custom-indicators{
+    width: 350px;
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    z-index: 1;
+    bottom: 10px;
+}
+.heart{
+    position: absolute;
+    z-index: 1;
+    top: 5px;
+    right: 10px;
+}

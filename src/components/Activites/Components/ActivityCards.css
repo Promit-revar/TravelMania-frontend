@@ -1,0 +1,36 @@
+.activity-card{
+    display: flex;
+    flex-direction: column;
+    height: 350px;
+    width: 30%;
+}
+.activity-card-desc{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 150px;
+}
+.activity-card-title{
+    padding-top: 17px;
+    font-size: 15px;
+    font-weight: 500;
+}
+.activity-card-info{
+    display: flex;
+    flex-direction: column;
+}
+.activity-card-price{
+    font-size: 20px;
+    font-weight: 500;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+.activity-card-category{
+    font-size: 15px;
+    font-weight: 400;
+}
+.distance{
+    display: flex;
+    justify-content: space-between;
+}
