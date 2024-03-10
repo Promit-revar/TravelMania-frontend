@@ -20,3 +20,11 @@
     align-items: center;
     height: 62px;
 }
+
+@media  screen and (max-width: 740px) {
+    .navigation-items-list{
+        font-size: 15px;
+        overflow-x: scroll;
+        gap:2px;
+    }
+}

@@ -79,3 +79,24 @@
 .review-read-more{
     cursor: pointer;
 }
+
+@media screen and (max-width: 1326px) {
+    .review-section{
+        flex-direction: column;
+        gap: 20px;
+    }
+    .ratings-summary{
+        width: 100%;
+    }
+    .recent-review-cards{
+        /* flex-direction: column; */
+        gap: 20px;
+    }
+    .all-reviews-button{
+        padding-top: 20px;
+    }
+    .recent-reviews{
+        flex-direction: column;
+        gap: 20px;
+    }
+}

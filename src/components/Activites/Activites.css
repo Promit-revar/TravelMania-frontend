@@ -7,3 +7,11 @@
     width: 5% !important;
     bottom: 100px !important;
 }
+
+@media screen and (max-width: 1326px) {
+    .active.carousel-item{
+        overflow-x: scroll;
+        gap:175px;
+    }
+    
+}

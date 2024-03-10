@@ -3,3 +3,19 @@ body{
     padding-right: 150px;
     font-family: 'Jost' ;
 }
+
+@media screen and (max-width: 1326) {
+    body{
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+    
+}
+
+@media screen and (max-width: 900px) {
+    body{
+        padding-left: 40px;
+        padding-right: 40px;
+    }
+    
+}
