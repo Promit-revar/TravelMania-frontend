@@ -7,6 +7,9 @@ import './Activites.css';
 const ActivitiesComponent = () => {
     return (
         <div className="activities">
+            <div className="mobile-view-activites">
+                {activities.map(act=><ActivityCardsComponent imgsrc={act.img} name={act.name} price={act.price} dist={act.dist}/>)}
+            </div>
         <Carousel  
             prevIcon={<ChevronLeftCircle fill='#fff' color='#000'/>} 
             nextIcon={<ChevronRightCircle fill='#fff' color='#000'/>} 

@@ -26,7 +26,7 @@ import HotelOverview5 from '../../assets/Hotel-Overview-13.jpg'
 import { ChevronLeftCircle, ChevronRightCircle, Heart } from 'lucide-react';
 import ViewAllReviewsComponent from "../../components/ViewAllReviews/ViewAllReviews";
 import './index.css'
-const GalleryView = () =>{
+export const GalleryView = () =>{
     return (
         <>
         <Carousel 
@@ -107,7 +107,7 @@ const HotelPageComponent = () => {
                 }
             {openReviewModal && <ModalComponent show={openReviewModal} onHide={()=>setOpenReviewModal(false)} title={'Reviews'}>
                     <ViewAllReviewsComponent reviews={Reviews} />
-                </ModalComponent>}R
+                </ModalComponent>}
         </div>
     );
 }

@@ -12,3 +12,27 @@
     width: 50%;
     gap: 2%;
 }
+.mobile-view-gallery{
+    display: none;
+}
+@media (max-width: 768px) {
+    .sub-imgs{
+        display: none;
+    }
+    .main-img{
+        display: none;
+    }
+    .mobile-view-gallery{
+        display: block;
+        height: 100%;
+    }
+    .gallery .carousel{
+        height: 100%;
+    }
+    .gallery .carousel-inner{
+        height: 100%;
+    }
+    .gallery .carousel-item{
+        height: 100%;
+    }
+}

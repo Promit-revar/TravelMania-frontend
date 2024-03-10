@@ -7,7 +7,7 @@ import './ActivityCards.css';
 const ActivityCardsComponent = ({imgsrc, name, price, dist}) => {
     return (
         <div className="activity-card">
-            <Image src={imgsrc} height={'200px'} width={'350px'}/>
+            <Image src={imgsrc} height={'200px'} width={'100%'}/>
             <div className="activity-card-desc">
                 <div className="activity-card-title"> {name}</div>
                 <div className="activity-card-info">

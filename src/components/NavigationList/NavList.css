@@ -21,10 +21,10 @@
     height: 62px;
 }
 
-@media  screen and (max-width: 740px) {
+@media  screen and (max-width: 820px) {
     .navigation-items-list{
         font-size: 15px;
         overflow-x: scroll;
-        gap:2px;
+        text-wrap: nowrap;
     }
 }
