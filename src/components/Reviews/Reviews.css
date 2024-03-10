@@ -74,4 +74,8 @@
     font-size: 15px;
     font-weight: 400;
     padding-top: 10px;
+    cursor: pointer;
+}
+.review-read-more{
+    cursor: pointer;
 }
