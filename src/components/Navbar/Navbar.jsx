@@ -16,10 +16,14 @@ const NavBarComponent = () => {
             <div className='hamburger-menu' onClick={toggleMenu}>
                 {!isOpen && <Menu />}
                 {isOpen && <button className='btn-close'/>}
-                <ul className={`menu-icon ${isOpen ? 'open' : ''}`}>
-                {isOpen && NavbarList.map((listitem,i) => <><li key={i}><a href={listitem.addr}>{listitem.name}</a></li><hr /></>
+                {isOpen && <ul className={`menu-icon ${isOpen ? 'open' : ''}`}>
+                 {NavbarList.map((listitem,i) => <><li key={i}><a href={listitem.addr}>{listitem.name}</a></li><hr /></>
                     )}
-                </ul>
+                    <li><Instagram fill='#000' color='#fff'/> Instagram</li>
+                    <hr/>
+                    <li><Mail fill='#000' color='#fff' /> email</li>
+                    <hr />
+                </ul>}
             </div>
             <ul className='nav-list'>
                 {NavbarList.map((listitem,i) => <li key={i}><a href={listitem.addr}>{listitem.name}</a></li>
