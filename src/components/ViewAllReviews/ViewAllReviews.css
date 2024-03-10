@@ -1,0 +1,25 @@
+.view-all-reviews{
+    height: 500px;
+    overflow: scroll;
+}
+.ratings-received{
+    font-size: 20px;
+    font-weight: 500;
+}
+.reviewer-name{
+    font-size: .875rem;
+    font-weight: 500;
+    line-height: 1.125rem;
+}
+.post-date{
+    font-size: .875rem;
+    font-weight: 400;
+}
+.review-desc{
+    font-size: 15px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.stay{
+    font-size: 12px;
+}

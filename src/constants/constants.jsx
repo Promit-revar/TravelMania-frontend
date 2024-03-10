@@ -15,6 +15,9 @@ import BedIcon from '../assets/Bed.svg';
 import Act1 from '../assets/photo_2024-03-05 17.11.43.jpeg';
 import Act2 from '../assets/photo_2024-03-05 17.11.44.jpeg';
 import Act3 from '../assets/photo_2024-03-05 17.11.45.jpeg';
+import Hotel1 from '../assets/1-Bedroom-Club-IC-Pool-Villa-2.jpg';
+import Hotel2 from '../assets/2-Bedroom-Club-IC-Pool-Villa-1-1.jpg';
+import Hotel3 from '../assets/3-Bedroom-Club-IC-Pool-Villa-3.jpg';
 export const  NavbarList = [
     {
         name: "Hotels",
@@ -83,6 +86,19 @@ export const AmenitiesList = [
 export const AccomodationAmenities = [
     {
         name:'1-Bedroom Club IC Pool Villa',
+        images: [{
+            src: Hotel1,
+            height: '200px',
+            width: '350px',
+        },{
+            src: Hotel2,
+            height: '200px',
+            width: '350px',
+        },{
+            src: Hotel3,
+            height: '200px',
+            width: '350px',
+        }],
         price: 4500,
         capacity: 2,
         amenities: [
@@ -111,6 +127,19 @@ export const AccomodationAmenities = [
     {
         name:'2-Bedroom Club IC Pool Villa',
         price: 6200,
+        images: [{
+            src: Hotel1,
+            height: '200px',
+            width: '350px',
+        },{
+            src: Hotel2,
+            height: '200px',
+            width: '350px',
+        },{
+            src: Hotel3,
+            height: '200px',
+            width: '350px',
+        }],
         capacity: 4,
         amenities: [
             {
@@ -138,6 +167,19 @@ export const AccomodationAmenities = [
     {
         name:'3-Bedroom Club IC Pool Villa',
         price: 8400,
+        images: [{
+            src: Hotel1,
+            height: '200px',
+            width: '350px',
+        },{
+            src: Hotel2,
+            height: '200px',
+            width: '350px',
+        },{
+            src: Hotel3,
+            height: '200px',
+            width: '350px',
+        }],
         capacity: 6,
         amenities: [
             {
@@ -244,3 +286,90 @@ export const Policies = [
             ]
         }
     ]
+export const Reviews = [
+    {
+        rating: 10,
+        comment: 'Excellent',
+        name: 'Mary',
+        postDate: 'Feb 29,2024',
+        desc : 'It was awesome !!',
+        stay: '7 nights',
+        stayMonth: 'Feb 2024',
+        likes: 0
+
+    },
+    {
+        rating: 6,
+        comment: 'Okay',
+        name: 'Jose',
+        postDate: 'Feb 15,2024',
+        desc : '',
+        stay: '4 nights',
+        stayMonth: 'Feb 2024',
+        likes: 0
+
+    },{
+        rating: 10,
+        comment: 'Excellent',
+        name: 'Mary',
+        postDate: 'Feb 29,2024',
+        desc : 'It was awesome !!',
+        stay: '7 nights',
+        stayMonth: 'Feb 2024',
+        likes: 0
+
+    },
+    {
+        rating: 6,
+        comment: 'Okay',
+        name: 'Jose',
+        postDate: 'Feb 15,2024',
+        desc : '',
+        stay: '4 nights',
+        stayMonth: 'Feb 2024',
+        likes: 0
+
+    },{
+        rating: 10,
+        comment: 'Excellent',
+        name: 'Mary',
+        postDate: 'Feb 29,2024',
+        desc : 'It was awesome !!',
+        stay: '7 nights',
+        stayMonth: 'Feb 2024',
+        likes: 0
+
+    },
+    {
+        rating: 6,
+        comment: 'Okay',
+        name: 'Jose',
+        postDate: 'Feb 15,2024',
+        desc : '',
+        stay: '4 nights',
+        stayMonth: 'Feb 2024',
+        likes: 0
+
+    },{
+        rating: 10,
+        comment: 'Excellent',
+        name: 'Mary',
+        postDate: 'Feb 29,2024',
+        desc : 'It was awesome !!',
+        stay: '7 nights',
+        stayMonth: 'Feb 2024',
+        likes: 0
+
+    },
+    {
+        rating: 6,
+        comment: 'Okay',
+        name: 'Jose',
+        postDate: 'Feb 15,2024',
+        desc : '',
+        stay: '4 nights',
+        stayMonth: 'Feb 2024',
+        likes: 0
+
+    },
+]

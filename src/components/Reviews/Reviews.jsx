@@ -15,7 +15,7 @@ const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
       backgroundColor: theme.palette.mode === 'light' ? '#399a7a' : '#308fe8',
     },
   }));
-const ReviewCard = ({ratings, name, date}) => {
+const ReviewCard = ({ratings, name, date, handleViewAllReviews}) => {
     return (
         <div className="review-card">
             <div className="review-ratings">{ratings}/10</div>
@@ -23,7 +23,7 @@ const ReviewCard = ({ratings, name, date}) => {
             <div className="review-name">{name}</div>
             <div className="review-bottom-section">
                 <div className="review-date">{date}</div>
-                <div className="review-read-more">Read more<ChevronRight size={'15px'}/></div>
+                <div className="review-read-more" onClick={()=>handleViewAllReviews()}>Read more<ChevronRight size={'15px'}/></div>
             </div>
             
 
@@ -45,7 +45,7 @@ const RatingProgress = ({ received, total, label }) => {
   );
 };
 
-const ReviewComponent = ({totalRating}) => {
+const ReviewComponent = ({totalRating, handleViewAllReviews}) => {
     return(
         <div className="review-section">
             <div className="ratings-summary">
@@ -69,11 +69,11 @@ const ReviewComponent = ({totalRating}) => {
                         Recent Reviews
                     </div>
                     <div className="recent-review-cards">
-                        <ReviewCard ratings={10} name="Mary" date="Feb 27, 2024" />
-                        <ReviewCard ratings={6} name="Jose" date="Feb 15, 2024" />
+                        <ReviewCard ratings={10} name="Mary" date="Feb 27, 2024" handleViewAllReviews={handleViewAllReviews} />
+                        <ReviewCard ratings={6} name="Jose" date="Feb 15, 2024" handleViewAllReviews={handleViewAllReviews} />
                     </div>
                 </div>
-                <div className="all-reviews-button">
+                <div className="all-reviews-button" onClick={()=>handleViewAllReviews()}>
                     See all reviews <ChevronRight size={'18px'}/>
                 </div>
             </div>
