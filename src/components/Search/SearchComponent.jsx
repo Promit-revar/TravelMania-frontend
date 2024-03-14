@@ -8,7 +8,6 @@ import MapPin from '../../assets/map-pin.svg';
 import Button from "../../UI/components/Button/Button";
 
 // (Optional) Import component styles. If you are using Less, import the `index.less` file. 
-import 'rsuite/DateRangePicker/styles/index.css';
 import './SearchComponent.css';
 const SearchComponent = ({handleDateShowModal, selectedDates}) => {
     const [isOpenRoom, setIsOpenRoom] = useState(false);
