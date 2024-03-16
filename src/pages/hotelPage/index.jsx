@@ -67,8 +67,6 @@ const HotelPageComponent = () => {
     }
     return (
         <div className="hotel-page">
-        <NavBarComponent />
-        <hr />
         <div className="back-button"> 
             <ChevronLeft size={'15px'}/> 
             <div style={{fontSize:'15px'}}>See all properties</div>

@@ -32,7 +32,7 @@ const CustomIndicators = ({ items, activeIndex, onSelect }) => {
     );
   };
 
-const CarouselComponent = () => {
+const CarouselComponent = ({height = '200px', width = '350px'}) => {
     const [index, setIndex] = useState(0);
     const handleSelect = (selectedIndex) => {
         setIndex(selectedIndex);
@@ -50,13 +50,13 @@ const CarouselComponent = () => {
             indicators={false}
             >
                 <Carousel.Item>
-                    <Image src={Hotel1} height={'200px'} width={'350px'}/>
+                    <Image src={Hotel1} height={height} width={width}/>
                 </Carousel.Item>
                 <Carousel.Item>
-                    <Image src={Hotel2} height={'200px'} width={'350px'}/>
+                    <Image src={Hotel2}  height={height} width={width}/>
                 </Carousel.Item>
                 <Carousel.Item>
-                    <Image src={Hotel3} height={'200px'} width={'350px'}/>
+                    <Image src={Hotel3}  height={height} width={width}/>
                 </Carousel.Item>
                 
             </Carousel>

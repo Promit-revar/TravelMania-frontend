@@ -373,3 +373,11 @@ export const Reviews = [
 
     },
 ]
+export const popularFilters = [
+    'Vacation rentals',
+    'Breakfast included',
+    'Pool',
+    'Occean view',
+    'All inclusive',
+    'Reserve now, pay later',
+]
