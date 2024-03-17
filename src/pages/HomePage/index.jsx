@@ -5,7 +5,7 @@ import HotelCardComponent from "../../components/HotelCard/HotelCard";
 import DateRangePickerComponent from "../../UI/components/DateRangePicker/DateRangePicker";
 import { Button } from "react-bootstrap";
 import FilterComponent from "../../components/Filters/Filter";
-import { AmenitiesList, popularFilters } from "../../constants/constants";
+import { AmenitiesList, popularFilters, guestRating, paymentMethods } from "../../constants/constants";
 import './index.css';
 const HomePageComponent = () => {
     const [showDateModal , setShowDateModal ] = useState(false);
@@ -34,7 +34,7 @@ const HomePageComponent = () => {
            <SearchComponent handleDateShowModal={handleDateShowModal} selectedDates={dateRange}/>
            <div className="home-page-body">
                 <div className="home-page-filters">
-                    <FilterComponent popularFilters={popularFilters}/>
+                    <FilterComponent popularFilters={popularFilters} guestRating={guestRating} paymentMethods={paymentMethods} />
                 </div>
                 <div className="hotel-cards">
                     <HotelCardComponent price={price} ratings={9.2} reviews={reviews} amenitites={AmenitiesList.slice(1,3)} desc={desc} name={'Baba Beach Club Natai'}/>

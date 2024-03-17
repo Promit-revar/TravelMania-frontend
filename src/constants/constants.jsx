@@ -381,3 +381,13 @@ export const popularFilters = [
     'All inclusive',
     'Reserve now, pay later',
 ]
+
+export const guestRating = [
+    'Any',
+    'Wonderful 9+',
+    'Very Good 8+',
+    'Good 7+',
+]
+export const paymentMethods = [
+    'Reserve now, pay later'
+]
