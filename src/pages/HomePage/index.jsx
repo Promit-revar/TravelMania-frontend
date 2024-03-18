@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React,{useState, useEffect} from "react";
 import SearchComponent from "../../components/Search/SearchComponent";
 import ModalComponent from "../../UI/components/Modal/Modal";
 import HotelCardComponent from "../../components/HotelCard/HotelCard";
@@ -8,13 +8,30 @@ import FilterComponent from "../../components/Filters/Filter";
 import { AmenitiesList, popularFilters, guestRating, paymentMethods, propertyType, mealPlans, Accessibilities} from "../../constants/constants";
 import './index.css';
 const HomePageComponent = () => {
+    const [hotels,setHotels] = useState([]);
+    const callApis = async()=>{
+        const getHotels = await api.getAllHotels();
+        console.log(getHotels.status.sessionId);
+        const data = await Promise.all(getHotels.itineraries.map(async(hotel)=>{
+            return await api.getHotelDetails({
+                hotelId: hotel.hotelId,
+                productId: hotel.productId,
+                sessionId: getHotels.status.sessionId,
+                tokenId: hotel.tokenId,
+            })
+        }));
+        setHotels(data);
+    }
+    useEffect(()=>{
+        callApis();
+        
+    },[]);
     const [showDateModal , setShowDateModal ] = useState(false);
     const [dateRange, setDateRange] = useState({
         startDate: new Date(),
         endDate: new Date(),
         key: 'selection',
       });
-    console.log(api.getAllHotels().then(data=>console.log(data)).catch(err=>console.log(err)))
     const handleDateShowModal = () => {
         setShowDateModal(true);
     }
@@ -30,6 +47,7 @@ const HomePageComponent = () => {
         number: 67
     }
     const desc = "Baba Beach Club Natai is a luxury Residential, Beachfront Hotel & Beach Club managed & developed by the team behind the internationally acclaimed estate 'Sri Panwa'."
+    console.log(hotels);
     return (
         <div className="home-page">
            <SearchComponent handleDateShowModal={handleDateShowModal} selectedDates={dateRange}/>
@@ -38,7 +56,8 @@ const HomePageComponent = () => {
                     <FilterComponent popularFilters={popularFilters} guestRating={guestRating} paymentMethods={paymentMethods} propertyType={propertyType} mealPlans={mealPlans} AmenitiesList={AmenitiesList} Accessibilities={Accessibilities}/>
                 </div>
                 <div className="hotel-cards">
-                    <HotelCardComponent price={price} ratings={9.2} reviews={reviews} amenitites={AmenitiesList.slice(1,3)} desc={desc} name={'Baba Beach Club Natai'}/>
+                    {hotels?.map(hotel=><HotelCardComponent price={price} ratings={hotel.hotelRating} reviews={hotel?.hotel_review?.reviews} amenitites={AmenitiesList.slice(1,3)} desc={desc} name={hotel.name} imgs={hotel.hotelImages}/>)}
+                    {/* <HotelCardComponent price={price} ratings={9.2} reviews={reviews} amenitites={AmenitiesList.slice(1,3)} desc={desc} name={'Baba Beach Club Natai'}/> */}
                 </div>
            </div>
           

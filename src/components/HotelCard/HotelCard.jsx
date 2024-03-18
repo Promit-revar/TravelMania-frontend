@@ -3,29 +3,29 @@ import CarouselComponent from "../Carousel/Carousel";
 import { useNavigate } from "react-router-dom";
 import Image from "../../UI/components/Image/Image";
 import './HotelCard.css';
-const HotelCardComponent = ({price, ratings, reviews, desc, amenitites, name}) => {
+const HotelCardComponent = ({price, ratings, reviews, desc, amenitites, name, imgs}) => {
     const navigate= useNavigate();
     return (
         <div style={{display: 'flex', flexDirection: 'row'}} className="hotel-card-mgt" >
-        <CarouselComponent height="300px" width="350px" />
+        <CarouselComponent height="300px" width="350px" src={imgs}/>
         <div className="hotel-card" onClick={()=>navigate('/hotel-details')}>
             
             <div>
                 <div className="hotel-card-title">{name}</div>
                 <div className="hotel-card-amenities">{amenitites.map(item => {
                         return (<div className="hotel-card-amenities-item">
-                            <Image src={item.icon} />
+                            <Image src={item?.icon} />
                             <div className="hotel-card-amenities-item-name">{item.name}</div>
                             </div>);
                 })}</div>
-                <div className="hotel-card-desc">{desc}</div>
+                <div className="hotel-card-desc">{desc} </div>
                 <div className="hotel-card-price">${price.night}</div>
                 <div className="hotel-card-footer">
                     <div className="hotel-card-ratings">{ratings}</div>
                     <div className="hotel-card-footer-right-section">
                         <div className="hotel-card-review">
                             <div className="hotel-card-review-title">Very Good</div>
-                            <div className="hotel-card-review-number">{reviews.number} reviews</div>
+                            <div className="hotel-card-review-number">{reviews?.length} reviews</div>
                         </div>
                         <div className="hotel-card-price-total">
                             <div className="hotel-card-price-amount">${price.total} total</div>

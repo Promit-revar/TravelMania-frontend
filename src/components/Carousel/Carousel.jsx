@@ -32,12 +32,14 @@ const CustomIndicators = ({ items, activeIndex, onSelect }) => {
     );
   };
 
-const CarouselComponent = ({height = '200px', width = '350px'}) => {
+const CarouselComponent = ({height = '200px', width = '350px', src=[]}) => {
     const [index, setIndex] = useState(0);
     const handleSelect = (selectedIndex) => {
         setIndex(selectedIndex);
     }
-    return (
+    console.log(src);
+    if(src.length){
+      return (
         <div className='img-corousel'>
             <Carousel 
             activeIndex={index} 
@@ -49,15 +51,13 @@ const CarouselComponent = ({height = '200px', width = '350px'}) => {
             nextLabel={null}
             indicators={false}
             >
-                <Carousel.Item>
-                    <Image src={Hotel1} height={height} width={width}/>
-                </Carousel.Item>
-                <Carousel.Item>
-                    <Image src={Hotel2}  height={height} width={width}/>
-                </Carousel.Item>
-                <Carousel.Item>
-                    <Image src={Hotel3}  height={height} width={width}/>
-                </Carousel.Item>
+              {src.map(item=>{
+                return (<Carousel.Item>
+                <Image src={item.url} height={height} width={width}/>
+                </Carousel.Item>);
+              })
+                }
+              
                 
             </Carousel>
             <CustomIndicators items={[Hotel1,Hotel2,Hotel3]} activeIndex={index} onSelect={handleSelect} />
@@ -66,5 +66,37 @@ const CarouselComponent = ({height = '200px', width = '350px'}) => {
         </div>
         
     );
+    }
+    else{
+      return (
+          <div className='img-corousel'>
+              <Carousel 
+              activeIndex={index} 
+              onSelect={handleSelect}
+              slide={false} 
+              prevIcon={<ChevronLeftCircle fill='#fff' color='#000'/>} 
+              nextIcon={<ChevronRightCircle fill='#fff' color='#000'/>} 
+              prevLabel={null} 
+              nextLabel={null}
+              indicators={false}
+              >
+                  <Carousel.Item>
+                      <Image src={Hotel1} height={height} width={width}/>
+                  </Carousel.Item>
+                  <Carousel.Item>
+                      <Image src={Hotel2}  height={height} width={width}/>
+                  </Carousel.Item>
+                  <Carousel.Item>
+                      <Image src={Hotel3}  height={height} width={width}/>
+                  </Carousel.Item>
+                  
+              </Carousel>
+              <CustomIndicators items={[Hotel1,Hotel2,Hotel3]} activeIndex={index} onSelect={handleSelect} />
+              <div className='heart'><Heart color='#fff'/></div>
+              
+          </div>
+          
+      );
+    }
 };
 export default CarouselComponent;

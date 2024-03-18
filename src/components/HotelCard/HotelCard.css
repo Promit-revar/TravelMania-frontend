@@ -55,6 +55,9 @@
 }
 .hotel-card-desc{
     font-size: 15px;
+    /* height: 120px;
+    width: 100%;
+    overflow-y: scroll; */
 }
 .hotel-card-price{
     display: flex;
