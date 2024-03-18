@@ -3,9 +3,9 @@ import SearchComponent from "../../components/Search/SearchComponent";
 import ModalComponent from "../../UI/components/Modal/Modal";
 import HotelCardComponent from "../../components/HotelCard/HotelCard";
 import DateRangePickerComponent from "../../UI/components/DateRangePicker/DateRangePicker";
-import { Button } from "react-bootstrap";
+import * as api from "../../api/hotelApis.js";
 import FilterComponent from "../../components/Filters/Filter";
-import { AmenitiesList, popularFilters, guestRating, paymentMethods } from "../../constants/constants";
+import { AmenitiesList, popularFilters, guestRating, paymentMethods, propertyType, mealPlans, Accessibilities} from "../../constants/constants";
 import './index.css';
 const HomePageComponent = () => {
     const [showDateModal , setShowDateModal ] = useState(false);
@@ -14,6 +14,7 @@ const HomePageComponent = () => {
         endDate: new Date(),
         key: 'selection',
       });
+    console.log(api.getAllHotels().then(data=>console.log(data)).catch(err=>console.log(err)))
     const handleDateShowModal = () => {
         setShowDateModal(true);
     }
@@ -34,7 +35,7 @@ const HomePageComponent = () => {
            <SearchComponent handleDateShowModal={handleDateShowModal} selectedDates={dateRange}/>
            <div className="home-page-body">
                 <div className="home-page-filters">
-                    <FilterComponent popularFilters={popularFilters} guestRating={guestRating} paymentMethods={paymentMethods} />
+                    <FilterComponent popularFilters={popularFilters} guestRating={guestRating} paymentMethods={paymentMethods} propertyType={propertyType} mealPlans={mealPlans} AmenitiesList={AmenitiesList} Accessibilities={Accessibilities}/>
                 </div>
                 <div className="hotel-cards">
                     <HotelCardComponent price={price} ratings={9.2} reviews={reviews} amenitites={AmenitiesList.slice(1,3)} desc={desc} name={'Baba Beach Club Natai'}/>

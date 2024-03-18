@@ -48,3 +48,10 @@
     padding-left: 10px;
     padding-right: 10px;
 }
+.expand-list{
+    font-size: 14px;
+    margin-top: 5px;
+    padding-left: 11px;
+    color: #399a7a;
+    cursor: pointer;
+}

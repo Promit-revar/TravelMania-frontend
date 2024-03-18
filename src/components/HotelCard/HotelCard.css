@@ -19,6 +19,14 @@
     font-size: 18px;
     font-weight: 500;
 }
+.hotel-card-mgt .custom-indicators{
+    width: 350px;
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    z-index: 1;
+    bottom: -70px;
+}
 .hotel-card-mgt .img-corousel{
     margin-top: 0;
 }

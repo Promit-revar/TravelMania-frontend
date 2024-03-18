@@ -391,3 +391,60 @@ export const guestRating = [
 export const paymentMethods = [
     'Reserve now, pay later'
 ]
+export const propertyType = [
+    "Vacation rentals",
+    "Villa",
+    "Hotel",
+    "Motel",
+]
+export const mealPlans = [
+    "Breakfast included",
+    "All inclusive",
+    "Dinner included",
+    "Lunch included"
+]
+export const Accessibilities = [
+    "Service animals allowed",
+    "Stair-free path to entrance",
+    "Accessible bathroom",
+    "Fire exit",
+]
+export const filterInitialState = {
+    popularFilters: [],
+    priceRange:[],
+    guestRating: [],
+    starRating: undefined,
+    paymentType: [],
+    cancellationOptions: [],
+    propertyType: [],
+    popularLocations: [],
+    mealPlans: [],
+    amenities: [],
+    accessibilities: [],
+}
+export const getHotels = {
+    "user_id": process.env.USER_NAME || "valeost_testAPI",
+    "user_password": process.env.USER_PASSWORD || "valeostTest@2024",
+    "access": "Test",
+    "requiredCurrency": "USD",
+    "checkin": "2024-04-17",
+    "checkout": "2024-04-18",
+    "latitude": 7.878978,
+    "longitude": 98.398392,
+    "hotelCodes": [
+    ],
+    "city_name": "Phuket",
+    "country_name": "Thailand",
+    "radius": 20,
+    "maxResult": 20,
+    "occupancy": [
+      {
+        "room_no": 1,
+        "adult": 2,
+        "child": 0,
+        "child_age": [
+          0
+        ]
+      }
+    ]
+  }
