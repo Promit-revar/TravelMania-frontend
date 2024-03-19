@@ -1,15 +1,19 @@
 import React,{useState} from 'react';
 import './Navbar.css'
 import { NavbarList } from '../../constants/constants'
+import { useNavigate } from 'react-router-dom';
 import { Instagram, Mail, Menu } from 'lucide-react';
 const NavBarComponent = () => {
     const [isOpen, setIsOpen] = useState(false);
     const toggleMenu = () => {
         setIsOpen(!isOpen);
     };
+    const handleLogoClick = () =>{
+        window.location.replace('/');
+    }
     return (
         <div className='nav'>
-            <div className='logo'>
+            <div className='logo' onClick={handleLogoClick}>
                 <span style={{ marginBottom:'-14px'}}>Phuket</span>
                 <span >Concierge</span>
             </div>

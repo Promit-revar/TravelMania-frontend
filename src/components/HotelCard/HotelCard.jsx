@@ -7,7 +7,8 @@ const HotelCardComponent = ({price, ratings, reviews, desc, amenitites, name, im
     const navigate= useNavigate();
     return (
         <div style={{display: 'flex', flexDirection: 'row'}} className="hotel-card-mgt" >
-        <CarouselComponent height="300px" width="350px" src={imgs}/>
+        {/* <CarouselComponent height="300px" width="350px" src={imgs}/> */}
+        <div className="thumbnail-img"><img height="300px" width="350px" src={imgs[0].url}  className="thumbnail-img"/></div>
         <div className="hotel-card" onClick={()=>navigate('/hotel-details')}>
             
             <div>
@@ -25,7 +26,7 @@ const HotelCardComponent = ({price, ratings, reviews, desc, amenitites, name, im
                     <div className="hotel-card-footer-right-section">
                         <div className="hotel-card-review">
                             <div className="hotel-card-review-title">Very Good</div>
-                            <div className="hotel-card-review-number">{reviews?.length} reviews</div>
+                            <div className="hotel-card-review-number">{reviews} reviews</div>
                         </div>
                         <div className="hotel-card-price-total">
                             <div className="hotel-card-price-amount">${price.total} total</div>
