@@ -9,7 +9,7 @@
     height: 55px;
     margin-top: 20px;
     border-radius: 5px;
-    border: 2px solid black;
+    border: 2px solid #c7c5c5;
     flex-direction: row;
     cursor: pointer;
     position: relative;
@@ -52,4 +52,28 @@
     margin-top: 20px;
     border: none;
     
+}
+.search-selector{
+    width: 27%;
+}
+.horizontal-line{
+    display: none;
+}
+@media screen and (max-width: 1050px) {
+    .search{
+        flex-direction: column;
+        gap: 20px;
+    }
+    .search-selector{
+        width: 100%;
+    }
+    .search-button{
+        width: 100%;
+    }
+    .horizontal-line{
+        display: block;
+    }
+    .select-date{
+        margin-top: 0px;
+    }
 }

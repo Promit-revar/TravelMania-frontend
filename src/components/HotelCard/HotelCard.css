@@ -10,7 +10,7 @@
     width: 100%;
     gap: 20px;
     padding: 20px;
-    border: 2px solid #000;
+    border: 2px solid #c7c5c5;
     border-top-right-radius: 20px;
     border-bottom-right-radius: 20px;
     cursor: pointer;
@@ -105,4 +105,30 @@
 .hotel-card-price-tax{
     font-size: 14px;
     margin-top: 2px;
+}
+@media screen and (max-width: 1050px){
+    .hotel-card-mgt{
+       flex-direction: column !important;
+       width: 48%;
+       margin-top: 0px;
+    }
+    .thumbnail-img{
+        width: 100%;
+        border-top-right-radius: 20px;
+        border-bottom-left-radius: 0px;
+    }
+    .thumbnail-img img{
+        width: 100% !important;
+    }
+    .hotel-card-mgt .hotel-card{
+        border-top-right-radius: 0px;
+        border-bottom-left-radius: 20px;
+        height: 350px;
+        width: 100%;
+    }
+}
+@media screen and (max-width: 580px){
+    .hotel-card-mgt{
+        width: 100%;
+     }
 }

@@ -14,5 +14,21 @@
 }
 .hotel-cards{
     width: 80%;
-    margin-left: 20px;
+}
+@media screen and (max-width: 1200px) {
+    .home-page-body{
+        flex-direction: column;
+    }
+    .home-page-filters{
+        width: 100%;
+        flex-direction: row;
+    }
+    .hotel-cards{
+        display: flex;
+        width: 100%;
+        flex-direction: row !important;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 20px;
+    }
 }

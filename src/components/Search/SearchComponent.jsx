@@ -9,7 +9,7 @@ import Button from "../../UI/components/Button/Button";
 
 // (Optional) Import component styles. If you are using Less, import the `index.less` file. 
 import './SearchComponent.css';
-const SearchComponent = ({handleDateShowModal, selectedDates}) => {
+const SearchComponent = ({handleDateShowModal, selectedDates, setActiveFilter}) => {
     const [isOpenRoom, setIsOpenRoom] = useState(false);
     const [isOpenLocation, setIsOpenLocation] = useState(false);
     const [selectLocation, setSelectLocation] = useState({location: 'Phuket Province'});
@@ -32,8 +32,8 @@ const SearchComponent = ({handleDateShowModal, selectedDates}) => {
         setIsOpenLocation(!isOpenLocation);
     };
     return (
-    <div className="search">
-        <div style={{ width: '27%'}}>
+    <div className="search" onClick={()=>setActiveFilter(0)}>
+        <div className="search-selector">
         <div className="select-date" onClick={toggleLocationDropdown}>
                 <div style={{ marginTop: '10px'}}><Image src={MapPin} height='30px' width='30px'/></div>
                 <div style={{ marginLeft: '5px'}}>
@@ -53,7 +53,7 @@ const SearchComponent = ({handleDateShowModal, selectedDates}) => {
       )}
     </div>
         </div>
-        <div style={{ width: '27%'}}>
+        <div className="search-selector">
             <div className="select-date" onClick={()=>handleDateShowModal()}>
                 <div style={{ marginTop: '-5px'}}><Image src={Calendar} height='60px' width='60px'/></div>
                 <div style={{ marginLeft: '-10px'}}>
@@ -62,7 +62,7 @@ const SearchComponent = ({handleDateShowModal, selectedDates}) => {
                 </div>
             </div>
         </div>
-        <div style={{ width: '27%'}}>
+        <div className="search-selector">
             <div className="select-date" onClick={toggleRoomDropdown}>
                 <div style={{ marginTop: '-15px', marginLeft: '-10px'}}><Image src={Traveller} height='80px' width='80px'/></div>
                 <div style={{ marginLeft: '-15px'}}>
@@ -83,6 +83,7 @@ const SearchComponent = ({handleDateShowModal, selectedDates}) => {
     </div>
         </div>
         <button type="button" className="search-button"> Search </button>
+        <hr className="horizontal-line"/>
     </div>
     );
 }

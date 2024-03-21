@@ -17,6 +17,7 @@ const HomePageComponent = () => {
     const [page, setPage] = useState({currPage:1, totalResults: null});
     const [requestParams, setRequestParams] = useState({});
     const [isLoading, setIsLoading] = useState(false);
+    const [activeFilter, setActiveFilter] = useState(0);
     const handleChange = async(event, value) => {
         
         if(hotels.length < value*10){
@@ -82,13 +83,13 @@ const HomePageComponent = () => {
     const desc = "Baba Beach Club Natai is a luxury Residential, Beachfront Hotel & Beach Club managed & developed by the team behind the internationally acclaimed estate 'Sri Panwa'."
     return (
         <div className="home-page">
-           {(!isLoading)?<SearchComponent handleDateShowModal={handleDateShowModal} selectedDates={dateRange}/>:<Skeleton height={100} width={"100%"} />}
+           <SearchComponent handleDateShowModal={handleDateShowModal} selectedDates={dateRange} setActiveFilter={setActiveFilter}/>
            <div className="home-page-body">
                 <div className="home-page-filters">
-                    {(!isLoading)?<FilterComponent popularFilters={popularFilters} guestRating={guestRating} paymentMethods={paymentMethods} propertyType={propertyType} mealPlans={mealPlans} AmenitiesList={AmenitiesList} Accessibilities={Accessibilities}/>:<Skeleton height={1200} width={300} animation='wave' />}
+                    <FilterComponent popularFilters={popularFilters} guestRating={guestRating} paymentMethods={paymentMethods} propertyType={propertyType} mealPlans={mealPlans} AmenitiesList={AmenitiesList} Accessibilities={Accessibilities} activeFilter={activeFilter} setActiveFilter={setActiveFilter}/>
                 </div>
-                 <div className="hotel-cards">
-                {isLoading && <Skeleton count={10} height={100} width={"100%"}/>}
+                 <div className="hotel-cards" onClick={()=>setActiveFilter(0)}>
+                {isLoading && <Skeleton count={10} height={200} width={"100%"}/>}
                     {!isLoading && hotels?.map((hotel,i)=>{
                         if(i<page.currPage*10 && i>=(page.currPage - 1)*10)
                         return <HotelCardComponent price={{night:hotel?.total}} ratings={hotel?.hotelRating} reviews={(hotel.tripAdvisorReview)?hotel.tripAdvisorReview:0} amenitites={AmenitiesList.slice(1,3)} desc={desc} name={hotel.hotelName} imgs={[{url:hotel?.thumbNailUrl}]}/>;
@@ -96,7 +97,7 @@ const HomePageComponent = () => {
                     })}
                     
                     {/* <HotelCardComponent price={price} ratings={9.2} reviews={reviews} amenitites={AmenitiesList.slice(1,3)} desc={desc} name={'Baba Beach Club Natai'}/> */}
-                    {!isLoading && <div style={{marginTop: "20px"}}>
+                    {!isLoading && <div style={{marginTop: "20px", display:"flex", alignItems:"center", justifyContent:"center"}}>
                     <Pagination count={page.totalResults} page={page.currPage} onChange={handleChange} sx={{
                         ".Mui-selected":{
                             backgroundColor: "#399a7a !important",
