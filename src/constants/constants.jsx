@@ -410,6 +410,7 @@ export const Accessibilities = [
     "Fire exit",
 ]
 export const filterInitialState = {
+    search:'',
     popularFilters: [],
     priceRange:[],
     guestRating: [],
