@@ -122,9 +122,9 @@ const HomePageComponent = () => {
                 {isLoading && <Skeleton count={10} height={200} width={"100%"}/>}
                     {!isLoading && hotels?.map((hotel,i)=>{
                         if(hotels.length <= 10)
-                        return <HotelCardComponent price={{night:hotel?.total}} ratings={hotel?.hotelRating} reviews={(hotel.tripAdvisorReview)?hotel.tripAdvisorReview:0} amenitites={AmenitiesList.slice(1,3)} desc={desc} name={hotel.hotelName} imgs={[{url:hotel?.thumbNailUrl}]}/>;
+                        return <HotelCardComponent price={{night:hotel?.total}} ratings={hotel?.hotelRating} reviews={(hotel.tripAdvisorReview)?hotel.tripAdvisorReview:0} amenitites={AmenitiesList.slice(1,3)} desc={desc} name={hotel.hotelName} imgs={[{url:hotel?.thumbNailUrl}]} requestParams={{...requestParams,productId: hotel.productId, tokenId: hotel.tokenId, hotelId:hotel.hotelId}}/>;
                         else if(i<page.currPage*10 && i>=(page.currPage - 1)*10)
-                        return <HotelCardComponent price={{night:hotel?.total}} ratings={hotel?.hotelRating} reviews={(hotel.tripAdvisorReview)?hotel.tripAdvisorReview:0} amenitites={AmenitiesList.slice(1,3)} desc={desc} name={hotel.hotelName} imgs={[{url:hotel?.thumbNailUrl}]}/>;
+                        return <HotelCardComponent price={{night:hotel?.total}} ratings={hotel?.hotelRating} reviews={(hotel.tripAdvisorReview)?hotel.tripAdvisorReview:0} amenitites={AmenitiesList.slice(1,3)} desc={desc} name={hotel.hotelName} imgs={[{url:hotel?.thumbNailUrl}]} requestParams={{...requestParams,productId: hotel.productId, tokenId: hotel.tokenId, hotelId:hotel.hotelId}}/>;
                         else return null;
                     })}
                     

@@ -6,8 +6,9 @@ import HotelOverview2 from '../../assets/Hotel-Overview-2.jpg'
 import HotelOverview3 from '../../assets/Hotel-Overview-4.jpg'
 import HotelOverview4 from '../../assets/Hotel-Overview-12.jpg'
 import HotelOverview5 from '../../assets/Hotel-Overview-13.jpg'
+import Skeleton from 'react-loading-skeleton'
 import { Carousel } from "react-bootstrap";
-export const CarouselView = () =>{
+export const CarouselView = ({images}) =>{
     return (
         <>
         <Carousel 
@@ -15,40 +16,38 @@ export const CarouselView = () =>{
             prevLabel={null} 
             nextLabel={null}
             >
-                <Carousel.Item>
-                    <Image src={HotelOverview1} height={'100%'} width={'100%'} />
-                </Carousel.Item>
-                <Carousel.Item>
-                    <Image src={HotelOverview2} height={'100%'} width={'100%'} />
-                </Carousel.Item>
-                <Carousel.Item>
-                    <Image src={HotelOverview3} height={'100%'} width={'100%'} />
-                </Carousel.Item>
-                <Carousel.Item>
-                    <Image src={HotelOverview4} height={'100%'} width={'100%'} />
-                </Carousel.Item>
-                <Carousel.Item>
-                    <Image src={HotelOverview5} height={'100%'} width={'100%'} />
-                </Carousel.Item>
+                {images.map(image=>{
+                return(<Carousel.Item>
+                    <Image src={image.url} height={'100%'} width={'100%'} />
+                </Carousel.Item>)})}
                 
             </Carousel>
             </>
     )
 }
-const GalleryComponent = ({handleViewGallery}) =>{
+const GalleryComponent = ({handleViewGallery, images}) =>{
     const handleClick = () => {
         handleViewGallery();
     }
+    console.log(images)
     return (
         <div className="gallery" >
-            <div className='mobile-view-gallery'><CarouselView /></div>
-           <div className='main-img' onClick={handleClick} ><Image src={HotelOverview1} height="100%" width="100%" /></div> 
+           {images && <><div className='mobile-view-gallery'><CarouselView images={images}/></div>
+           <div className='main-img' onClick={handleClick} ><Image src={images[0].url} height="100%" width="100%" /></div> 
             <div className='sub-imgs' onClick={handleClick}>   
-                <Image src={HotelOverview2} height="48%" width="49%" />
-                <Image src={HotelOverview3} height="48%" width="49%" />
-                <Image src={HotelOverview4} height="48%" width="49%" />
-                <Image src={HotelOverview5} height="48%" width="49%" />
-            </div>
+                <Image src={images[1].url} height="48%" width="49%" />
+                <Image src={images[2].url} height="48%" width="49%" />
+                <Image src={images[3].url} height="48%" width="49%" />
+                <Image src={images[4].url} height="48%" width="49%" />
+            </div></>}
+            {!images && <><div className='mobile-view-gallery'><Skeleton height={"100%"} width={"100%"}/></div>
+           <div className='main-img' onClick={handleClick} ><Skeleton height={"100%"} width={"100%"} /></div> 
+            <div className='sub-imgs' onClick={handleClick}>   
+                <Skeleton  height="48%" width="49%" />
+                <Skeleton  height="48%" width="49%" />
+                <Skeleton height="48%" width="49%" />
+                <Skeleton height="48%" width="49%" />
+            </div></>}
         </div>
     )
 }

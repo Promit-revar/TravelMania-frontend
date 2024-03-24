@@ -3,13 +3,13 @@ import CarouselComponent from "../Carousel/Carousel";
 import { useNavigate } from "react-router-dom";
 import Image from "../../UI/components/Image/Image";
 import './HotelCard.css';
-const HotelCardComponent = ({price, ratings, reviews, desc, amenitites, name, imgs}) => {
+const HotelCardComponent = ({price, ratings, reviews, desc, amenitites, name, imgs, requestParams}) => {
     const navigate= useNavigate();
     return (
-        <div style={{display: 'flex', flexDirection: 'row'}} className="hotel-card-mgt" >
+        <div style={{display: 'flex', flexDirection: 'row'}} className="hotel-card-mgt" onClick={()=>navigate(`/hotel-details?sessionId=${requestParams.sessionId}&hotelId=${requestParams.hotelId}&productId=${requestParams.productId}&tokenId=${requestParams.tokenId}`)}>
         {/* <CarouselComponent height="300px" width="350px" src={imgs}/> */}
         <div className="thumbnail-img"><img height="300px" width="350px" src={imgs[0].url}  className="thumbnail-img"/></div>
-        <div className="hotel-card" onClick={()=>navigate('/hotel-details')}>
+        <div className="hotel-card">
             
             <div>
                 <div className="hotel-card-title">{name}</div>
