@@ -26,3 +26,8 @@ export async function getHotelByFilters(body) {
     const response = await makeRequest({method: 'POST', url, body:{...body}});
     return response;
 }
+export async function getNextFilteredHotelResults(params){
+    const url = BASE_URL+"moreFiterResults?";
+    const response = await makeRequest({method: 'GET', url: url, params:{...params}});
+    return response;
+}

@@ -1,5 +1,4 @@
 export const filterBodyConverter = (filters) => {
-    console.log(filters);
     let requestBody ={ filters:{
         price:{
             min: filters.priceRange[0],

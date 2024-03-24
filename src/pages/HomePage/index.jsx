@@ -41,11 +41,12 @@ const HomePageComponent = () => {
     const [page, setPage] = useState({currPage:1, totalResults: null});
     const [requestParams, setRequestParams] = useState({});
     const [isLoading, setIsLoading] = useState(false);
+    const [filterApplied, setFilterApplied] = useState(false);
     const [activeFilter, setActiveFilter] = useState(0);
     const [isError,setIsError] = useState({value:false,error:""});
     const handleChange = async(event, value) => {
         
-        if(hotels.length < value*10){
+        if(!filterApplied && hotels.length < value*10){
             setIsLoading(true);
             const getHotelsResponse = await api.getNextHotelSearchResults({...requestParams, maxResult: 10});
             setRequestParams({
@@ -63,6 +64,7 @@ const HomePageComponent = () => {
     };
     const hotelSearchApi = async()=>{
         // console.log(hotels);
+        setFilterApplied(false);
         const getHotelsResponse = await api.getAllHotels({...getHotels,...hotelSearch});
         if(getHotelsResponse.status.errors)
         {
@@ -81,14 +83,15 @@ const HomePageComponent = () => {
         setIsLoading(false);
     }
     const filterHotels = async() => {
-        console.log("here in")
-        const filteredResponse = await api.getHotelByFilters({...filters,...{sessionId: requestParams.sessionId,maxResult:10}});
+        const filteredResponse = await api.getHotelByFilters({...filters,...{sessionId: requestParams.sessionId,maxResult: Number.MAX_SAFE_INTEGER}});
         if(filteredResponse.status.error || filteredResponse.status.errors) setIsError({value: true, error: filteredResponse.status.error || filteredResponse.status.errors[0].errorMessage});
         else {
             setIsError({value:false,error:""})
             setHotels(filteredResponse.itineraries);
+            const totalResults = Math.ceil(filteredResponse.itineraries.length/10);
+            setPage({...page, totalResults:totalResults});
         }
-        setPage({...page, totalResults:1});
+        setFilterApplied(true);
         setIsLoading(false);
     }
     useEffect(()=>{
