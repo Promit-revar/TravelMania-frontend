@@ -9,7 +9,8 @@ import Button from "../../UI/components/Button/Button";
 
 // (Optional) Import component styles. If you are using Less, import the `index.less` file. 
 import './SearchComponent.css';
-const SearchComponent = ({handleDateShowModal, selectedDates, setActiveFilter}) => {
+const SearchComponent = ({handleDateShowModal, selectedDates, setActiveFilter, setHotelSearch, hotelSearch}) => {
+    // console.log(selectedDates);
     const [isOpenRoom, setIsOpenRoom] = useState(false);
     const [isOpenLocation, setIsOpenLocation] = useState(false);
     const [selectLocation, setSelectLocation] = useState({location: 'Phuket Province'});
@@ -17,10 +18,6 @@ const SearchComponent = ({handleDateShowModal, selectedDates, setActiveFilter}) 
         rooms: 1,
         travellers: 2,
     });
-    const handleSelectRooms = (selectedRooms) =>{
-        setSelectRooms({...selectedRooms});
-        setIsOpenRoom(false);
-    }
     const handleSelectLocation = (location) => {
         setSelectLocation(location);
         setIsOpenLocation(false);
@@ -31,6 +28,23 @@ const SearchComponent = ({handleDateShowModal, selectedDates, setActiveFilter}) 
     const toggleLocationDropdown = () => {
         setIsOpenLocation(!isOpenLocation);
     };
+    const handleSearch = () =>{
+        setHotelSearch({
+            ...hotelSearch,
+            occupancy:[
+            {
+                "room_no": selectRooms.rooms,
+                "adult": selectRooms.travellers,
+                "child": 0,
+                "child_age": [
+                  0
+                ]
+              }
+        ], 
+        checkin: moment(selectedDates.startDate).format('YYYY-MM-DD'),
+        checkout: moment(selectedDates.endDate).format('YYYY-MM-DD'),
+        });
+    }
     return (
     <div className="search" onClick={()=>setActiveFilter(0)}>
         <div className="search-selector">
@@ -45,9 +59,7 @@ const SearchComponent = ({handleDateShowModal, selectedDates, setActiveFilter}) 
       {isOpenLocation && (
         <div className="dropdown-content">
           <ul>
-            <li onClick={()=>handleSelectLocation({location: 'Phuket Province'})}>Phuket Province</li><hr/>
-            <li onClick={()=>handleSelectLocation({location: 'Bali'})}>Bali</li><hr/>
-            <li onClick={()=>handleSelectLocation({location: 'Vietnam'})}>Vietnam</li><hr/>
+            <li onClick={()=>handleSelectLocation({location: 'Phuket Province'})}>Phuket Province</li>
           </ul>
         </div>
       )}
@@ -73,16 +85,13 @@ const SearchComponent = ({handleDateShowModal, selectedDates, setActiveFilter}) 
             <div className="dropdown-container">
       {isOpenRoom && (
         <div className="dropdown-content">
-          <ul>
-            <li onClick={()=>handleSelectRooms({rooms:1, travellers:2})}>1 room, 2 travelers</li><hr/>
-            <li onClick={()=>handleSelectRooms({rooms:2, travellers:4})}>2 rooms, 4 travelers</li><hr/>
-            <li onClick={()=>handleSelectRooms({rooms:3, travellers:6})}>3 rooms, 6 travelers</li><hr/>
-          </ul>
+            <div style={{display: 'flex', flexDirection:"row",justifyContent:"space-between"}}>Rooms: <div><button type="button" className="btn-rooms" onClick={()=>setSelectRooms({...selectRooms, rooms: selectRooms.rooms+1})}>+</button>{selectRooms.rooms}<button type="button" className="btn-rooms" onClick={()=>setSelectRooms({...selectRooms, rooms: selectRooms.rooms-1})} disabled={selectRooms.rooms === 1}>-</button></div></div>
+            <div style={{display: 'flex', flexDirection:"row",justifyContent:"space-between", marginTop: '20px'}}>Travellers: <div><button type="button" className="btn-rooms" onClick={()=>setSelectRooms({...selectRooms, travellers: selectRooms.travellers+1})}>+</button>{selectRooms.travellers}<button type="button" className="btn-rooms" onClick={()=>setSelectRooms({...selectRooms, travellers: selectRooms.travellers-1})} disabled={selectRooms.travellers === 0}>-</button></div></div>
         </div>
       )}
     </div>
         </div>
-        <button type="button" className="search-button"> Search </button>
+        <button type="button" className="search-button" onClick={handleSearch}> Search </button>
         <hr className="horizontal-line"/>
     </div>
     );

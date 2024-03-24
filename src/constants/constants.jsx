@@ -414,7 +414,7 @@ export const filterInitialState = {
     popularFilters: [],
     priceRange:[],
     guestRating: [],
-    starRating: undefined,
+    starRating: [],
     paymentType: [],
     cancellationOptions: [],
     propertyType: [],

@@ -1,10 +1,11 @@
-import React,{useState} from "react";
+import React,{useEffect, useState} from "react";
 import { TextField, InputAdornment, Checkbox, Slider} from "@mui/material";
 import { Search, Star, ChevronRight, ChevronUp, ChevronDownCircle , ChevronUpCircle } from 'lucide-react';
 import { filterInitialState } from "../../constants/constants";
+import { filterBodyConverter } from "../../utils/helper";
 import "./Filter.css";
 
-const FilterComponent = ({popularFilters, guestRating, paymentMethods, propertyType, mealPlans, AmenitiesList, Accessibilities, activeFilter, setActiveFilter}) => {
+const FilterComponent = ({popularFilters, guestRating, paymentMethods, propertyType, mealPlans, AmenitiesList, Accessibilities, activeFilter, setActiveFilter, setFilters}) => {
     const [priceRange, setPriceRange] = useState([0,50]); 
     const [openPropertyType, setOpenPropertyType] = useState(false);
     const [openAmeneties, setOpenAmeneties] = useState(false);
@@ -20,10 +21,13 @@ const FilterComponent = ({popularFilters, guestRating, paymentMethods, propertyT
         if(value === activeFilter) setActiveFilter(0);
         else setActiveFilter(value);
     }
-    console.log(filterValue);
+    useEffect(()=>{
+        setFilters(filterBodyConverter(filterValue));
+    },[filterValue]);
     const handleFilterCheck = (filterName,value,filterItem) =>{
         if(value){
             //console.log([...filterValue.popularFilters, filter]);
+            // console.log({[filterName]:[...filterValue[filterName], filterItem]})
             setFilterValue({...filterValue,...{[filterName]:[...filterValue[filterName], filterItem]}});
         }
         else{
@@ -31,12 +35,19 @@ const FilterComponent = ({popularFilters, guestRating, paymentMethods, propertyT
             setFilterValue({...filterValue,...{[filterName]:[...tempArr]}});
         }
     }
+    const handleSearch = (e) => {
+        setFilterValue({...filterValue,search:e.target.value})
+    }
+    useEffect(()=>{
+        setFilterValue({...filterValue,priceRange:[priceRange[0].toString(),priceRange[1].toString()]});
+    },[priceRange]);
     return (
         <div className="filter">
             <div onClick={()=>setActiveFilter(0)}>
             <div className="filter-title">Search by property name</div>
             <div className="filter-search">
                 <TextField
+                    onChange={handleSearch}
                     id="input-with-icon-textfield"
                     InputProps={{
                     startAdornment: (
@@ -138,7 +149,7 @@ const FilterComponent = ({popularFilters, guestRating, paymentMethods, propertyT
                 <div className="star-rating-filter">
                     {[1,2,3,4,5].map(item=>{
                         return (
-                            <div className="star-rating-box">
+                            <div className={(filterValue.starRating.indexOf(item) === -1)?"star-rating-box":"star-rating-box active"} onClick={()=>handleFilterCheck('starRating',filterValue.starRating.indexOf(item) === -1,item)}>
                                 {item} <Star color='#FFD700' size={'14px'} fill='#FFD700'/>
                             </div>
                         )
@@ -453,6 +464,7 @@ const FilterComponent = ({popularFilters, guestRating, paymentMethods, propertyT
                                 return (
                                     <div className="check-boxes">
                                         <Checkbox 
+                                        onChange={e =>handleFilterCheck('starRating',e.target.checked, item)} 
                                         sx={{
                                             "&.Mui-checked": {
                                             color: "#399a7a",
@@ -461,6 +473,7 @@ const FilterComponent = ({popularFilters, guestRating, paymentMethods, propertyT
                                                 borderRadius: 10,
                                         },
                                         }}
+                                        checked={filterValue.starRating.indexOf(item) != -1}
                                         />
                                         {item} <Star color='#FFD700' size={'14px'} fill='#FFD700'/>
                                     </div>
