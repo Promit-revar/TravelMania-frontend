@@ -45,7 +45,7 @@ const RatingProgress = ({ received, total, label }) => {
   );
 };
 
-const ReviewComponent = ({totalRating, handleViewAllReviews}) => {
+const ReviewComponent = ({totalRating, handleViewAllReviews, reviews}) => {
     return(
         <div className="review-section">
             <div className="ratings-summary">

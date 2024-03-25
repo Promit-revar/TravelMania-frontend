@@ -43,10 +43,10 @@ const GalleryComponent = ({handleViewGallery, images}) =>{
             {!images && <><div className='mobile-view-gallery'><Skeleton height={"100%"} width={"100%"}/></div>
            <div className='main-img' onClick={handleClick} ><Skeleton height={"100%"} width={"100%"} /></div> 
             <div className='sub-imgs' onClick={handleClick}>   
-                <Skeleton  height="48%" width="49%" />
-                <Skeleton  height="48%" width="49%" />
-                <Skeleton height="48%" width="49%" />
-                <Skeleton height="48%" width="49%" />
+                <Skeleton  height={"100%"} width={"250px"} />
+                <Skeleton  height={"100%"} width={"250px"} />
+                <Skeleton height={"100%"} width={"250px"} />
+                <Skeleton height={"100%"} width={"250px"} />
             </div></>}
         </div>
     )

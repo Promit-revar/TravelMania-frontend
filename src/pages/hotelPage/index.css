@@ -5,6 +5,7 @@
     align-items: center;
     font-weight: 400;
     padding: 20px;
+    cursor: pointer;
 }
 .hotel-page{
     width: 100%;

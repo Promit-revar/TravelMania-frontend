@@ -1,4 +1,4 @@
-import React,{useState, useEffect} from "react";
+import React,{useState, useEffect, useContext} from "react";
 import SearchComponent from "../../components/Search/SearchComponent";
 import ModalComponent from "../../UI/components/Modal/Modal";
 import HotelCardComponent from "../../components/HotelCard/HotelCard";
@@ -6,6 +6,7 @@ import DateRangePickerComponent from "../../UI/components/DateRangePicker/DateRa
 import * as api from "../../api/hotelApis.js";
 import FilterComponent from "../../components/Filters/Filter";
 import moment from "moment";
+import { HotelContext } from "../../Context/hotelDetailsContext.jsx";
 import { AmenitiesList, popularFilters, guestRating, paymentMethods, propertyType, mealPlans, Accessibilities, getHotels} from "../../constants/constants";
 import Pagination from '@mui/material/Pagination';
 import Skeleton from 'react-loading-skeleton'
@@ -13,6 +14,7 @@ import 'react-loading-skeleton/dist/skeleton.css'
 
 import './index.css';
 const HomePageComponent = () => {
+    const {hotelDetails, setHotelDetails} = useContext(HotelContext);
     const [hotels,setHotels] = useState([]);
     const [filters,setFilters] = useState({});
     const tomorrow = new Date();

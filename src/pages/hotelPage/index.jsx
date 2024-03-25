@@ -1,4 +1,4 @@
-import React,{useState, useEffect} from "react";
+import React,{useState, useEffect, useContext} from "react";
 import NavBarComponent from "../../components/Navbar/Navbar";
 import GalleryComponent from "../../components/Gallery/Gallery.jsx"
 import NavList from "../../components/NavigationList/NavList";
@@ -11,6 +11,7 @@ import {AccomodationAmenities} from '../../constants/constants';
 import ActivitiesComponent from "../../components/Activites/Activites";
 import { ChevronLeft } from 'lucide-react';
 import { Carousel } from "react-bootstrap";
+import { HotelContext } from "../../Context/hotelDetailsContext.jsx";
 import LocationComponent from "../../components/Location/Location";
 import PoilciesComponent from "../../components/Policies/Policies";
 import CarouselComponent from "../../components/Carousel/Carousel";
@@ -27,6 +28,7 @@ import HotelOverview5 from '../../assets/Hotel-Overview-13.jpg'
 import { ChevronLeftCircle, ChevronRightCircle, Heart } from 'lucide-react';
 import { useSearchParams, useNavigate } from "react-router-dom";
 import ViewAllReviewsComponent from "../../components/ViewAllReviews/ViewAllReviews";
+import Skeleton from "react-loading-skeleton";
 import './index.css'
 export const GalleryView = ({images}) =>{
     return (
@@ -49,9 +51,11 @@ export const GalleryView = ({images}) =>{
 }
 const HotelPageComponent = () => {
     const navigate = useNavigate();
+    const { hotelDetails, setHotelDetails } = useContext(HotelContext);
     const [openModal,setOpenModal] = useState(false);
-    const [hotelDetails, setHotelDetails] = useState({});
+    const [hotelData, setHotelData] = useState({});
     const [openReviewModal,setOpenReviewModal] = useState(false);
+    const [isLoading,setIsLoading] = useState(false);
     const desc = 'loremIncididunt eiusmod ex ullamco esse do duis culpa ipsum dolor ea cupidatat. Sunt nisi eu voluptate aliqua nisi duis nulla. Ea adipisicing laborum ullamco quis aute laborum nulla. Cillum enim et ut ex minim. Non irure magna in amet non minim ullamco. Do culpa minim laborum sunt magna eu reprehenderit anim. Excepteur labore consequat consequat ea fugiat excepteur id aliqua proident. Laboris eu ea nisi non occaecat eiusmod nulla excepteur amet incididunt cillum. Esse ex cupidatat laborum amet duis reprehenderit aliqua est in anim. Veniam ut ipsum adipisicing incididunt aliquip amet non. Ut exercitation culpa cupidatat excepteur consequat aliquip do amet. Ullamco aliquip enim in non exercitation reprehenderit veniam et quis. Amet cillum nisi esse tempor elit consequat ut consectetur proident dolor excepteur et.';
     const location ={ Latitude: 7.9246,Longitude: 98.2792 }
     const [searchParams] = useSearchParams();
@@ -61,32 +65,38 @@ const HotelPageComponent = () => {
     const handleViewAllReviews = () =>{
         setOpenReviewModal(true);
     }
-    const { sessionId, productId, hotelId, tokenId} = Object.fromEntries([...searchParams]);
+    
     const getHotelDetails = async()=>{
-        const hotelData = await api.getHotelDetails({ sessionId, productId, hotelId, tokenId});
+        const hotelId = searchParams.get('hotelId');
+        const { sessionId, productId, tokenId} = hotelDetails.params;
+        const data = await api.getHotelDetails({ sessionId, productId, hotelId, tokenId});
         if(hotelData){
-            setHotelDetails(hotelData);
+            setHotelData(data);
         }
         else{
             navigate('/');
         }
+        console.log(data);
+        setIsLoading(false);
         
     }
     useEffect(()=>{
+        console.log("here");
+        setIsLoading(true);
         getHotelDetails();
     },[]);
     return (
         <div className="hotel-page">
-        <div className="back-button"> 
+        <div className="back-button" onClick={()=>navigate('/')}> 
             <ChevronLeft size={'15px'}/> 
             <div style={{fontSize:'15px'}}>See all properties</div>
         </div>
-        <GalleryComponent handleViewGallery={handleViewGallery} images={hotelDetails.hotelImages}/>
+        <GalleryComponent handleViewGallery={handleViewGallery} images={hotelData.hotelImages}/>
         <div className="navigation-list">
             <NavList items={HotelDetailsNavigationList} />
         </div>
         <hr />
-            <HotelDescriptionComponent title='InterContinental Phuket' description={desc} location={location} ratings={5}/>
+           {(!isLoading)?<HotelDescriptionComponent title={hotelData.name} description={hotelData.description?.content} location={{Latitude:hotelData.latitude, Longitude: hotelData.longitude}} ratings={Number(hotelData.hotelRating)}/>:<Skeleton count={5}/>}
             <AmenitiesComponent amenities={AmenitiesList} />
             <hr />
             <div className="title" id="accommodation">
@@ -102,15 +112,15 @@ const HotelPageComponent = () => {
                 </div>
             <ActivitiesComponent />
             <hr />
-            <LocationComponent address={hotelDetails.address}/>
+            <LocationComponent address={hotelData.address}/>
             <hr />
             <PoilciesComponent Policies={Policies}/>
             <hr />
-            <ReviewComponent totalRating={hotelDetails.hotelRating} handleViewAllReviews={handleViewAllReviews}/>
+            <ReviewComponent totalRating={hotelData.hotelRating} handleViewAllReviews={handleViewAllReviews} reviews={hotelData.reviews}/>
             <hr/>
             <OtherHotelCardsComponent />
             {openModal && <ModalComponent show={openModal} onHide={()=>setOpenModal(false)} title={'Gallery View'}>
-                    <GalleryView images={hotelDetails.hotelImages}/>
+                    <GalleryView images={hotelData.hotelImages}/>
                 </ModalComponent>
                 }
             {openReviewModal && <ModalComponent show={openReviewModal} onHide={()=>setOpenReviewModal(false)} title={'Reviews'}>

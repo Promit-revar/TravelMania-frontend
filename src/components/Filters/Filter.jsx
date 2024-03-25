@@ -149,7 +149,7 @@ const FilterComponent = ({popularFilters, guestRating, paymentMethods, propertyT
                 <div className="star-rating-filter">
                     {[1,2,3,4,5].map(item=>{
                         return (
-                            <div className={(filterValue.starRating.indexOf(item) === -1)?"star-rating-box":"star-rating-box active"} onClick={()=>handleFilterCheck('starRating',filterValue.starRating.indexOf(item) === -1,item)}>
+                            <div className={(filterValue.starRating.indexOf(item) === -1)?"star-rating-box":"star-rating-box active-filter"} onClick={()=>handleFilterCheck('starRating',filterValue.starRating.indexOf(item) === -1,item)}>
                                 {item} <Star color='#FFD700' size={'14px'} fill='#FFD700'/>
                             </div>
                         )

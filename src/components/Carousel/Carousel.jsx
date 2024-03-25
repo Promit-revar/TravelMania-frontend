@@ -37,7 +37,6 @@ const CarouselComponent = ({height = '200px', width = '350px', src=[]}) => {
     const handleSelect = (selectedIndex) => {
         setIndex(selectedIndex);
     }
-    console.log(src);
     if(src.length){
       return (
         <div className='img-corousel'>

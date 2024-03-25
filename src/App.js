@@ -3,10 +3,11 @@ import NavBarComponent from "./components/Navbar/Navbar";
 import HomePageComponent from "./pages/HomePage";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import './App.css';
+import { HotelContextProvider } from "./Context/hotelDetailsContext";
 
 function App() {
   return (
-    <>
+    <HotelContextProvider>
       <NavBarComponent />
       <hr />
       <BrowserRouter>
@@ -16,7 +17,7 @@ function App() {
       </Routes>
     </BrowserRouter>
       
-    </>
+    </HotelContextProvider>
   );
 }
 
