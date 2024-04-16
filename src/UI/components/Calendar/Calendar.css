@@ -1,0 +1,40 @@
+.calendar {
+    font-family: Arial, sans-serif;
+    max-width: 300px;
+    margin: auto;
+  }
+  
+  .calendar-header {
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+  }
+  
+  .day-header {
+    font-weight: bold;
+    text-align: center;
+  }
+  
+  .day-cell {
+    text-align: center;
+    cursor: pointer;
+    padding: 5px;
+  }
+  
+  .empty-cell {
+    background-color: #f3f3f3;
+  }
+  
+  .selected {
+    background-color: #007bff;
+    color: #fff;
+  }
+  
+  .selected:hover {
+    background-color: #0056b3;
+  }

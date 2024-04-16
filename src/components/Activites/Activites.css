@@ -7,3 +7,22 @@
     width: 5% !important;
     bottom: 100px !important;
 }
+.mobile-view-activites{
+    display: none;
+}
+@media screen and (max-width: 1326px) {
+    .active.carousel-item{
+        overflow-x: scroll;
+        gap:175px;
+    }
+    .activities .carousel{
+        display: none;
+    }
+    .mobile-view-activites{
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        overflow-x: scroll;
+        gap: 20px;
+    }
+}

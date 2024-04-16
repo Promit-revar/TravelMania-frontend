@@ -1,10 +1,14 @@
+import React,{useContext} from 'react';
 import { DatePicker, MuiPickersAdapterContext } from '@mui/x-date-pickers';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs from 'dayjs';
 import './DatePicker.css';
 import CalendarIcon from '../../../Icons/CalendarIcon';
+import { HotelContext } from '../../../Context/hotelDetailsContext';
 const DatePickerComponent = ({ label }) => {
+    const {hotelDetails, setHotelDetails} =  useContext(HotelContext);
+    console.log(hotelDetails);
     return (
         <>
             <LocalizationProvider dateAdapter={AdapterDayjs}>

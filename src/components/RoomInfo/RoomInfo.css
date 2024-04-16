@@ -1,0 +1,89 @@
+.roomInfo{
+    width:35%;
+}
+.roomInfo .title{
+    margin-top: 20px;
+}
+.highlights{
+    width: 100%;
+    border-radius: 20px;
+    background-color: aliceblue;
+    padding: 15px;
+    margin-bottom: 10px;
+    margin-top: 15px;
+}
+.roomInfo .facilities{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    height: 320px;
+    width: 100%;
+}
+.sub-title{
+    font-size: 18px;
+    font-weight: 600;
+}
+.room-amenities-sub-title{
+    display: flex;
+    gap: 10px;
+    font-size: 15px;
+    font-weight: 500;
+    margin-top: 20px;
+}
+.roomInfo .hotel-info{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+}
+.hotel-info-left-section{
+
+}
+.hotel-info-right-section{
+    
+}
+.reserve-block{
+    width: 100%;
+    border-radius: 20px;
+    border: 2px solid #c7c5c5;
+    padding: 15px;
+}
+.reserve-block-footer{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+}
+.price-details-tag{
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    color: rgb(57, 154, 122);
+}
+.reserve-btn{
+    width: 30%;
+}
+.reserve-btn .button{
+    padding: 5px;
+    margin-top: 0px;
+    border-radius: 0px;
+    font-size: 15px;
+}
+.room-amenities-sub-item{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 10px;
+    font-size: 15px;
+}
+.heading-little{
+    font-size: 12px;
+}
+.reserve-block .price{
+    font-size: 18px;
+    font-weight: 500;
+    margin-top: 20px;
+}
+.reserve-block .total-price{
+    font-size: 15px;
+}

@@ -36,3 +36,18 @@
     gap: 5px;
     align-items: center;
 }
+
+@media screen and (max-width: 1326px) {
+    .hotel-description-section{
+        flex-direction: column;
+        gap: 20px;
+    }
+    .desc{
+        width: 100%;
+    }
+    .gmap{
+        width: 100%;
+        margin-bottom: 15px;
+    }
+    
+}

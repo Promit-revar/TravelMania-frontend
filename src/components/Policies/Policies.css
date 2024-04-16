@@ -4,7 +4,7 @@
 .policy-description{
     margin-top: 20px;
     display: flex;
-    flex-direction: row !important;
+    flex-direction: row ;
     width: 100%;
     gap: 20px
 }
@@ -36,4 +36,17 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
+}
+
+@media screen and (max-width:520px) {
+    
+    .policy-description{
+        flex-direction: column;
+    }
+    .policies-description-left{
+        width: 100%;
+    }
+    .policies-description-right{
+        width: 100%;
+    }
 }

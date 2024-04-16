@@ -1,0 +1,145 @@
+.filter{
+    margin-top: 20px;
+}
+.filter-title{
+    font-size: 15px;
+    font-weight: 500;
+    margin-bottom: 10px;
+}
+.filter-search{
+    margin-bottom: 20px;
+}
+.filter-title-main{
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 20px;
+}
+.popular-filters{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+.price-filter{
+    height: 80px;
+    padding: 10px;
+    width: 160px;
+    border-radius: 10px;
+    border: 2px solid #c7c5c5;
+}
+.min-max{
+    display: flex;
+    flex-direction: row;
+    gap
+    :20px;
+}
+.star-rating-filter{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.star-rating-box{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2px;
+    border-radius: 10px;
+    border: 2px solid #c7c5c5;
+    padding: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+.active-filter{
+    background-color: #399a7a;
+    color: #fff;
+}
+.expand-list{
+    font-size: 14px;
+    margin-top: 5px;
+    padding-left: 11px;
+    color: #399a7a;
+    cursor: pointer;
+}
+
+/* mobile design classes */
+.dropdown-filters{
+    display: none;
+}
+.popular-filters-dropdown{
+    display: none;
+}
+.filter .dropdown-container{
+    display: none;
+    position: relative;
+}
+.filter .dropdown-content{
+    display: none;
+    width: 100%;
+    background-color: #fff;
+    border: 1px solid #c7c5c5;
+    border-radius: 10px;
+    position: absolute;
+    top:5;
+    z-index: 5;
+}
+.check-boxes{
+    display: none;
+
+
+}
+@media screen and (max-width: 1200px){
+    .dropdown-filters{
+        display: flex;
+        align-items: center;
+        font-size: 12px;
+        padding: 15px;
+        background-color: #399a7a;
+        text-wrap: nowrap;
+        border-radius: 25px;
+        gap: 10px;
+        height: 40px;
+        color: #fff;
+    }
+    .check-boxes{
+        display: flex;
+        align-items: center;
+        font-size: 12px;
+        padding: 15px;
+        background-color: #eff3f1;
+        text-wrap: nowrap;
+        border-radius: 25px;
+        gap: 10px;
+        height: 40px;
+    }
+    .filter .dropdown-container{
+        display: block;
+    } 
+    .filter .dropdown-content{
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+        gap: 15px;
+        padding: 20px;
+    }
+    .popular-filters-dropdown{
+        display: none;
+    }
+    .popular-filters{
+        display: none;
+    }
+    .filter-component{
+        display: none;
+    }
+    .dropdown-filters-layout{
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+        overflow-x: scroll;
+    }
+    .price-filter{
+        width: 50%;
+    }
+    .min-max{
+        width: 100%;
+    }
+}

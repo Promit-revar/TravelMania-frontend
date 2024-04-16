@@ -1,0 +1,34 @@
+.home-page{
+    height: 100vh;
+    width: 100%;
+}
+.home-page-body{
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    gap: 20px;
+    flex-direction: row;
+}
+.home-page-filters{
+    width: 30%;
+}
+.hotel-cards{
+    width: 80%;
+}
+@media screen and (max-width: 1200px) {
+    .home-page-body{
+        flex-direction: column;
+    }
+    .home-page-filters{
+        width: 100%;
+        flex-direction: row;
+    }
+    .hotel-cards{
+        display: flex;
+        width: 100%;
+        flex-direction: row !important;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 20px;
+    }
+}
