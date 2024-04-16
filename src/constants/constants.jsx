@@ -427,6 +427,7 @@ export const getHotels = {
     "user_id": process.env.USER_NAME || "valeost_testAPI",
     "user_password": process.env.USER_PASSWORD || "valeostTest@2024",
     "access": "Test",
+    "ip_address": '85.137.122.196',
     "requiredCurrency": "USD",
     "checkin": "2024-04-17",
     "checkout": "2024-04-18",

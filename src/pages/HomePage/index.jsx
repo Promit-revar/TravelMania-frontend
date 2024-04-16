@@ -11,12 +11,11 @@ import { AmenitiesList, popularFilters, guestRating, paymentMethods, propertyTyp
 import Pagination from '@mui/material/Pagination';
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
-
+import ErrorHandlingComponent from "../../UI/components/Errors/Error.jsx";
 import './index.css';
 const HomePageComponent = () => {
     const {hotelDetails, setHotelDetails} = useContext(HotelContext);
     const [hotels,setHotels] = useState([]);
-    const [filters,setFilters] = useState({});
     const tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate()+1);
     const [showDateModal , setShowDateModal ] = useState(false);
@@ -66,11 +65,12 @@ const HomePageComponent = () => {
     };
     const hotelSearchApi = async()=>{
         // console.log(hotels);
+        console.log("here");
         setFilterApplied(false);
         const getHotelsResponse = await api.getAllHotels({...getHotels,...hotelSearch});
         if(getHotelsResponse.status.errors)
         {
-            setIsError({value: true, error: getHotelsResponse.status.errors})
+            setIsError({value: true, error: getHotelsResponse.status.errors});
         }
         else{
             setIsError({value:false,error:""});
@@ -84,7 +84,7 @@ const HomePageComponent = () => {
         
         setIsLoading(false);
     }
-    const filterHotels = async() => {
+    const filterHotels = async(filters) => {
         const filteredResponse = await api.getHotelByFilters({...filters,...{sessionId: requestParams.sessionId,maxResult: Number.MAX_SAFE_INTEGER}});
         if(filteredResponse.status.error || filteredResponse.status.errors[0]) setIsError({value: true, error: filteredResponse.status.error || filteredResponse.status.errors[0].errorMessage});
         else {
@@ -98,12 +98,8 @@ const HomePageComponent = () => {
     }
     useEffect(()=>{
         setIsLoading(true);
-        if(!hotels.length)
-            hotelSearchApi();
-        else
-            filterHotels();
-        
-    },[hotelSearch,filters]);
+        hotelSearchApi();
+    },[hotelSearch]);
     
     const handleDateShowModal = () => {
         setShowDateModal(true);
@@ -118,9 +114,9 @@ const HomePageComponent = () => {
            <SearchComponent handleDateShowModal={handleDateShowModal} selectedDates={dateRange} setActiveFilter={setActiveFilter} setHotelSearch={setHotelSearch} hotelSearch={hotelSearch}/>
            <div className="home-page-body">
                 <div className="home-page-filters">
-                    <FilterComponent popularFilters={popularFilters} guestRating={guestRating} paymentMethods={paymentMethods} propertyType={propertyType} mealPlans={mealPlans} AmenitiesList={AmenitiesList} Accessibilities={Accessibilities} activeFilter={activeFilter} setActiveFilter={setActiveFilter} setFilters={setFilters}/>
+                    <FilterComponent popularFilters={popularFilters} guestRating={guestRating} paymentMethods={paymentMethods} propertyType={propertyType} mealPlans={mealPlans} AmenitiesList={AmenitiesList} Accessibilities={Accessibilities} activeFilter={activeFilter} setActiveFilter={setActiveFilter} setFilters={filterHotels}/>
                 </div>
-                {isError.value && <div>Error: {isError.error}</div>}
+                {isError.value && <ErrorHandlingComponent error="Something went wrong"/>}
                  {!isError.value && <div className="hotel-cards" onClick={()=>setActiveFilter(0)}>
                 {isLoading && <Skeleton count={10} height={200} width={"100%"}/>}
                     {!isLoading && hotels?.map((hotel,i)=>{

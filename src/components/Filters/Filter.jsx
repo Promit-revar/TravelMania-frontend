@@ -1,4 +1,4 @@
-import React,{useEffect, useState} from "react";
+import React,{useEffect, useState, useRef} from "react";
 import { TextField, InputAdornment, Checkbox, Slider} from "@mui/material";
 import { Search, Star, ChevronRight, ChevronUp, ChevronDownCircle , ChevronUpCircle } from 'lucide-react';
 import { filterInitialState } from "../../constants/constants";
@@ -21,7 +21,18 @@ const FilterComponent = ({popularFilters, guestRating, paymentMethods, propertyT
         if(value === activeFilter) setActiveFilter(0);
         else setActiveFilter(value);
     }
-    useEffect(()=>{
+    const useOnUpdate = (callback, deps) => {
+        const isFirst = useRef(true);
+        useEffect(() => {
+          if (!isFirst.current) {
+            callback();
+          }
+        }, deps);
+        useEffect(() => {
+          isFirst.current = false;
+        }, []);
+      };
+    useOnUpdate(()=>{
         setFilters(filterBodyConverter(filterValue));
     },[filterValue]);
     const handleFilterCheck = (filterName,value,filterItem) =>{
