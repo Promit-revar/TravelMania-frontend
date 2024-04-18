@@ -2,6 +2,7 @@ import makeRequest from "../utils/makeRequest.js";
 
 import axios from "axios";
 const BASE_URL = "https://travelnext.works/api/hotel_trawexv6/";
+const headers = {'X-Forwarded-For':'185.137.122.196'}
 export async function getAllHotels(getHotels){
     // const res = await axios.get("https://api.ipify.org/?format=json");
     // const userIp = '85.137.122.196';
