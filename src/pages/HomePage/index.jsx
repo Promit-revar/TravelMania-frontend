@@ -38,9 +38,8 @@ const HomePageComponent = () => {
             }
           ]
     })
-    console.log(hotels);
+    // console.log(hotels);
     const [page, setPage] = useState({currPage:1, totalResults: null});
-    const [requestParams, setRequestParams] = useState({});
     const [isLoading, setIsLoading] = useState(false);
     const [filterApplied, setFilterApplied] = useState(false);
     const [activeFilter, setActiveFilter] = useState(0);
@@ -49,11 +48,11 @@ const HomePageComponent = () => {
         
         if(!filterApplied && hotels.length < value*10){
             setIsLoading(true);
-            const getHotelsResponse = await api.getNextHotelSearchResults({...requestParams, maxResult: 10});
-            setRequestParams({
+            const getHotelsResponse = await api.getNextHotelSearchResults({...hotelDetails.params, maxResult: 10});
+            setHotelDetails({params:{
                 sessionId: getHotelsResponse.status.sessionId,
                 nextToken: getHotelsResponse.status.nextToken,
-            });
+            }})
             // console.log([...hotels, ...getHotels.itineraries])
             if(value >2)
             setHotels([...hotels,...getHotelsResponse.itineraries]);
@@ -64,8 +63,6 @@ const HomePageComponent = () => {
         setIsLoading(false);
     };
     const hotelSearchApi = async()=>{
-        // console.log(hotels);
-        console.log("here");
         setFilterApplied(false);
         const getHotelsResponse = await api.getAllHotels({...getHotels,...hotelSearch});
         if(getHotelsResponse.status.errors)
@@ -74,19 +71,19 @@ const HomePageComponent = () => {
         }
         else{
             setIsError({value:false,error:""});
-            setRequestParams({
+            setHotelDetails({params:{
                 sessionId: getHotelsResponse.status.sessionId,
                 nextToken: getHotelsResponse.status.nextToken,
-            });
-            setHotels(getHotelsResponse.itineraries)
+            }})
+            setHotels([...getHotelsResponse.itineraries]);
             setPage({...page, totalResults:Math.ceil((getHotelsResponse.status.totalResults-20)/10)+1});
         }
         
         setIsLoading(false);
     }
     const filterHotels = async(filters) => {
-        const filteredResponse = await api.getHotelByFilters({...filters,...{sessionId: requestParams.sessionId,maxResult: Number.MAX_SAFE_INTEGER}});
-        if(filteredResponse.status.error || filteredResponse.status.errors[0]) setIsError({value: true, error: filteredResponse.status.error || filteredResponse.status.errors[0].errorMessage});
+        const filteredResponse = await api.getHotelByFilters({...filters,...{sessionId: hotelDetails?.params?.sessionId,maxResult: Number.MAX_SAFE_INTEGER}});
+        if(filteredResponse.status.error || filteredResponse.status.errors) setIsError({value: true, error:'Something went wrong'});
         else {
             setIsError({value:false,error:""})
             setHotels(filteredResponse.itineraries);
@@ -121,9 +118,9 @@ const HomePageComponent = () => {
                 {isLoading && <Skeleton count={10} height={200} width={"100%"}/>}
                     {!isLoading && hotels?.map((hotel,i)=>{
                         if(hotels.length <= 10)
-                        return <HotelCardComponent price={{night:hotel?.total}} ratings={hotel?.hotelRating} reviews={(hotel.tripAdvisorReview)?hotel.tripAdvisorReview:0} amenitites={AmenitiesList.slice(1,3)} desc={desc} name={hotel.hotelName} imgs={[{url:hotel?.thumbNailUrl}]} requestParams={{...requestParams,productId: hotel.productId, tokenId: hotel.tokenId, hotelId:hotel.hotelId}}/>;
+                        return <HotelCardComponent price={{night:hotel?.total}} ratings={hotel?.hotelRating} reviews={(hotel.tripAdvisorReview)?hotel.tripAdvisorReview:0} amenitites={AmenitiesList.slice(1,3)} desc={desc} name={hotel.hotelName} imgs={[{url:hotel?.thumbNailUrl}]} requestParams={{productId: hotel.productId, tokenId: hotel.tokenId, hotelId:hotel.hotelId}}/>;
                         else if(i<page.currPage*10 && i>=(page.currPage - 1)*10)
-                        return <HotelCardComponent price={{night:hotel?.total}} ratings={hotel?.hotelRating} reviews={(hotel.tripAdvisorReview)?hotel.tripAdvisorReview:0} amenitites={AmenitiesList.slice(1,3)} desc={desc} name={hotel.hotelName} imgs={[{url:hotel?.thumbNailUrl}]} requestParams={{...requestParams,productId: hotel.productId, tokenId: hotel.tokenId, hotelId:hotel.hotelId}}/>;
+                        return <HotelCardComponent price={{night:hotel?.total}} ratings={hotel?.hotelRating} reviews={(hotel.tripAdvisorReview)?hotel.tripAdvisorReview:0} amenitites={AmenitiesList.slice(1,3)} desc={desc} name={hotel.hotelName} imgs={[{url:hotel?.thumbNailUrl}]} requestParams={{productId: hotel.productId, tokenId: hotel.tokenId, hotelId:hotel.hotelId}}/>;
                         else return null;
                     })}
                     

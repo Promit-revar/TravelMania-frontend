@@ -1,5 +1,5 @@
 import axios from "axios";
-const makeRequest = async({method, body={}, url, headers={ "Content-Type":false}, ...defaultConfig}) => {
+const makeRequest = async({method, body={}, url, headers={ "Content-Type":'application/json'}, ...defaultConfig}) => {
     try{
     const response = await axios({
         method: method,

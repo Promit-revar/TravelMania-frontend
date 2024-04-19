@@ -68,7 +68,10 @@ const HotelPageComponent = () => {
     
     const getHotelDetails = async()=>{
         const hotelId = searchParams.get('hotelId');
-        const { sessionId, productId, tokenId} = hotelDetails.params;
+        const tokenId = searchParams.get('tokenId');
+        const productId = searchParams.get('productId');
+        const { sessionId } = hotelDetails.params;
+        console.log(sessionId, productId, tokenId);
         const data = await api.getHotelDetails({ sessionId, productId, hotelId, tokenId});
         if(hotelData){
             setHotelData(data);

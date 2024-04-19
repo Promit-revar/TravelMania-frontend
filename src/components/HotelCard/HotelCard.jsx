@@ -1,15 +1,12 @@
 import React,{useContext} from "react";
 import CarouselComponent from "../Carousel/Carousel";
 import { useNavigate } from "react-router-dom";
-import { HotelContext } from "../../Context/hotelDetailsContext";
 import Image from "../../UI/components/Image/Image";
 import './HotelCard.css';
 const HotelCardComponent = ({price, ratings, reviews, desc, amenitites, name, imgs, requestParams}) => {
     const navigate= useNavigate();
-    const {hotelDetails, setHotelDetails} = useContext(HotelContext);
-    setHotelDetails({params:requestParams})
     return (
-        <div style={{display: 'flex', flexDirection: 'row'}} className="hotel-card-mgt" onClick={()=>navigate(`/hotel-details?hotelId=${requestParams.hotelId}`)}>
+        <div style={{display: 'flex', flexDirection: 'row'}} className="hotel-card-mgt" onClick={()=>navigate(`/hotel-details?hotelId=${requestParams.hotelId}&productId=${requestParams.productId}&tokenId=${requestParams.tokenId}`)}>
         {/* <CarouselComponent height="300px" width="350px" src={imgs}/> */}
         <div className="thumbnail-img"><img height="300px" width="350px" src={imgs[0].url}  className="thumbnail-img"/></div>
         <div className="hotel-card">
