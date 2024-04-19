@@ -1,8 +1,6 @@
 import makeRequest from "../utils/makeRequest.js";
 
-import axios from "axios";
-const BASE_URL = "https://travelnext.works/api/hotel_trawexv6/";
-const headers = {'X-Forwarded-For':'185.137.122.196'}
+const BASE_URL = "https://travelmania-backend.onrender.com/";
 export async function getAllHotels(getHotels){
     // const res = await axios.get("https://api.ipify.org/?format=json");
     // const userIp = '85.137.122.196';
@@ -28,7 +26,7 @@ export async function getHotelByFilters(body) {
     return response;
 }
 export async function getNextFilteredHotelResults(params){
-    const url = BASE_URL+"moreFiterResults?";
+    const url = BASE_URL+"moreFilterResults?";
     const response = await makeRequest({method: 'GET', url: url, params:{...params}});
     return response;
 }
