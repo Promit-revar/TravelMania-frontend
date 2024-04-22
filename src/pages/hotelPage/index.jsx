@@ -4,6 +4,7 @@ import GalleryComponent from "../../components/Gallery/Gallery.jsx"
 import NavList from "../../components/NavigationList/NavList";
 import * as api from "../../api/hotelApis.js";
 import { HotelDetailsNavigationList, AmenitiesList } from "../../constants/constants";
+import RoomInfoComponent from "../../components/RoomInfo/RoomInfoComponent.jsx";
 import HotelDescriptionComponent from "../../components/HotelDescription/HotelDescription";
 import AmenitiesComponent from "../../components/Amenities/Amenities";
 import AccomodationComponent from "../../components/Accomodation/Accomodation";
@@ -52,6 +53,7 @@ export const GalleryView = ({images}) =>{
 const HotelPageComponent = () => {
     const navigate = useNavigate();
     const { hotelDetails, setHotelDetails } = useContext(HotelContext);
+    const [openRoomModal, setOpenRoomModal] = useState(false);
     const [openModal,setOpenModal] = useState(false);
     const [hotelData, setHotelData] = useState({});
     const [openReviewModal,setOpenReviewModal] = useState(false);
@@ -107,7 +109,7 @@ const HotelPageComponent = () => {
                 </div>
             <div className="accomodation-section">
                 
-            {AccomodationAmenities.map((item)=><AccomodationComponent  amenities={item.amenities} capacity={item.capacity} name={item.name}  price={item.price}/>)}
+            {AccomodationAmenities.map((item)=><AccomodationComponent  amenities={item.amenities} capacity={item.capacity} name={item.name}  price={item.price} openAccomodationModal={setOpenRoomModal}/>)}
             </div>
             <hr />
             <div className="title" id="accommodation">
@@ -128,6 +130,9 @@ const HotelPageComponent = () => {
                 }
             {openReviewModal && <ModalComponent show={openReviewModal} onHide={()=>setOpenReviewModal(false)} title={'Reviews'}>
                     <ViewAllReviewsComponent reviews={Reviews} />
+                </ModalComponent>}
+            {openRoomModal && <ModalComponent show={openRoomModal} onHide={()=>setOpenRoomModal(false)} title={'Room Information'} contentClassName="room-info-modal">
+                    <RoomInfoComponent/>
                 </ModalComponent>}
         </div>
     );

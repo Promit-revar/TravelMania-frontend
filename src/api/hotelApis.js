@@ -1,6 +1,6 @@
 import makeRequest from "../utils/makeRequest.js";
 
-const BASE_URL = "https://travelmania-backend.onrender.com/";
+const BASE_URL = "https://phuket-concierge.com/api/";
 export async function getAllHotels(getHotels){
     // const res = await axios.get("https://api.ipify.org/?format=json");
     // const userIp = '85.137.122.196';

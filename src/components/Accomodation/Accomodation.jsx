@@ -2,9 +2,12 @@ import React from "react";
 import CarouselComponent from "../Carousel/Carousel";
 import Image from "../../UI/components/Image/Image";
 import './Accomodation.css';
-const AccomodationComponent = ({amenities, capacity, name, price}) =>{
+const AccomodationComponent = ({amenities, capacity, name, price, openAccomodationModal}) =>{
+    const handleAccomodationSelect = () => {
+        openAccomodationModal(true);
+    }
     return (
-        <div id="accomodation">
+        <div id="accomodation" onClick={handleAccomodationSelect}>
             <CarouselComponent />
             <div className="details">
                 <div className="details-info">

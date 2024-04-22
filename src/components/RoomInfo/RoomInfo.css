@@ -1,8 +1,8 @@
 .roomInfo{
-    width:35%;
+    width:100%;
 }
 .roomInfo .title{
-    margin-top: 20px;
+    margin-top: 120px;
 }
 .highlights{
     width: 100%;
@@ -62,6 +62,13 @@
 }
 .reserve-btn{
     width: 30%;
+}
+.roomInfo .img-corousel{
+    width: 100% !important;
+}
+.roomInfo .custom-indicators{
+    width: 100% !important;
+    bottom: -80px;
 }
 .reserve-btn .button{
     padding: 5px;

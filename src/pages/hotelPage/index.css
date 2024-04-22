@@ -23,6 +23,9 @@
     flex-direction: row;
     gap: 60px;
 }
+.room-info-modal{
+    width: 70% !important;
+}
 
 @media screen and (max-width: 1326px) {
     .accomodation-section{

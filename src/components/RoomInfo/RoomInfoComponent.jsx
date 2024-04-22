@@ -40,8 +40,7 @@ const RoomInfoComponent = () => {
     }];
     return (
         <div className="roomInfo">
-            <div>Room Information</div>
-            <CarouselComponent />
+            <CarouselComponent width="100%" height="300px"/>
             <div className="title">Classic Room, 2 Twin Beds, Mountain View</div>
             <div style={{ fontSize:'14px'}}>Mountain view</div>
             <div className="highlights"><Sparkles fill="#000"/><b>Highlights:</b> &nbsp;&nbsp;Furnished balcony or patio Surounded Air Conditioning Connecting rooms available Individual Rooms available decorated LED TV</div>
