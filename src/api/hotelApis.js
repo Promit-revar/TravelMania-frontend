@@ -1,6 +1,6 @@
 import makeRequest from "../utils/makeRequest.js";
 
-const BASE_URL = "https://phuket-concierge.com/api/";
+const BASE_URL = "http://localhost:8000/api/";
 export async function getAllHotels(getHotels){
     // const res = await axios.get("https://api.ipify.org/?format=json");
     // const userIp = '85.137.122.196';
@@ -21,7 +21,7 @@ export async function getNextHotelSearchResults(params){
 }
 export async function getHotelByFilters(body) {
     const url = BASE_URL+"filterResults";
-    console.log(body);
+    // console.log(body);
     const response = await makeRequest({method: 'POST', url, body:{...body}});
     return response;
 }

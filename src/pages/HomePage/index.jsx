@@ -7,6 +7,7 @@ import * as api from "../../api/hotelApis.js";
 import FilterComponent from "../../components/Filters/Filter";
 import moment from "moment";
 import { HotelContext } from "../../Context/hotelDetailsContext.jsx";
+import { LoaderContext } from "../../Context/loaderContext.jsx";
 import { AmenitiesList, popularFilters, guestRating, paymentMethods, propertyType, mealPlans, Accessibilities, getHotels} from "../../constants/constants";
 import Pagination from '@mui/material/Pagination';
 import Skeleton from 'react-loading-skeleton'
@@ -15,6 +16,7 @@ import ErrorHandlingComponent from "../../UI/components/Errors/Error.jsx";
 import './index.css';
 const HomePageComponent = () => {
     const {hotelDetails, setHotelDetails} = useContext(HotelContext);
+    const {isLoading, setIsLoading} = useContext(LoaderContext);
     const [hotels,setHotels] = useState([]);
     const tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate()+1);
@@ -39,8 +41,8 @@ const HomePageComponent = () => {
           ]
     })
     // console.log(hotels);
+    console.log(hotelDetails);
     const [page, setPage] = useState({currPage:1, totalResults: null});
-    const [isLoading, setIsLoading] = useState(false);
     const [filterApplied, setFilterApplied] = useState(false);
     const [activeFilter, setActiveFilter] = useState(0);
     const [isError,setIsError] = useState({value:false,error:""});
@@ -49,10 +51,10 @@ const HomePageComponent = () => {
         if(!filterApplied && hotels.length < value*10){
             setIsLoading(true);
             const getHotelsResponse = await api.getNextHotelSearchResults({...hotelDetails.params, maxResult: 10});
-            setHotelDetails({params:{
+            setHotelDetails({...hotelDetails, params:{
                 sessionId: getHotelsResponse.status.sessionId,
                 nextToken: getHotelsResponse.status.nextToken,
-            }})
+            }});
             // console.log([...hotels, ...getHotels.itineraries])
             if(value >2)
             setHotels([...hotels,...getHotelsResponse.itineraries]);
@@ -65,30 +67,34 @@ const HomePageComponent = () => {
     const hotelSearchApi = async()=>{
         setFilterApplied(false);
         const getHotelsResponse = await api.getAllHotels({...getHotels,...hotelSearch});
-        if(getHotelsResponse.status.errors)
+        if(!getHotelsResponse.error)
         {
-            setIsError({value: true, error: getHotelsResponse.status.errors});
+            setIsError({value:false,error:""});
+            setHotelDetails({...hotelDetails, params:{
+                sessionId: getHotelsResponse.data.status.sessionId,
+                nextToken: getHotelsResponse.data.status.nextToken,
+            }});
+            
+            setHotels([...getHotelsResponse.data.itineraries]);
+            setPage({...page, totalResults:Math.ceil((getHotelsResponse.data.status.totalResults-20)/10)+1});
         }
         else{
-            setIsError({value:false,error:""});
-            setHotelDetails({params:{
-                sessionId: getHotelsResponse.status.sessionId,
-                nextToken: getHotelsResponse.status.nextToken,
-            }})
-            setHotels([...getHotelsResponse.itineraries]);
-            setPage({...page, totalResults:Math.ceil((getHotelsResponse.status.totalResults-20)/10)+1});
+            setIsError({value: true, error: getHotelsResponse.error});
         }
         
         setIsLoading(false);
     }
     const filterHotels = async(filters) => {
+        console.log(hotelDetails);
         const filteredResponse = await api.getHotelByFilters({...filters,...{sessionId: hotelDetails?.params?.sessionId,maxResult: Number.MAX_SAFE_INTEGER}});
-        if(filteredResponse.status.error || filteredResponse.status.errors) setIsError({value: true, error:'Something went wrong'});
-        else {
+        if(!filteredResponse.error ) {
             setIsError({value:false,error:""})
-            setHotels(filteredResponse.itineraries);
-            const totalResults = Math.ceil(filteredResponse.itineraries.length/10);
+            setHotels(filteredResponse.data.itineraries);
+            const totalResults = Math.ceil(filteredResponse.data.itineraries.length/10);
             setPage({...page, totalResults:totalResults});
+        }
+        else {
+            setIsError({value: true, error: filteredResponse.error});
         }
         setFilterApplied(true);
         setIsLoading(false);

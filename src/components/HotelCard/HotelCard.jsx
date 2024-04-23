@@ -15,7 +15,7 @@ const HotelCardComponent = ({price, ratings, reviews, desc, amenitites, name, im
                 <div className="hotel-card-title">{name}</div>
                 <div className="hotel-card-amenities">{amenitites.map(item => {
                         return (<div className="hotel-card-amenities-item">
-                            <Image src={item?.icon} />
+                            <Image src={item?.icon} height={100} width={50}/>
                             <div className="hotel-card-amenities-item-name">{item.name}</div>
                             </div>);
                 })}</div>

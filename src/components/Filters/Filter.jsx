@@ -1,17 +1,22 @@
-import React,{useEffect, useState, useRef} from "react";
+import React,{useEffect, useState, useRef, useContext} from "react";
 import { TextField, InputAdornment, Checkbox, Slider} from "@mui/material";
 import { Search, Star, ChevronRight, ChevronUp, ChevronDownCircle , ChevronUpCircle } from 'lucide-react';
 import { filterInitialState } from "../../constants/constants";
 import { filterBodyConverter } from "../../utils/helper";
+import { LoaderContext } from "../../Context/loaderContext";
 import "./Filter.css";
 
 const FilterComponent = ({popularFilters, guestRating, paymentMethods, propertyType, mealPlans, AmenitiesList, Accessibilities, activeFilter, setActiveFilter, setFilters}) => {
+    // context variables
+    const { isLoading, setIsLoading } = useContext(LoaderContext);
+    // state variables
     const [priceRange, setPriceRange] = useState([0,50]); 
     const [openPropertyType, setOpenPropertyType] = useState(false);
     const [openAmeneties, setOpenAmeneties] = useState(false);
     const [openAccessibility, setOpenAccessibility] = useState(false);
     const [alterPriceRange, setAlterPriceRange] = useState(false);
     const [filterValue, setFilterValue] = useState({...filterInitialState});
+    const isMounted = useRef(false);
 
     const handlePriceRange = (values) => {
         setAlterPriceRange(false);
@@ -33,12 +38,15 @@ const FilterComponent = ({popularFilters, guestRating, paymentMethods, propertyT
         }, []);
       };
     useOnUpdate(()=>{
-        setFilters(filterBodyConverter(filterValue));
+        if(isMounted.current){
+            setIsLoading(true);
+            setFilters(filterBodyConverter(filterValue));
+        }
+        else
+            isMounted.current = true;
     },[filterValue]);
     const handleFilterCheck = (filterName,value,filterItem) =>{
         if(value){
-            //console.log([...filterValue.popularFilters, filter]);
-            // console.log({[filterName]:[...filterValue[filterName], filterItem]})
             setFilterValue({...filterValue,...{[filterName]:[...filterValue[filterName], filterItem]}});
         }
         else{

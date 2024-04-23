@@ -46,8 +46,8 @@
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    gap: 80px;
-    margin-top: 10px;
+    gap: 10%;
+    margin-top: 5px;
 }
 .hotel-card-amenities-item{
     display: flex;

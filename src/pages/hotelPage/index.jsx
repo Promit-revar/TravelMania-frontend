@@ -21,12 +21,14 @@ import OtherHotelCardsComponent from "../../components/OtherHotels/OtherHotelsCa
 import { Policies, Reviews } from "../../constants/constants";
 import ModalComponent from "../../UI/components/Modal/Modal";
 import Image from "../../UI/components/Image/Image";
+import ErrorHandlingComponent from "../../UI/components/Errors/Error.jsx";
 import HotelOverview1 from '../../assets/Hotel-Overview-1.jpg'
 import HotelOverview2 from '../../assets/Hotel-Overview-2.jpg'
 import HotelOverview3 from '../../assets/Hotel-Overview-4.jpg'
 import HotelOverview4 from '../../assets/Hotel-Overview-12.jpg'
 import HotelOverview5 from '../../assets/Hotel-Overview-13.jpg'
 import { ChevronLeftCircle, ChevronRightCircle, Heart } from 'lucide-react';
+import { LoaderContext } from "../../Context/loaderContext.jsx";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import ViewAllReviewsComponent from "../../components/ViewAllReviews/ViewAllReviews";
 import Skeleton from "react-loading-skeleton";
@@ -52,12 +54,16 @@ export const GalleryView = ({images}) =>{
 }
 const HotelPageComponent = () => {
     const navigate = useNavigate();
+    //context variables
+    const { isLoading, setIsLoading } = useContext(LoaderContext);
     const { hotelDetails, setHotelDetails } = useContext(HotelContext);
+     
+    //state variables
     const [openRoomModal, setOpenRoomModal] = useState(false);
     const [openModal,setOpenModal] = useState(false);
     const [hotelData, setHotelData] = useState({});
+    const [isError, setIsError] = useState({value: false, error:""});
     const [openReviewModal,setOpenReviewModal] = useState(false);
-    const [isLoading,setIsLoading] = useState(false);
     const desc = 'loremIncididunt eiusmod ex ullamco esse do duis culpa ipsum dolor ea cupidatat. Sunt nisi eu voluptate aliqua nisi duis nulla. Ea adipisicing laborum ullamco quis aute laborum nulla. Cillum enim et ut ex minim. Non irure magna in amet non minim ullamco. Do culpa minim laborum sunt magna eu reprehenderit anim. Excepteur labore consequat consequat ea fugiat excepteur id aliqua proident. Laboris eu ea nisi non occaecat eiusmod nulla excepteur amet incididunt cillum. Esse ex cupidatat laborum amet duis reprehenderit aliqua est in anim. Veniam ut ipsum adipisicing incididunt aliquip amet non. Ut exercitation culpa cupidatat excepteur consequat aliquip do amet. Ullamco aliquip enim in non exercitation reprehenderit veniam et quis. Amet cillum nisi esse tempor elit consequat ut consectetur proident dolor excepteur et.';
     const location ={ Latitude: 7.9246,Longitude: 98.2792 }
     const [searchParams] = useSearchParams();
@@ -75,18 +81,21 @@ const HotelPageComponent = () => {
         const { sessionId } = hotelDetails.params;
         console.log(sessionId, productId, tokenId);
         const data = await api.getHotelDetails({ sessionId, productId, hotelId, tokenId});
-        if(hotelData){
-            setHotelData(data);
-        }
-        else{
-            navigate('/');
+        if(!data.error){
+            if(hotelData){
+                setHotelData(data.data);
+            }
+            else{
+                navigate('/');
+            }
+        }else{
+            setIsError({value: true, error: data.error});
         }
         console.log(data);
         setIsLoading(false);
         
     }
     useEffect(()=>{
-        console.log("here");
         setIsLoading(true);
         getHotelDetails();
     },[]);
@@ -96,6 +105,8 @@ const HotelPageComponent = () => {
             <ChevronLeft size={'15px'}/> 
             <div style={{fontSize:'15px'}}>See all properties</div>
         </div>
+        {isError.value && <ErrorHandlingComponent error={isError.error}/>}
+        {!isError.value && <>
         <GalleryComponent handleViewGallery={handleViewGallery} images={hotelData.hotelImages}/>
         <div className="navigation-list">
             <NavList items={HotelDetailsNavigationList} />
@@ -124,6 +135,7 @@ const HotelPageComponent = () => {
             <ReviewComponent totalRating={hotelData.hotelRating} handleViewAllReviews={handleViewAllReviews} reviews={hotelData.reviews}/>
             <hr/>
             <OtherHotelCardsComponent />
+            </>}
             {openModal && <ModalComponent show={openModal} onHide={()=>setOpenModal(false)} title={'Gallery View'}>
                     <GalleryView images={hotelData.hotelImages}/>
                 </ModalComponent>

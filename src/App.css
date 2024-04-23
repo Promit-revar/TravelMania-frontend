@@ -11,7 +11,12 @@ body{
     }
     
 }
-
+@media screen and (max-width: 985px){
+    body{
+        padding-left: 100px;
+        padding-right: 100px;
+    }
+}
 @media screen and (max-width: 900px) {
     body{
         padding-left: 40px;

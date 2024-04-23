@@ -8,9 +8,14 @@ const makeRequest = async({method, body={}, url, headers={ "Content-Type":'appli
         headers: headers,
         ...defaultConfig
     });
-    return response.data;
+    if(response.status === 200){
+        return {data:response.data, error: null};
+    }
+    else{
+        return {data: null, error: response.data.error};
+    }
 }catch(err){
-    console.log(err);
+    return {data: null, error: 'Something went wrong'};
 }
 }
 export default makeRequest;

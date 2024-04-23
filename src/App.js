@@ -4,10 +4,12 @@ import HomePageComponent from "./pages/HomePage";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import './App.css';
 import { HotelContextProvider } from "./Context/hotelDetailsContext";
+import { LoaderContextProvider } from "./Context/loaderContext";
 
 function App() {
   return (
     <HotelContextProvider>
+      <LoaderContextProvider>
       <NavBarComponent />
       <hr />
       <BrowserRouter>
@@ -16,7 +18,7 @@ function App() {
         <Route path="hotel-details" element={<HotelPageComponent />} />
       </Routes>
     </BrowserRouter>
-      
+    </LoaderContextProvider>
     </HotelContextProvider>
   );
 }

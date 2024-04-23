@@ -412,7 +412,7 @@ export const Accessibilities = [
 export const filterInitialState = {
     search:'',
     popularFilters: [],
-    priceRange:[],
+    priceRange:['0','50'],
     guestRating: [],
     starRating: [],
     paymentType: [],
