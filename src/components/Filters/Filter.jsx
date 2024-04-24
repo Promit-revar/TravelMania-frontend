@@ -87,9 +87,9 @@ const FilterComponent = ({popularFilters, guestRating, paymentMethods, propertyT
             <div className="filter-component">
                 <div className="filter-title">Popular filters</div>
                 <div className="popular-filters">
-                    {popularFilters.map(filter=>{
+                    {popularFilters.map((filter, i)=>{
                         return (
-                            <div style={{display:'flex', flexDirection:'row', alignItems:'center', marginBottom: '-5px'}}>
+                            <div key={i} style={{display:'flex', flexDirection:'row', alignItems:'center', marginBottom: '-5px'}}>
                                 <Checkbox 
                                 onChange={e =>handleFilterCheck('popularFilters',e.target.checked, filter)} 
                                 sx={{
@@ -142,9 +142,9 @@ const FilterComponent = ({popularFilters, guestRating, paymentMethods, propertyT
             <div className="dropdown-filters" onClick={()=>handleFilterSelect(3)}>Guest rating {(activeFilter==3)?<ChevronUpCircle size={'18px'}/>:<ChevronDownCircle size={'18px'}/>}</div>
             <div className="filter-component filter-title">Guest rating</div>
             <div className="filter-component popular-filters">
-                {guestRating.map(filter=>{
+                {guestRating.map((filter, i)=>{
                     return (
-                        <div style={{display:'flex', flexDirection:'row', alignItems:'center', marginBottom: '-5px'}}>
+                        <div key={i} style={{display:'flex', flexDirection:'row', alignItems:'center', marginBottom: '-5px'}}>
                             <Checkbox 
                             onChange={e =>handleFilterCheck('guestRating',e.target.checked, filter)} 
                             sx={{
@@ -226,7 +226,7 @@ const FilterComponent = ({popularFilters, guestRating, paymentMethods, propertyT
                         return (
                             <div style={{display:'flex', flexDirection:'row', alignItems:'center', marginBottom: '-5px'}}>
                                 <Checkbox 
-                                onChange={e =>handleFilterCheck('propertyType',e.target.checked, filter)} 
+                                onChange={e =>handleFilterCheck('propertyType',e.target.checked, filter.value)} 
                                 sx={{
                                     "&.Mui-checked": {
                                     color: "#399a7a",
@@ -234,9 +234,10 @@ const FilterComponent = ({popularFilters, guestRating, paymentMethods, propertyT
                                     "& .MuiSvgIcon-root": {
                                         borderRadius: 10,
                                 },
-
+                                
                                 }}
-                                />{filter}
+                                
+                                />{filter.label}
                             </div>
                         )
                         }
@@ -248,7 +249,7 @@ const FilterComponent = ({popularFilters, guestRating, paymentMethods, propertyT
                         return (
                             <div style={{display:'flex', flexDirection:'row', alignItems:'center', marginBottom: '-5px'}}>
                                 <Checkbox 
-                                onChange={e =>handleFilterCheck('propertyType',e.target.checked, filter)} 
+                                onChange={e =>handleFilterCheck('propertyType',e.target.checked, filter.value)} 
                                 sx={{
                                     "&.Mui-checked": {
                                     color: "#399a7a",
@@ -258,8 +259,8 @@ const FilterComponent = ({popularFilters, guestRating, paymentMethods, propertyT
                                 },
 
                                 }}
-                                checked={filterValue.propertyType.indexOf(filter) != -1}
-                                />{filter}
+                                checked={filterValue.propertyType.indexOf(filter.value) != -1}
+                                />{filter.label}
                             </div>
                         )
                 })}
@@ -560,7 +561,7 @@ const FilterComponent = ({popularFilters, guestRating, paymentMethods, propertyT
                         return (
                             <div className="check-boxes">
                                 <Checkbox
-                                onChange={e =>handleFilterCheck('propertyType',e.target.checked, filter)} 
+                                onChange={e =>handleFilterCheck('propertyType',e.target.checked, filter.value)} 
                                 sx={{
                                     "&.Mui-checked": {
                                     color: "#399a7a",
@@ -569,8 +570,8 @@ const FilterComponent = ({popularFilters, guestRating, paymentMethods, propertyT
                                         borderRadius: 10,
                                 },
                                 }}
-                                checked={filterValue.propertyType.indexOf(filter) != -1}
-                                />{filter}
+                                checked={filterValue.propertyType.indexOf(filter.value) != -1}
+                                />{filter.label}
                             </div>
                         )
                     })}

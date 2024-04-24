@@ -21,7 +21,7 @@ import Hotel3 from '../assets/3-Bedroom-Club-IC-Pool-Villa-3.jpg';
 export const  NavbarList = [
     {
         name: "Hotels",
-        addr: "#",
+        addr: "/",
     },
     {
         name: "Villas",
@@ -392,10 +392,10 @@ export const paymentMethods = [
     'Reserve now, pay later'
 ]
 export const propertyType = [
-    "Vacation rentals",
-    "Villa",
-    "Hotel",
-    "Motel",
+    {label:"Vacation rentals", value: 'GUEST HOUSES'},
+    {label:"Villa", value: 'RESIDENCES'},
+    {label:"Hotel", value: 'HOTEL'},
+    {label:"Motel", value: 'HOTELS'},
 ]
 export const mealPlans = [
     "Breakfast included",

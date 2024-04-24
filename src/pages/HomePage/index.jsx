@@ -119,7 +119,7 @@ const HomePageComponent = () => {
                 <div className="home-page-filters">
                     <FilterComponent popularFilters={popularFilters} guestRating={guestRating} paymentMethods={paymentMethods} propertyType={propertyType} mealPlans={mealPlans} AmenitiesList={AmenitiesList} Accessibilities={Accessibilities} activeFilter={activeFilter} setActiveFilter={setActiveFilter} setFilters={filterHotels}/>
                 </div>
-                {isError.value && <ErrorHandlingComponent error="Something went wrong"/>}
+                {isError.value && <ErrorHandlingComponent error={isError.error}/>}
                  {!isError.value && <div className="hotel-cards" onClick={()=>setActiveFilter(0)}>
                 {isLoading && <Skeleton count={10} height={200} width={"100%"}/>}
                     {!isLoading && hotels?.map((hotel,i)=>{

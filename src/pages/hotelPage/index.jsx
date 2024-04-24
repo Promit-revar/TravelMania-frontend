@@ -78,8 +78,7 @@ const HotelPageComponent = () => {
         const hotelId = searchParams.get('hotelId');
         const tokenId = searchParams.get('tokenId');
         const productId = searchParams.get('productId');
-        const { sessionId } = hotelDetails.params;
-        console.log(sessionId, productId, tokenId);
+        const sessionId = searchParams.get('sessionId');
         const data = await api.getHotelDetails({ sessionId, productId, hotelId, tokenId});
         if(!data.error){
             if(hotelData){
