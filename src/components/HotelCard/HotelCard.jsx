@@ -21,7 +21,7 @@ const HotelCardComponent = ({price, ratings, reviews, desc, amenitites, name, im
                             <div className="hotel-card-amenities-item-name">{item.name}</div>
                             </div>);
                 })}</div>
-                <div className="hotel-card-desc">{desc} </div>
+                <div className="hotel-card-desc">{desc}</div>
                 <div className="hotel-card-price">${price.night}</div>
                 <div className="hotel-card-footer">
                     <div className="hotel-card-ratings">{ratings}</div>

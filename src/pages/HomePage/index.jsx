@@ -51,13 +51,14 @@ const HomePageComponent = () => {
         if(!filterApplied && hotels.length < value*10){
             setIsLoading(true);
             const getHotelsResponse = await api.getNextHotelSearchResults({...hotelDetails.params, maxResult: 10});
+            console.log({getHotelsResponse})
             setHotelDetails({...hotelDetails, params:{
-                sessionId: getHotelsResponse.status.sessionId,
-                nextToken: getHotelsResponse.status.nextToken,
+                sessionId: getHotelsResponse.data.status.sessionId,
+                nextToken: getHotelsResponse.data.status.nextToken,
             }});
             // console.log([...hotels, ...getHotels.itineraries])
             if(value >2)
-            setHotels([...hotels,...getHotelsResponse.itineraries]);
+            setHotels([...hotels,...getHotelsResponse.data.itineraries]);
 
         }
         
