@@ -435,7 +435,6 @@ export const getHotels = {
     "city_name": "Phuket",
     "country_name": "Thailand",
     "radius": 20,
-    "maxResult": 20,
     "occupancy": [
       {
         "room_no": 1,

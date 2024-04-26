@@ -48,19 +48,19 @@ const HomePageComponent = () => {
     const [isError,setIsError] = useState({value:false,error:""});
     const handleChange = async(event, value) => {
         
-        if(!filterApplied && hotels.length < value*10){
-            setIsLoading(true);
-            const getHotelsResponse = await api.getNextHotelSearchResults({...hotelDetails.params, maxResult: 10});
-            console.log({getHotelsResponse})
-            setHotelDetails({...hotelDetails, params:{
-                sessionId: getHotelsResponse.data.status.sessionId,
-                nextToken: getHotelsResponse.data.status.nextToken,
-            }});
-            // console.log([...hotels, ...getHotels.itineraries])
-            if(value >2)
-            setHotels([...hotels,...getHotelsResponse.data.itineraries]);
+        // if(!filterApplied){
+        //     setIsLoading(true);
+        //     // const getHotelsResponse = await api.getNextHotelSearchResults({...hotelDetails.params, maxResult: 10});
+        //     // console.log({getHotelsResponse})
+        //     // setHotelDetails({...hotelDetails, params:{
+        //     //     sessionId: getHotelsResponse.data.status.sessionId,
+        //     //     nextToken: getHotelsResponse.data.status.nextToken,
+        //     // }});
+        //     // console.log([...hotels, ...getHotels.itineraries])
+        //     if(value >2)
+        //     setHotels([...getHotelsResponse.data.itineraries]);
 
-        }
+        // }
         
         setPage({...page, currPage:value});
         setIsLoading(false);
@@ -77,7 +77,11 @@ const HomePageComponent = () => {
             }});
             
             setHotels([...getHotelsResponse.data.itineraries]);
-            setPage({...page, totalResults:Math.ceil((getHotelsResponse.data.status.totalResults-20)/10)+1});
+            if(getHotelsResponse.data.itineraries.length %10 === 0)
+            setPage({...page, totalResults:Math.ceil((getHotelsResponse.data.itineraries.length)/10)});
+            else{
+                setPage({...page, totalResults:Math.ceil((getHotelsResponse.data.itineraries.length)/10)+1});
+            }
         }
         else{
             setIsError({value: true, error: getHotelsResponse.error});
@@ -124,8 +128,14 @@ const HomePageComponent = () => {
                  {!isError.value && <div className="hotel-cards" onClick={()=>setActiveFilter(0)}>
                 {isLoading && <Skeleton count={10} height={200} width={"100%"}/>}
                     {!isLoading && hotels?.map((hotel,i)=>{
-                        if(hotels.length <= 10)
-                        return <HotelCardComponent price={{night:hotel?.total}} ratings={hotel?.hotelRating} reviews={(hotel.tripAdvisorReview)?hotel.tripAdvisorReview:0} amenitites={AmenitiesList.slice(1,3)} desc={desc} name={hotel.hotelName} imgs={[{url:hotel?.thumbNailUrl}]} requestParams={{productId: hotel.productId, tokenId: hotel.tokenId, hotelId:hotel.hotelId}}/>;
+                        // if(hotels.length <= 10)
+                        if(page.currPage === 1){
+                            if(i<10)
+                                return <HotelCardComponent price={{night:hotel?.total}} ratings={hotel?.hotelRating} reviews={(hotel.tripAdvisorReview)?hotel.tripAdvisorReview:0} amenitites={AmenitiesList.slice(1,3)} desc={desc} name={hotel.hotelName} imgs={[{url:hotel?.thumbNailUrl}]} requestParams={{productId: hotel.productId, tokenId: hotel.tokenId, hotelId:hotel.hotelId}}/>;
+                            else{
+                                return null;
+                            }
+                        }
                         else if(i<page.currPage*10 && i>=(page.currPage - 1)*10)
                         return <HotelCardComponent price={{night:hotel?.total}} ratings={hotel?.hotelRating} reviews={(hotel.tripAdvisorReview)?hotel.tripAdvisorReview:0} amenitites={AmenitiesList.slice(1,3)} desc={desc} name={hotel.hotelName} imgs={[{url:hotel?.thumbNailUrl}]} requestParams={{productId: hotel.productId, tokenId: hotel.tokenId, hotelId:hotel.hotelId}}/>;
                         else return null;
