@@ -389,7 +389,8 @@ export const guestRating = [
     'Good 7+',
 ]
 export const paymentMethods = [
-    'Reserve now, pay later'
+    'Refundable',
+    'Non-Refundable',
 ]
 export const propertyType = [
     {label:"Vacation rentals", value: 'GUEST HOUSES'},
@@ -412,7 +413,7 @@ export const Accessibilities = [
 export const filterInitialState = {
     search:'',
     popularFilters: [],
-    priceRange:['0','50'],
+    priceRange:['0','1500'],
     guestRating: [],
     starRating: [],
     paymentType: [],

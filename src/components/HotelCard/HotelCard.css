@@ -74,7 +74,10 @@
 .hotel-card-ratings{
     background-color: rgb(57, 154, 122);
     color: #fff;
-    padding: 10px;
+    padding-top: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-bottom: 10px;
     border-radius: 10px;
     height: 45px;
 }

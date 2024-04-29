@@ -10,14 +10,14 @@ const FilterComponent = ({popularFilters, guestRating, paymentMethods, propertyT
     // context variables
     const { isLoading, setIsLoading } = useContext(LoaderContext);
     // state variables
-    const [priceRange, setPriceRange] = useState([0,50]); 
+    const [priceRange, setPriceRange] = useState([0,1500]); 
     const [openPropertyType, setOpenPropertyType] = useState(false);
     const [openAmeneties, setOpenAmeneties] = useState(false);
     const [openAccessibility, setOpenAccessibility] = useState(false);
     const [alterPriceRange, setAlterPriceRange] = useState(false);
     const [filterValue, setFilterValue] = useState({...filterInitialState});
     const isMounted = useRef(false);
-
+    console.log({filterValue});
     const handlePriceRange = (values) => {
         setAlterPriceRange(false);
         setPriceRange(values.target.value);
@@ -125,7 +125,7 @@ const FilterComponent = ({popularFilters, guestRating, paymentMethods, propertyT
                     <Slider
                         getAriaLabel={() => 'Price range'}
                         value={priceRange}
-                        max={1000}
+                        max={2000}
                         min={0}
                         onChange={handlePriceRange}
                         sx={{
@@ -289,7 +289,7 @@ const FilterComponent = ({popularFilters, guestRating, paymentMethods, propertyT
                         )
                 })}
             </div>
-            <div className="dropdown-filters" onClick={()=>handleFilterSelect(9)}>Amenities {(activeFilter==9)?<ChevronUpCircle size={'18px'}/>:<ChevronDownCircle size={'18px'}/>}</div>
+            {/* <div className="dropdown-filters" onClick={()=>handleFilterSelect(9)}>Amenities {(activeFilter==9)?<ChevronUpCircle size={'18px'}/>:<ChevronDownCircle size={'18px'}/>}</div>
             <div style={{marginTop:'20px'}} className="filter-component">
             <div className="filter-title">Amenities</div>
             {!openAmeneties  && AmenitiesList.map((filter, i)=>{
@@ -336,7 +336,7 @@ const FilterComponent = ({popularFilters, guestRating, paymentMethods, propertyT
                         )
                 })}
                 {openAmeneties&& <div className="expand-list" onClick={()=>setOpenAmeneties(false)}>See fewer <ChevronUp size={'20px'} color="#399a7a"/></div>}
-            </div>
+            </div> */}
             <div className="dropdown-filters" onClick={()=>handleFilterSelect(10)}>Accessibility {(activeFilter==10)?<ChevronUpCircle size={'18px'}/>:<ChevronDownCircle size={'18px'}/>}</div>
             <div style={{marginTop:'20px'}} className="filter-component">
             <div className="filter-title">Accessibility</div>

@@ -1,3 +1,12 @@
 .rdrDefinedRangesWrapper{
     display: none !important;
 }
+.rdrDateRangePickerWrapper{
+    width: 100% !important;
+}
+.rdrCalendarWrapper {
+    width: 100% !important;
+}
+.rdrMonths{
+    justify-content: space-around !important;
+}
