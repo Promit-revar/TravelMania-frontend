@@ -62,6 +62,8 @@ const HotelPageComponent = () => {
     const [openRoomModal, setOpenRoomModal] = useState(false);
     const [openModal,setOpenModal] = useState(false);
     const [hotelData, setHotelData] = useState({});
+    const [ roomTypes, setRoomTypes ] = useState([]);
+    const [selectedRoom, setSelectedRoom] = useState({});
     const [isError, setIsError] = useState({value: false, error:""});
     const [openReviewModal,setOpenReviewModal] = useState(false);
     const desc = 'loremIncididunt eiusmod ex ullamco esse do duis culpa ipsum dolor ea cupidatat. Sunt nisi eu voluptate aliqua nisi duis nulla. Ea adipisicing laborum ullamco quis aute laborum nulla. Cillum enim et ut ex minim. Non irure magna in amet non minim ullamco. Do culpa minim laborum sunt magna eu reprehenderit anim. Excepteur labore consequat consequat ea fugiat excepteur id aliqua proident. Laboris eu ea nisi non occaecat eiusmod nulla excepteur amet incididunt cillum. Esse ex cupidatat laborum amet duis reprehenderit aliqua est in anim. Veniam ut ipsum adipisicing incididunt aliquip amet non. Ut exercitation culpa cupidatat excepteur consequat aliquip do amet. Ullamco aliquip enim in non exercitation reprehenderit veniam et quis. Amet cillum nisi esse tempor elit consequat ut consectetur proident dolor excepteur et.';
@@ -73,12 +75,11 @@ const HotelPageComponent = () => {
     const handleViewAllReviews = () =>{
         setOpenReviewModal(true);
     }
-    
+    const hotelId = searchParams.get('hotelId');
+    const tokenId = searchParams.get('tokenId');
+    const productId = searchParams.get('productId');
+    const sessionId = searchParams.get('sessionId');
     const getHotelDetails = async()=>{
-        const hotelId = searchParams.get('hotelId');
-        const tokenId = searchParams.get('tokenId');
-        const productId = searchParams.get('productId');
-        const sessionId = searchParams.get('sessionId');
         const data = await api.getHotelDetails({ sessionId, productId, hotelId, tokenId});
         if(!data.error){
             if(hotelData){
@@ -91,12 +92,18 @@ const HotelPageComponent = () => {
             setIsError({value: true, error: data.error});
         }
         console.log(data);
-        setIsLoading(false);
+       
         
+    }
+    const getRoomDetails = async() => {
+        const response = await api.getRoomRates({ sessionId, productId, hotelId, tokenId});
+        setRoomTypes(response.data.roomRates.perBookingRates);
+        setIsLoading(false);
     }
     useEffect(()=>{
         setIsLoading(true);
         getHotelDetails();
+        getRoomDetails();
     },[]);
     return (
         <div className="hotel-page">
@@ -119,7 +126,7 @@ const HotelPageComponent = () => {
                 </div>
             <div className="accomodation-section">
                 
-            {AccomodationAmenities.map((item)=><AccomodationComponent  amenities={item.amenities} capacity={item.capacity} name={item.name}  price={item.price} openAccomodationModal={setOpenRoomModal}/>)}
+            {!isLoading && roomTypes.map((item,i)=><AccomodationComponent  amenities={item.facilities} capacity={item.maxOccupancyPerRoom} name={item.roomType}  price={item.netPrice} openAccomodationModal={setOpenRoomModal} setSelectedRoom={setSelectedRoom} requestBody={{rateBasisId: item.rateBasisId, sessionId, tokenId, productId }}/>)}
             </div>
             <hr />
             <div className="title" id="accommodation">
@@ -143,7 +150,7 @@ const HotelPageComponent = () => {
                     <ViewAllReviewsComponent reviews={Reviews} />
                 </ModalComponent>}
             {openRoomModal && <ModalComponent show={openRoomModal} onHide={()=>setOpenRoomModal(false)} title={'Room Information'} contentClassName="room-info-modal">
-                    <RoomInfoComponent/>
+                    <RoomInfoComponent selectedRoom={selectedRoom}/>
                 </ModalComponent>}
         </div>
     );

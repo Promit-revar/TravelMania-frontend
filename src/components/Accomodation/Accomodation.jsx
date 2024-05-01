@@ -2,8 +2,9 @@ import React from "react";
 import CarouselComponent from "../Carousel/Carousel";
 import Image from "../../UI/components/Image/Image";
 import './Accomodation.css';
-const AccomodationComponent = ({amenities, capacity, name, price, openAccomodationModal}) =>{
+const AccomodationComponent = ({amenities, capacity, name, price, openAccomodationModal, setSelectedRoom, requestBody}) =>{
     const handleAccomodationSelect = () => {
+        setSelectedRoom({...requestBody});
         openAccomodationModal(true);
     }
     return (
@@ -17,10 +18,8 @@ const AccomodationComponent = ({amenities, capacity, name, price, openAccomodati
                         amenities.map(item=>{
                         return (
                         <li>
-                            <Image src={item.icon} height='60px' width='60px'/>
-                            <div>
-                                {item.name}
-                            </div>
+                            {/* <Image src={item.icon} height='60px' width='60px'/> */}
+                            {item}
                         </li>
                         );
                     })

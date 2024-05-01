@@ -30,3 +30,13 @@ export async function getNextFilteredHotelResults(params){
     const response = await makeRequest({method: 'GET', url: url, params:{...params}});
     return response;
 }
+export async function getRoomRates(body){
+    const url = BASE_URL+"get_room_rates";
+    const response =  await makeRequest({method: 'POST', url, body:{...body}});
+    return response;
+}
+export async function getRoomDetails(body){
+    const url = BASE_URL+"get_rate_rules";
+    const response = await makeRequest({method: 'POST', url, body:{...body}});
+    return response;
+}
