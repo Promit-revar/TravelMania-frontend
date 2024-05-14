@@ -1,16 +1,17 @@
-import React,{ useState} from "react";
-import DropdownComponent from "../../UI/components/Dropdown/Dropdown";
+import React,{ useState, useContext} from "react";
 import Image from '../../UI/components/Image/Image';
 import Calendar from '../../assets/Calendar.svg';
 import Traveller from '../../assets/Person.svg';
 import moment from "moment";
 import MapPin from '../../assets/map-pin.svg';
 import Button from "../../UI/components/Button/Button";
+import { HotelContext } from "../../Context/hotelDetailsContext";
 
 // (Optional) Import component styles. If you are using Less, import the `index.less` file. 
 import './SearchComponent.css';
 const SearchComponent = ({handleDateShowModal, selectedDates, setActiveFilter, setHotelSearch, hotelSearch}) => {
     // console.log(selectedDates);
+    const {hotelDetails, setHotelDetails} = useContext(HotelContext);
     const [isOpenRoom, setIsOpenRoom] = useState(false);
     const [isOpenLocation, setIsOpenLocation] = useState(false);
     const [selectLocation, setSelectLocation] = useState({location: 'Phuket Province'});
@@ -18,6 +19,7 @@ const SearchComponent = ({handleDateShowModal, selectedDates, setActiveFilter, s
         rooms: 1,
         travellers: 2,
     });
+    
     const handleSelectLocation = (location) => {
         setSelectLocation(location);
         setIsOpenLocation(false);
@@ -29,6 +31,24 @@ const SearchComponent = ({handleDateShowModal, selectedDates, setActiveFilter, s
         setIsOpenLocation(!isOpenLocation);
     };
     const handleSearch = () =>{
+        setHotelDetails({
+            ...hotelDetails,
+            reservation: {
+                ...hotelSearch,
+                occupancy:[
+                {
+                    "room_no": selectRooms.rooms,
+                    "adult": selectRooms.travellers,
+                    "child": 0,
+                    "child_age": [
+                      0
+                    ]
+                  }
+            ], 
+            checkin: moment(selectedDates.startDate).format('YYYY-MM-DD'),
+            checkout: moment(selectedDates.endDate).format('YYYY-MM-DD'),
+            }
+        });
         setHotelSearch({
             ...hotelSearch,
             occupancy:[

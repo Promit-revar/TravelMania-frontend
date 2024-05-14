@@ -40,3 +40,8 @@ export async function getRoomDetails(body){
     const response = await makeRequest({method: 'POST', url, body:{...body}});
     return response;
 }
+export async function bookHotel(body){
+    const url = BASE_URL+"booking";
+    const response = await makeRequest({method: 'POST', url, body:{...body}});
+    return response;
+}

@@ -66,15 +66,31 @@ const HomePageComponent = () => {
         setIsLoading(false);
     };
     const hotelSearchApi = async()=>{
+        console.log("KKR",{hotelDetails});
         setFilterApplied(false);
         const getHotelsResponse = await api.getAllHotels({...getHotels,...hotelSearch});
         if(!getHotelsResponse.error)
         {
             setIsError({value:false,error:""});
-            setHotelDetails({...hotelDetails, params:{
-                sessionId: getHotelsResponse.data.status.sessionId,
-                nextToken: getHotelsResponse.data.status.nextToken,
-            }});
+            setHotelDetails({
+                ...hotelDetails,
+                ...{params:{
+                    sessionId: getHotelsResponse.data.status.sessionId,
+                    nextToken: getHotelsResponse.data.status.nextToken,}},
+                ...{reservation:{
+                checkin: moment(dateRange.startDate).format('YYYY-MM-DD'),
+                checkout: moment(dateRange.endDate).format('YYYY-MM-DD'),
+                occupancy: [
+                    {
+                      "room_no": 1,
+                      "adult": 2,
+                      "child": 0,
+                      "child_age": [
+                        0
+                      ]
+                    }
+                  ]}}
+            });
             
             setHotels([...getHotelsResponse.data.itineraries]);
             if(getHotelsResponse.data.itineraries.length %10 === 0)

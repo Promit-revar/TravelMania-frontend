@@ -5,8 +5,9 @@ import Button from '../../UI/components/Button/Button';
 import { LoaderContext } from "../../Context/loaderContext.jsx";
 import { Sparkles, Accessibility, Tv2, BedDouble, Bath,  UtensilsCrossed , Wifi, TentTree, Check  } from 'lucide-react';
 import { AmenitiesList } from '../../constants/constants';
+import Skeleton from "react-loading-skeleton";
 import * as api from "../../api/hotelApis.js";
-const RoomInfoComponent = ({selectedRoom}) => {
+const RoomInfoComponent = ({selectedRoom, bookHotel}) => {
     const { isLoading, setIsLoading } = useContext(LoaderContext);
     const [roomDetails, setRoomDetails] = useState({});
     const roomAmenities = [{
@@ -53,8 +54,17 @@ const RoomInfoComponent = ({selectedRoom}) => {
         setIsLoading(true);
         getRoomDetails();
     },[]);
+    const handleClick = () => {
+        bookHotel({...roomDetails});
+    }
     return (
         <div className="roomInfo">
+            {isLoading && <><Skeleton width="100%" height="300px"/>
+            <Skeleton width="100%" height="20px"/>
+            <Skeleton width="100%" height="20px"/>
+            <Skeleton width="100%" height="20px"/>
+            <Skeleton width="100%" height="20px"/> 
+            </>}
             {!isLoading && <><CarouselComponent width="100%" height="300px"/>
             <div className="title">{roomDetails.roomType}</div>
             <div style={{ fontSize:'14px'}}>Mountain view</div>
@@ -109,7 +119,7 @@ const RoomInfoComponent = ({selectedRoom}) => {
                         <div className="heading-little">include taxes & fees</div>
                         <div className="reserve-block-footer">
                             <div className="price-details-tag">Price details</div>
-                            <div className="reserve-btn"><Button label="Reserve"/></div>
+                            <div className="reserve-btn"><Button label="Reserve" onClick={handleClick}/></div>
                         </div>
                 </div>
             </div>

@@ -8,7 +8,6 @@ import RoomInfoComponent from "../../components/RoomInfo/RoomInfoComponent.jsx";
 import HotelDescriptionComponent from "../../components/HotelDescription/HotelDescription";
 import AmenitiesComponent from "../../components/Amenities/Amenities";
 import AccomodationComponent from "../../components/Accomodation/Accomodation";
-import {AccomodationAmenities} from '../../constants/constants';
 import ActivitiesComponent from "../../components/Activites/Activites";
 import { ChevronLeft } from 'lucide-react';
 import { Carousel } from "react-bootstrap";
@@ -29,6 +28,7 @@ import HotelOverview4 from '../../assets/Hotel-Overview-12.jpg'
 import HotelOverview5 from '../../assets/Hotel-Overview-13.jpg'
 import { ChevronLeftCircle, ChevronRightCircle, Heart } from 'lucide-react';
 import { LoaderContext } from "../../Context/loaderContext.jsx";
+import { HotelBookingContext } from "../../Context/hotelBookingContext.jsx";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import ViewAllReviewsComponent from "../../components/ViewAllReviews/ViewAllReviews";
 import Skeleton from "react-loading-skeleton";
@@ -57,6 +57,7 @@ const HotelPageComponent = () => {
     //context variables
     const { isLoading, setIsLoading } = useContext(LoaderContext);
     const { hotelDetails, setHotelDetails } = useContext(HotelContext);
+    const { hotelBookingDetails, setHotelBookingDetails } = useContext(HotelBookingContext);
      
     //state variables
     const [openRoomModal, setOpenRoomModal] = useState(false);
@@ -79,6 +80,7 @@ const HotelPageComponent = () => {
     const tokenId = searchParams.get('tokenId');
     const productId = searchParams.get('productId');
     const sessionId = searchParams.get('sessionId');
+    console.log({hotelDetails});
     const getHotelDetails = async()=>{
         const data = await api.getHotelDetails({ sessionId, productId, hotelId, tokenId});
         if(!data.error){
@@ -105,6 +107,21 @@ const HotelPageComponent = () => {
         getHotelDetails();
         getRoomDetails();
     },[]);
+    const bookHotel = (roomDetails) => {
+        console.log({roomDetails});
+        setHotelBookingDetails({
+            ...hotelBookingDetails,
+            ...{
+                reservation: {
+                    hotelName: hotelData.name,
+                    ...selectedRoom,
+                    ...hotelDetails.reservation,
+                    ...roomDetails,
+                }
+            }
+    });
+        navigate(`/order-summary?sessionId=${sessionId}&productId=${productId}&tokenId=${tokenId}&rateBasisId=${roomDetails.rateBasisId}&adult=${hotelDetails.reservation.occupancy[0].adult}&checkin=${hotelDetails.reservation.checkin}&checkout=${hotelDetails.reservation.checkout}&hotelName=${hotelData.name}`);
+    }
     return (
         <div className="hotel-page">
         <div className="back-button" onClick={()=>navigate('/')}> 
@@ -150,7 +167,7 @@ const HotelPageComponent = () => {
                     <ViewAllReviewsComponent reviews={Reviews} />
                 </ModalComponent>}
             {openRoomModal && <ModalComponent show={openRoomModal} onHide={()=>setOpenRoomModal(false)} title={'Room Information'} contentClassName="room-info-modal">
-                    <RoomInfoComponent selectedRoom={selectedRoom}/>
+                    <RoomInfoComponent selectedRoom={selectedRoom} bookHotel={bookHotel}/>
                 </ModalComponent>}
         </div>
     );

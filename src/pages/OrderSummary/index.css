@@ -1,0 +1,62 @@
+.order-summary{
+    display: flex;
+    flex-direction: column;
+}
+.order-form{
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+    gap: 20px;
+    padding: 30px;
+    border: 1px solid #c7c5c5;
+    border-radius: 20px;
+}
+.booking-details{
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #c7c5c5;
+    width: 30%;
+    border-radius: 20px;
+}
+.booking-section{
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+    flex-direction: row;
+}
+.booking-details .img-corousel{
+    width: 100% !important;
+}
+.booking-details-content{
+    padding: 10px;
+}
+.booking-details-content .hotel-card-ratings{
+    width: 40px;
+}
+.booking-details-reviews{
+    display: flex;
+    flex-direction: row;
+}
+.booking-details-reviews-text{
+    display: flex;
+    flex-direction: column;
+    margin-left: 5px;
+}
+.booking-details-reviews-text-title{
+    font-size: 15px;
+    font-weight: 600;
+}
+.booking-details-reviews-text-number{
+    font-size: 12px;
+}
+.order-form .dropdown{
+    margin-top: 0px !important;
+}
+.order-form .MuiOutlinedInput-root{
+    width: 100px;
+    height: 38px !important;
+}
+
+.react-tel-input .form-control {
+    width: 100%;
+}

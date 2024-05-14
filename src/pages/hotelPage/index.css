@@ -20,6 +20,9 @@
 }
 .accomodation-section{
     display: flex;
+    width: 100%;
+    overflow-x: hidden;
+    overflow: scroll;
     flex-direction: row;
     gap: 60px;
 }

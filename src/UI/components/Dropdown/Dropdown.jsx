@@ -1,25 +1,32 @@
-import Select, { SelectChangeEvent } from '@mui/material/Select';
-import InputLabel from '@mui/material/InputLabel';
+import React,{ useState } from 'react';
 import './Dropdown.css';
 import MenuItem from '@mui/material/MenuItem';
 import { TextField } from '@mui/material';
-const DropdownComponent = ({label}) => {
+const DropdownComponent = ({label, options=[], index, setTitle, title}) => {
+  console.log(title);
+  const handleChange = (e) =>{
+    console.log(index);
+    const titles = title.map((item, i) => {
+      if(index === i){
+        return e.target.value;
+      }
+      return item;
+    });
+    setTitle([...titles]);
+  }
     return (
         <div >
         {/* <InputLabel id="demo-simple-select-helper-label">{label}</InputLabel> */}
         <TextField
           className='dropdown'
           labelId="demo-simple-select-helper-label"
-          id="demo-simple-select-helper"
+          id={`title`}
           label={label}
+          defaultValue={options[0].value}
+          onChange={handleChange}
           select
         >
-          <MenuItem value={label}>
-            <em>{label}</em>
-          </MenuItem>
-          <MenuItem value={10}>Ten</MenuItem>
-          <MenuItem value={20}>Twenty</MenuItem>
-          <MenuItem value={30}>Thirty</MenuItem>
+          {options.map(option => <MenuItem value={option.value}>{option.label}</MenuItem>)}
         </TextField>
         </div>
     )
