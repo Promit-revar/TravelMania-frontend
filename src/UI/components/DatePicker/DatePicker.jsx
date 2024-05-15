@@ -6,7 +6,7 @@ import dayjs from 'dayjs';
 import './DatePicker.css';
 import CalendarIcon from '../../../Icons/CalendarIcon';
 import { HotelContext } from '../../../Context/hotelDetailsContext';
-const DatePickerComponent = ({ label, date }) => {
+const DatePickerComponent = ({ label, date, setDate }) => {
     const {hotelDetails, setHotelDetails} =  useContext(HotelContext);
     console.log(hotelDetails);
     console.log(date);
@@ -15,6 +15,7 @@ const DatePickerComponent = ({ label, date }) => {
             <LocalizationProvider dateAdapter={AdapterDayjs}>
                 {/* <img src={CalendarIcon} /> */}
                 <DatePicker
+                    onChange={(date)=>setDate(dayjs(date).format('YYYY-MM-DD'))}
                     className='date-picker'
                     label={label}
                     defaultValue={dayjs(new Date(date))}

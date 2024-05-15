@@ -80,7 +80,7 @@ const OrderSummaryPage = () => {
             <div className="title">Order Summary</div>
             <div className="booking-section">
                 <div className="order-form">
-                    <div>Who's checking in?</div>
+                    <div className="sub-title-1">Who's checking in?</div>
                     <div><b>Room 1:</b> {searchParams.get('adult')} Adults, Non-smoking</div>
                     <form onSubmit={confirmBooking}>
                     {Array(Number(searchParams.get('adult'))).fill(1).map((traveller, index) => (<div className="mb-2"> Traveller {index+1}<div className="d-flex flex-row mt-2" style={{ gap: "10px"}}>
@@ -117,7 +117,7 @@ const OrderSummaryPage = () => {
                         <textarea
                             rows={8}
                             className="form-control"
-                            placeholder="Booking Remarks"
+                            defaultValue="Booking Remarks"
                             onChange={(e)=>setBookingRemarks(e.target.value)}
                             required
                             id="outlined-required"

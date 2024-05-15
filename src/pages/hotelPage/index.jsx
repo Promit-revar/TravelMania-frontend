@@ -14,19 +14,12 @@ import { Carousel } from "react-bootstrap";
 import { HotelContext } from "../../Context/hotelDetailsContext.jsx";
 import LocationComponent from "../../components/Location/Location";
 import PoilciesComponent from "../../components/Policies/Policies";
-import CarouselComponent from "../../components/Carousel/Carousel";
 import ReviewComponent from "../../components/Reviews/Reviews";
 import OtherHotelCardsComponent from "../../components/OtherHotels/OtherHotelsCards";
 import { Policies, Reviews } from "../../constants/constants";
 import ModalComponent from "../../UI/components/Modal/Modal";
 import Image from "../../UI/components/Image/Image";
 import ErrorHandlingComponent from "../../UI/components/Errors/Error.jsx";
-import HotelOverview1 from '../../assets/Hotel-Overview-1.jpg'
-import HotelOverview2 from '../../assets/Hotel-Overview-2.jpg'
-import HotelOverview3 from '../../assets/Hotel-Overview-4.jpg'
-import HotelOverview4 from '../../assets/Hotel-Overview-12.jpg'
-import HotelOverview5 from '../../assets/Hotel-Overview-13.jpg'
-import { ChevronLeftCircle, ChevronRightCircle, Heart } from 'lucide-react';
 import { LoaderContext } from "../../Context/loaderContext.jsx";
 import { HotelBookingContext } from "../../Context/hotelBookingContext.jsx";
 import { useSearchParams, useNavigate } from "react-router-dom";
@@ -122,6 +115,7 @@ const HotelPageComponent = () => {
     });
         navigate(`/order-summary?sessionId=${sessionId}&productId=${productId}&tokenId=${tokenId}&rateBasisId=${roomDetails.rateBasisId}&adult=${hotelDetails.reservation.occupancy[0].adult}&checkin=${hotelDetails.reservation.checkin}&checkout=${hotelDetails.reservation.checkout}&hotelName=${hotelData.name}`);
     }
+    console.log({hotelData});
     return (
         <div className="hotel-page">
         <div className="back-button" onClick={()=>navigate('/')}> 
@@ -142,8 +136,8 @@ const HotelPageComponent = () => {
                     Types of accommodation
                 </div>
             <div className="accomodation-section">
-                
-            {!isLoading && roomTypes.map((item,i)=><AccomodationComponent  amenities={item.facilities} capacity={item.maxOccupancyPerRoom} name={item.roomType}  price={item.netPrice} openAccomodationModal={setOpenRoomModal} setSelectedRoom={setSelectedRoom} requestBody={{rateBasisId: item.rateBasisId, sessionId, tokenId, productId }}/>)}
+            {isLoading && <div className="d-flex flex-row justify-content-between w-100"><Skeleton height={'250px'} width={'230px'} /><Skeleton height={'250px'} width={'230px'}/><Skeleton height={'250px'} width={'230px'}/></div>}
+            {!isLoading && roomTypes.map((item,i)=><AccomodationComponent  amenities={item.facilities} capacity={item.maxOccupancyPerRoom} name={item.roomType}  price={item.netPrice} currency={item.currency} openAccomodationModal={setOpenRoomModal} setSelectedRoom={setSelectedRoom} requestBody={{rateBasisId: item.rateBasisId, sessionId, tokenId, productId }}/>)}
             </div>
             <hr />
             <div className="title" id="accommodation">

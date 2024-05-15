@@ -92,7 +92,7 @@ const HomePageComponent = () => {
                   ]}}
             });
             
-            setHotels([...getHotelsResponse.data.itineraries]);
+            setHotels([...getHotelsResponse.data.itineraries.filter(hotel => hotel?.hotelRating >= 4)]);
             if(getHotelsResponse.data.itineraries.length %10 === 0)
             setPage({...page, totalResults:Math.ceil((getHotelsResponse.data.itineraries.length)/10)});
             else{
@@ -132,6 +132,7 @@ const HomePageComponent = () => {
         setDateRange(dates);
         setHotelDetails({...hotelDetails,...{dates:dates}});
     }
+    console.log({hotels});
     const desc = "Baba Beach Club Natai is a luxury Residential, Beachfront Hotel & Beach Club managed & developed by the team behind the internationally acclaimed estate 'Sri Panwa'."
     return (
         <div className="home-page">

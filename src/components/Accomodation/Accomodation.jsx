@@ -2,7 +2,7 @@ import React from "react";
 import CarouselComponent from "../Carousel/Carousel";
 import Image from "../../UI/components/Image/Image";
 import './Accomodation.css';
-const AccomodationComponent = ({amenities, capacity, name, price, openAccomodationModal, setSelectedRoom, requestBody}) =>{
+const AccomodationComponent = ({amenities, capacity, name, price, openAccomodationModal, setSelectedRoom, requestBody, currency}) =>{
     const handleAccomodationSelect = () => {
         setSelectedRoom({...requestBody});
         openAccomodationModal(true);
@@ -27,7 +27,7 @@ const AccomodationComponent = ({amenities, capacity, name, price, openAccomodati
                 </ul>
                 </div>
                 <div className="price">
-                    <div className="price-value">{price} THB </div>
+                    <div className="price-value">{price} {currency?currency.toUpperCase():null} </div>
                     <div className="price-rate">per night</div>
                 </div>
                 

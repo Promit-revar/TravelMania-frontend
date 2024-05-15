@@ -7,29 +7,41 @@ import Image from "../../UI/components/Image/Image";
 import Traveller from "../../assets/Person.svg";
 import { HotelContext } from "../../Context/hotelDetailsContext";
 import moment from "moment";
+import { useNavigate } from "react-router-dom";
 const SelectRoomComponent = () => {
   const { hotelDetails, setHotelDetails } = useContext(HotelContext);
+  const navigate = useNavigate();
   const [isOpenRoom, setIsOpenRoom] = useState(false);
-  const [selectRooms, setSelectRooms] = useState({
-    rooms: 1,
-    travellers: 2,
-  });
   const toggleRoomDropdown = () => {
     setIsOpenRoom(!isOpenRoom);
   };
   const tomorrow = new Date();
   tomorrow.setDate(tomorrow.getDate()+1);
   console.log({ hotelDetails });
+  const setCheckInDate = (checkIn) => {
+    setHotelDetails({...hotelDetails, reservation:{
+        ...hotelDetails.reservation,
+        checkin : checkIn,
+    }});
+  }
+  const setCheckOutDate = (checkOut) => {
+    setHotelDetails({...hotelDetails, reservation:{
+        ...hotelDetails.reservation,
+        checkout : checkOut,
+    }});
+  }
   return (
     <div className="schedule-block">
       <div className="select-block">
         <DatePickerComponent
           label="Check-in"
           date={hotelDetails.reservation.checkin?hotelDetails.reservation.checkin:moment(new Date()).format('YYYY-MM-DD') }
+          setDate = {setCheckInDate}
         />
         <DatePickerComponent
           label={"Check-out"}
           date={hotelDetails.reservation.checkout?hotelDetails.reservation.checkout:moment(tomorrow).format('YYYY-MM-DD')}
+          setDate = {setCheckOutDate}
         />
       </div>
       {/* <DropdownComponent options={[{value:'Travelers',label:'Travelers'}]}/> */}
@@ -159,7 +171,7 @@ const SelectRoomComponent = () => {
           )}
         </div>
       </div>
-      <Button label="Reserve" />
+      <a href="#accomodation"><Button label="Choose your room"/></a>
       <div className="msg">You won't be charged yet</div>
     </div>
   );

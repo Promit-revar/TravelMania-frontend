@@ -415,7 +415,7 @@ export const filterInitialState = {
     popularFilters: [],
     priceRange:['0','1500'],
     guestRating: [],
-    starRating: [],
+    starRating: [4,5],
     paymentType: [],
     cancellationOptions: [],
     propertyType: [],
