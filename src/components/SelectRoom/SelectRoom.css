@@ -38,3 +38,6 @@
     padding: 20px;
     z-index: 5;
 }
+.select-block .select-date{
+    width: 100%;
+}

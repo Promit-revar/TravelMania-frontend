@@ -3,12 +3,26 @@ import CarouselComponent from "../Carousel/Carousel";
 import { useNavigate } from "react-router-dom";
 import { HotelContext } from "../../Context/hotelDetailsContext";
 import Image from "../../UI/components/Image/Image";
+import * as api from "../../api/hotelApis";
 import './HotelCard.css';
-const HotelCardComponent = ({price, ratings, reviews, desc, amenitites, name, imgs, requestParams}) => {
+const HotelCardComponent = ({price, ratings, reviews, desc, amenitites, name, imgs, requestParams, hotelSearch}) => {
     const navigate= useNavigate();
     const {hotelDetails, setHotelDetails} = useContext(HotelContext);
+    console.log(hotelDetails);
+    const handleCardClick = async() => {
+        const response = await api.getToken({
+            sessionId: hotelDetails.params.sessionId,
+            checkin: hotelSearch.checkin,
+            checkout: hotelSearch.checkout,
+            occupancy: hotelSearch.occupancy,
+            tokenId: requestParams.tokenId,
+            hotelId: requestParams.hotelId,
+            productId: requestParams.productId,
+        });
+        navigate(`/hotel-details/?id=${response.data.token}`);
+    }
     return (
-        <div style={{display: 'flex', flexDirection: 'row'}} className="hotel-card-mgt" onClick={()=>navigate(`/hotel-details?hotelId=${requestParams.hotelId}&productId=${requestParams.productId}&tokenId=${requestParams.tokenId}&sessionId=${hotelDetails.params.sessionId}`)}>
+        <div style={{display: 'flex', flexDirection: 'row'}} className="hotel-card-mgt" onClick={handleCardClick}>
         {/* <CarouselComponent height="300px" width="350px" src={imgs}/> */}
         <div className="thumbnail-img"><img height="300px" width="350px" src={imgs[0].url}  className="thumbnail-img"/></div>
         <div className="hotel-card">

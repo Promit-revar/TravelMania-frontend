@@ -4,10 +4,10 @@ import 'react-date-range/dist/styles.css'; // main style file
 import 'react-date-range/dist/theme/default.css'; // theme css file
 import './DateRangePicker.css'
 
-const DateRangePickerComponent = ({selectDateRange}) => {
+const DateRangePickerComponent = ({selectDateRange, checkin, checkout}) => {
   const [selectionRange, setSelectionRange] = useState({
-    startDate: new Date(),
-    endDate: new Date(),
+    startDate: new Date(checkin),
+    endDate: new Date(checkout),
     key: 'selection',
   });
 

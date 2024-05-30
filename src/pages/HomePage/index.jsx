@@ -18,12 +18,12 @@ const HomePageComponent = () => {
     const {hotelDetails, setHotelDetails} = useContext(HotelContext);
     const {isLoading, setIsLoading} = useContext(LoaderContext);
     const [hotels,setHotels] = useState([]);
-    const tomorrow = new Date();
-    tomorrow.setDate(tomorrow.getDate()+1);
+    const tomorrow = moment().add(1,'days');
+    const dayAftertomorrow = moment().add(2,'days');
     const [showDateModal , setShowDateModal ] = useState(false);
     const [dateRange, setDateRange] = useState({
-        startDate: new Date(),
-        endDate: tomorrow,
+        startDate: tomorrow,
+        endDate: dayAftertomorrow,
         key: 'selection',
       });
     const [hotelSearch,setHotelSearch] = useState({
@@ -41,7 +41,7 @@ const HomePageComponent = () => {
           ]
     })
     // console.log(hotels);
-    console.log(hotelDetails);
+    console.log({hotelSearch});
     const [page, setPage] = useState({currPage:1, totalResults: null});
     const [filterApplied, setFilterApplied] = useState(false);
     const [activeFilter, setActiveFilter] = useState(0);
@@ -66,7 +66,6 @@ const HomePageComponent = () => {
         setIsLoading(false);
     };
     const hotelSearchApi = async()=>{
-        console.log("KKR",{hotelDetails});
         setFilterApplied(false);
         const getHotelsResponse = await api.getAllHotels({...getHotels,...hotelSearch});
         if(!getHotelsResponse.error)
@@ -148,13 +147,13 @@ const HomePageComponent = () => {
                         // if(hotels.length <= 10)
                         if(page.currPage === 1){
                             if(i<10)
-                                return <HotelCardComponent price={{night:hotel?.total}} ratings={hotel?.hotelRating} reviews={(hotel.tripAdvisorReview)?hotel.tripAdvisorReview:0} amenitites={AmenitiesList.slice(1,3)} desc={desc} name={hotel.hotelName} imgs={[{url:hotel?.thumbNailUrl}]} requestParams={{productId: hotel.productId, tokenId: hotel.tokenId, hotelId:hotel.hotelId}}/>;
+                                return <HotelCardComponent price={{night:hotel?.total}} ratings={hotel?.hotelRating} reviews={(hotel.tripAdvisorReview)?hotel.tripAdvisorReview:0} amenitites={AmenitiesList.slice(1,3)} desc={desc} name={hotel.hotelName} imgs={[{url:hotel?.thumbNailUrl}]} requestParams={{productId: hotel.productId, tokenId: hotel.tokenId, hotelId:hotel.hotelId}} hotelSearch={hotelSearch}/>;
                             else{
                                 return null;
                             }
                         }
                         else if(i<page.currPage*10 && i>=(page.currPage - 1)*10)
-                        return <HotelCardComponent price={{night:hotel?.total}} ratings={hotel?.hotelRating} reviews={(hotel.tripAdvisorReview)?hotel.tripAdvisorReview:0} amenitites={AmenitiesList.slice(1,3)} desc={desc} name={hotel.hotelName} imgs={[{url:hotel?.thumbNailUrl}]} requestParams={{productId: hotel.productId, tokenId: hotel.tokenId, hotelId:hotel.hotelId}}/>;
+                        return <HotelCardComponent price={{night:hotel?.total}} ratings={hotel?.hotelRating} reviews={(hotel.tripAdvisorReview)?hotel.tripAdvisorReview:0} amenitites={AmenitiesList.slice(1,3)} desc={desc} name={hotel.hotelName} imgs={[{url:hotel?.thumbNailUrl}]} requestParams={{productId: hotel.productId, tokenId: hotel.tokenId, hotelId:hotel.hotelId}} hotelSearch={hotelSearch}/>;
                         else return null;
                     })}
                     
@@ -174,7 +173,7 @@ const HomePageComponent = () => {
           
            
            {showDateModal && <ModalComponent show={showDateModal} onHide={()=>setShowDateModal(false)} title={'Select Date Range'}>
-                    <DateRangePickerComponent selectDateRange={selectDateRange} />
+                    <DateRangePickerComponent selectDateRange={selectDateRange} checkin={dateRange.startDate} checkout={dateRange.endDate}/>
                     {/* <Button type="button">Select</Button> */}
                 </ModalComponent>}
         </div>

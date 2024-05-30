@@ -4,45 +4,29 @@ import DatePickerComponent from "../../UI/components/DatePicker/DatePicker";
 import Button from "../../UI/components/Button/Button";
 import DropdownComponent from "../../UI/components/Dropdown/Dropdown";
 import Image from "../../UI/components/Image/Image";
+import Calendar from '../../assets/Calendar.svg';
 import Traveller from "../../assets/Person.svg";
-import { HotelContext } from "../../Context/hotelDetailsContext";
 import moment from "moment";
-import { useNavigate } from "react-router-dom";
-const SelectRoomComponent = () => {
-  const { hotelDetails, setHotelDetails } = useContext(HotelContext);
-  const navigate = useNavigate();
+const SelectRoomComponent = ({checkin , checkout, setBookingData, bookingData, handleDateShowModal}) => {
   const [isOpenRoom, setIsOpenRoom] = useState(false);
   const toggleRoomDropdown = () => {
     setIsOpenRoom(!isOpenRoom);
   };
-  const tomorrow = new Date();
-  tomorrow.setDate(tomorrow.getDate()+1);
-  console.log({ hotelDetails });
-  const setCheckInDate = (checkIn) => {
-    setHotelDetails({...hotelDetails, reservation:{
-        ...hotelDetails.reservation,
-        checkin : checkIn,
-    }});
-  }
-  const setCheckOutDate = (checkOut) => {
-    setHotelDetails({...hotelDetails, reservation:{
-        ...hotelDetails.reservation,
-        checkout : checkOut,
-    }});
-  }
+  // const tomorrow = new Date();
+  // tomorrow.setDate(tomorrow.getDate()+1);
+  // const dayAftertomorrow = new Date();
+  // dayAftertomorrow.setDate(dayAftertomorrow.getDate()+2);
+  console.log({bookingData,})
   return (
     <div className="schedule-block">
       <div className="select-block">
-        <DatePickerComponent
-          label="Check-in"
-          date={hotelDetails.reservation.checkin?hotelDetails.reservation.checkin:moment(new Date()).format('YYYY-MM-DD') }
-          setDate = {setCheckInDate}
-        />
-        <DatePickerComponent
-          label={"Check-out"}
-          date={hotelDetails.reservation.checkout?hotelDetails.reservation.checkout:moment(tomorrow).format('YYYY-MM-DD')}
-          setDate = {setCheckOutDate}
-        />
+      <div className="select-date" onClick={()=>handleDateShowModal()}>
+                <div style={{ marginTop: '-5px'}}><Image src={Calendar} height='60px' width='60px'/></div>
+                <div style={{ marginLeft: '-10px'}}>
+                    <div className="select-date-title">Dates</div>
+                    <div>{moment(checkin).format('MMM DD')} - {moment(checkout).format('MMM DD')}</div>
+                </div>
+            </div>
       </div>
       {/* <DropdownComponent options={[{value:'Travelers',label:'Travelers'}]}/> */}
       <div className="search-selector">
@@ -53,7 +37,7 @@ const SelectRoomComponent = () => {
           <div style={{ marginLeft: "-15px" }}>
             <div className="select-date-title">Travellers</div>
             <div>
-              {hotelDetails.reservation.occupancy[0].room_no} room,{hotelDetails.reservation.occupancy[0].adult} travelers
+              {bookingData.length} room, {bookingData.reduce((partialSum, a) => partialSum + a.adult, 0)} travelers
             </div>
           </div>
         </div>
@@ -72,53 +56,71 @@ const SelectRoomComponent = () => {
                   <button
                     type="button"
                     className="btn-rooms"
-                    onClick={() =>
-                        setHotelDetails({
-                        ...hotelDetails,
-                        ...{reservation:{
-                            ...hotelDetails.reservation,
-                            occupancy:[
-                                {
-                                    ...hotelDetails.reservation.occupancy[0],
-                                    room_no: hotelDetails.reservation.occupancy[0].room_no+1,
-                                }
-                            ]  
-                        }}
-                      })
+                    onClick={() =>{
+                      //   setHotelDetails({
+                      //   ...hotelDetails,
+                      //   ...{reservation:{
+                      //       ...hotelDetails.reservation,
+                      //       occupancy:[
+                      //           {
+                      //               ...hotelDetails.reservation.occupancy[0],
+                      //               room_no: hotelDetails.reservation.occupancy[0].room_no+1,
+                      //           }
+                      //       ]  
+                      //   }}
+                      // })
+                      const newRoom = {
+                        "room_no": bookingData.length + 1,
+                        "adult": 0,
+                        "child": 0,
+                        "child_age": [
+                            0
+                        ]
                     }
+                      setBookingData([
+                        ...bookingData,
+                        newRoom,
+                      ])
+                    }}
                   >
                     +
                   </button>
-                  {hotelDetails.reservation.occupancy[0].room_no}
+                  {bookingData.length}
                   <button
                     type="button"
                     className="btn-rooms"
-                    onClick={() =>
-                        setHotelDetails({
-                            ...hotelDetails,
-                            ...{reservation:{
-                                ...hotelDetails.reservation,
-                                occupancy:[
-                                    {
-                                        ...hotelDetails.reservation.occupancy[0],
-                                        room_no: hotelDetails.reservation.occupancy[0].room_no - 1,
-                                    }
-                                ]  
-                            }}
-                          })
-                    }
-                    disabled={hotelDetails.reservation.occupancy[0].room_no === 1}
+                    onClick={() =>{
+                        // setHotelDetails({
+                        //     ...hotelDetails,
+                        //     ...{reservation:{
+                        //         ...hotelDetails.reservation,
+                        //         occupancy:[
+                        //             {
+                        //                 ...hotelDetails.reservation.occupancy[0],
+                        //                 room_no: hotelDetails.reservation.occupancy[0].room_no - 1,
+                        //             }
+                        //         ]  
+                        //     }}
+                        //   })
+                        const tempBookingData = [...bookingData];
+                        const e = tempBookingData.pop();
+                        setBookingData([
+                          ...tempBookingData
+                        ]);
+                    }}
+                    disabled={bookingData.length === 1}
                   >
                     -
                   </button>
                 </div>
               </div>
+              {bookingData.map((item, index) => (<div className="mt-3">
+              <div><b>Room {item.room_no}</b></div>
               <div
                 style={{
                   display: "flex",
                   flexDirection: "row",
                   justifyContent: "space-between",
-                  marginTop: "20px",
                 }}
               >
                 Travellers:{" "}
@@ -126,47 +128,59 @@ const SelectRoomComponent = () => {
                   <button
                     type="button"
                     className="btn-rooms"
-                    onClick={() =>
-                        setHotelDetails({
-                            ...hotelDetails,
-                            ...{reservation:{
-                                ...hotelDetails.reservation,
-                                occupancy:[
-                                    {
-                                        ...hotelDetails.reservation.occupancy[0],
-                                        adult: hotelDetails.reservation.occupancy[0].adult + 1,
-                                    }
-                                ]  
-                            }}
-                          })
-                    }
+                    onClick={() =>{
+                        // setHotelDetails({
+                        //     ...hotelDetails,
+                        //     ...{reservation:{
+                        //         ...hotelDetails.reservation,
+                        //         occupancy:[
+                        //             {
+                        //                 ...hotelDetails.reservation.occupancy[0],
+                        //                 adult: hotelDetails.reservation.occupancy[0].adult + 1,
+                        //             }
+                        //         ]  
+                        //     }}
+                        //   })
+                        const updatedBookingData = [...bookingData];
+                        updatedBookingData[index].adult +=1;
+                        setBookingData([
+                          ...updatedBookingData,
+                        ])
+                    }}
                   >
                     +
                   </button>
-                  {hotelDetails.reservation.occupancy[0].adult}
+                  {item.adult}
                   <button
                     type="button"
                     className="btn-rooms"
-                    onClick={() =>
-                        setHotelDetails({
-                            ...hotelDetails,
-                            ...{reservation:{
-                                ...hotelDetails.reservation,
-                                occupancy:[
-                                    {
-                                        ...hotelDetails.reservation.occupancy[0],
-                                        adult: hotelDetails.reservation.occupancy[0].adult - 1,
-                                    }
-                                ]  
-                            }}
-                          })
+                    onClick={() =>{
+                        // setHotelDetails({
+                        //     ...hotelDetails,
+                        //     ...{reservation:{
+                        //         ...hotelDetails.reservation,
+                        //         occupancy:[
+                        //             {
+                        //                 ...hotelDetails.reservation.occupancy[0],
+                        //                 adult: hotelDetails.reservation.occupancy[0].adult - 1,
+                        //             }
+                        //         ]  
+                        //     }}
+                        //   })
+                        const updatedBookingData = [...bookingData];
+                        updatedBookingData[index].adult -=1;
+                        setBookingData([
+                          ...updatedBookingData,
+                        ])
                     }
-                    disabled={hotelDetails.reservation.occupancy[0].adult === 0}
+                    }
+                    disabled={item.adult === 1}
                   >
                     -
                   </button>
                 </div>
               </div>
+              </div>))}
             </div>
           )}
         </div>

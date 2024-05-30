@@ -1,9 +1,8 @@
 import makeRequest from "../utils/makeRequest.js";
 
-const BASE_URL = "https://phuket-concierge.com/api/";
+// const BASE_URL = "https://phuket-concierge.com/api/";
+const BASE_URL = "http://localhost:8000/api/";
 export async function getAllHotels(getHotels){
-    // const res = await axios.get("https://api.ipify.org/?format=json");
-    // const userIp = '85.137.122.196';
     const body = {...getHotels};
     const url = BASE_URL+"hotel_search";
     const response = await makeRequest({method:'POST',url:url, body:{...body}});
@@ -21,7 +20,6 @@ export async function getNextHotelSearchResults(params){
 }
 export async function getHotelByFilters(body) {
     const url = BASE_URL+"filterResults";
-    // console.log(body);
     const response = await makeRequest({method: 'POST', url, body:{...body}});
     return response;
 }
@@ -42,6 +40,11 @@ export async function getRoomDetails(body){
 }
 export async function bookHotel(body){
     const url = BASE_URL+"booking";
+    const response = await makeRequest({method: 'POST', url, body:{...body}});
+    return response;
+}
+export async function getToken(body){
+    const url = BASE_URL+"store";
     const response = await makeRequest({method: 'POST', url, body:{...body}});
     return response;
 }

@@ -2,7 +2,7 @@ import './HotelDescription.css'
 import { Star } from 'lucide-react';
 import parse from 'html-react-parser';
 import SelectRoomComponent from '../SelectRoom/SelectRoom';
-const HotelDescriptionComponent = ({title, description, location, ratings}) => {
+const HotelDescriptionComponent = ({title, description, location, ratings, checkin, checkout, setBookingData, bookingData, handleDateShowModal}) => {
     const stars = [];
     for(var i=0 ;i<ratings;i++){
         stars.push(i);
@@ -20,7 +20,7 @@ const HotelDescriptionComponent = ({title, description, location, ratings}) => {
                 <div className='title'>
                     Choose Your Room
                 </div>
-                <SelectRoomComponent />
+                <SelectRoomComponent  checkin={checkin} checkout={checkout} setBookingData={setBookingData} bookingData={bookingData} handleDateShowModal={handleDateShowModal}/>
             </div>
         </div>
     )

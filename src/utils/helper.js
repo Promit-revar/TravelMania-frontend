@@ -15,3 +15,12 @@ export const filterBodyConverter = (filters) => {
     if(filters.amenities.length) requestBody = {...requestBody, filters:{...requestBody.filters,facility: filters.amenities.join()}};
     return requestBody;
 }
+export const splitArray = (chunk, arr) => {
+    let splittedArrays = arr.reduce((result, item, index) => {
+        if (index % chunk === 0) {
+            result.push(arr.slice(index, index + chunk));
+        }
+        return result;
+    }, []);
+    return splittedArrays;
+}
