@@ -9,6 +9,7 @@
     margin-top: 10px;
     font-size: 12px;
     font-weight: 300;
+    text-decoration: none !important;
 }
 .map{
     height: 350px;

@@ -1,7 +1,6 @@
 import makeRequest from "../utils/makeRequest.js";
 
-// const BASE_URL = "https://phuket-concierge.com/api/";
-const BASE_URL = "http://localhost:8000/api/";
+const BASE_URL = "https://phuket-concierge.com/api/";
 export async function getAllHotels(getHotels){
     const body = {...getHotels};
     const url = BASE_URL+"hotel_search";

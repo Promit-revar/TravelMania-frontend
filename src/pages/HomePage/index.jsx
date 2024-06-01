@@ -40,8 +40,6 @@ const HomePageComponent = () => {
             }
           ]
     })
-    // console.log(hotels);
-    console.log({hotelSearch});
     const [page, setPage] = useState({currPage:1, totalResults: null});
     const [filterApplied, setFilterApplied] = useState(false);
     const [activeFilter, setActiveFilter] = useState(0);
@@ -51,12 +49,10 @@ const HomePageComponent = () => {
         // if(!filterApplied){
         //     setIsLoading(true);
         //     // const getHotelsResponse = await api.getNextHotelSearchResults({...hotelDetails.params, maxResult: 10});
-        //     // console.log({getHotelsResponse})
         //     // setHotelDetails({...hotelDetails, params:{
         //     //     sessionId: getHotelsResponse.data.status.sessionId,
         //     //     nextToken: getHotelsResponse.data.status.nextToken,
         //     // }});
-        //     // console.log([...hotels, ...getHotels.itineraries])
         //     if(value >2)
         //     setHotels([...getHotelsResponse.data.itineraries]);
 
@@ -105,7 +101,6 @@ const HomePageComponent = () => {
         setIsLoading(false);
     }
     const filterHotels = async(filters) => {
-        console.log(hotelDetails);
         const filteredResponse = await api.getHotelByFilters({...filters,...{sessionId: hotelDetails?.params?.sessionId,maxResult: Number.MAX_SAFE_INTEGER}});
         if(!filteredResponse.error ) {
             setIsError({value:false,error:""})
@@ -131,7 +126,6 @@ const HomePageComponent = () => {
         setDateRange(dates);
         setHotelDetails({...hotelDetails,...{dates:dates}});
     }
-    console.log({hotels});
     const desc = "Baba Beach Club Natai is a luxury Residential, Beachfront Hotel & Beach Club managed & developed by the team behind the internationally acclaimed estate 'Sri Panwa'."
     return (
         <div className="home-page">

@@ -5,9 +5,12 @@ import Button from '../../UI/components/Button/Button';
 import { LoaderContext } from "../../Context/loaderContext.jsx";
 import { Sparkles, Accessibility, Tv2, BedDouble, Bath,  UtensilsCrossed , Wifi, TentTree, Check  } from 'lucide-react';
 import { AmenitiesList } from '../../constants/constants';
+import ErrorHandlingComponent from "../../UI/components/Errors/Error.jsx";
 import Skeleton from "react-loading-skeleton";
 import * as api from "../../api/hotelApis.js";
 const RoomInfoComponent = ({selectedRoom, bookHotel}) => {
+    // console.log({selectedRoom, bookHotel});
+    const [isError, setIsError] = useState({value: false, message: ""});
     const { isLoading, setIsLoading } = useContext(LoaderContext);
     const [roomDetails, setRoomDetails] = useState({});
     const roomAmenities = [{
@@ -45,7 +48,11 @@ const RoomInfoComponent = ({selectedRoom, bookHotel}) => {
     }];
     const getRoomDetails = async() => {
         const response = await api.getRoomDetails(selectedRoom);
-        if(!response.error){
+        // console.log({response});
+        if(response.error){
+            setIsError({value:true, message:response.error});
+        }
+        else{
             setRoomDetails(response.data.roomRates.perBookingRates[0]);
         }
         setIsLoading(false);
@@ -59,6 +66,7 @@ const RoomInfoComponent = ({selectedRoom, bookHotel}) => {
     }
     return (
         <div className="roomInfo">
+            {isError.value && <ErrorHandlingComponent error={isError.message}/>}
             {isLoading && <><Skeleton width="100%" height="300px"/>
             <Skeleton width="100%" height="20px"/>
             <Skeleton width="100%" height="20px"/>

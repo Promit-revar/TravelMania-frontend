@@ -5,11 +5,8 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs from 'dayjs';
 import './DatePicker.css';
 import CalendarIcon from '../../../Icons/CalendarIcon';
-import { HotelContext } from '../../../Context/hotelDetailsContext';
+
 const DatePickerComponent = ({ label, date, setDate }) => {
-    const {hotelDetails, setHotelDetails} =  useContext(HotelContext);
-    console.log(hotelDetails);
-    console.log(date);
     return (
         <>
             <LocalizationProvider dateAdapter={AdapterDayjs}>

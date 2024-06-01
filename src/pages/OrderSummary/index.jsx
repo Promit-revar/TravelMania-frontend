@@ -10,7 +10,6 @@ import { useSearchParams, useNavigate } from "react-router-dom";
 import * as api from "../../api/hotelApis.js";
 import { LoaderContext } from "../../Context/loaderContext.jsx";
 import { jwtDecode } from "jwt-decode";
-import { splitArray } from "../../utils/helper.js";
 import "./index.css";
 
 const OrderSummaryPage = () => {
@@ -20,7 +19,6 @@ const OrderSummaryPage = () => {
   const [roomDetails, setRoomDetails] = useState({});
   const [searchParams] = useSearchParams();
   const token = searchParams.get("id");
-  console.log({ decoded: jwtDecode(token) });
   const {
     rateBasisId,
     sessionId,
@@ -29,6 +27,7 @@ const OrderSummaryPage = () => {
     checkin,
     checkout,
     occupancy,
+    geoData,
   } = jwtDecode(token);
   const adult = occupancy.reduce((partialSum, a) => partialSum + a.adult, 0);
   const rooms = occupancy.length;
@@ -36,10 +35,8 @@ const OrderSummaryPage = () => {
   const [email, setEmail] = useState("");
   const [phoneNo, setPhoneNo] = useState("");
   const [bookingRemarks, setBookingRemarks] = useState("");
-  console.log({ hotelBookingDetails, title });
   const confirmBooking = async (e) => {
     e.preventDefault();
-    // console.log( Array(hotelBookingDetails.reservation.occupancy[0].adult));
     const firstNames = [];
     const lastNames = [];
     let tempFirstName;
@@ -50,17 +47,12 @@ const OrderSummaryPage = () => {
     for (var i = 0; i < occupancy[j].adult; i++) {
       const fname = document.getElementById(`fname${j}${i}`).value;
       const lname = document.getElementById(`lname${j}${i}`).value;
-      // console.log(`${title[i]} ${fname} ${lname}`);
       tempFirstName.push(fname);
       tempLastName.push(lname);
     }
     firstNames.push([...tempFirstName]);
     lastNames.push([...tempLastName]);
 }
-    // const splittedFirstNames = splitArray(2, firstNames);
-    // const splittedLastNames = splitArray(2, lastNames);
-    // const splittedTitles = splitArray(2, title);
-    // console.log(splitArray(2,firstNames));
     const paxDetails = occupancy.map((item, index) => {
         return {
           room_no: index + 1,
@@ -71,7 +63,6 @@ const OrderSummaryPage = () => {
           },
         };
       });
-    console.log(paxDetails);
     const clientRef = Date.now();
     const roomBookingDetails = {
       sessionId,
@@ -84,7 +75,7 @@ const OrderSummaryPage = () => {
       bookingNote: bookingRemarks,
       paxDetails,
     };
-    const response = await api.bookHotel({ ...roomBookingDetails });
+    const response = await api.bookHotel({ requestData: roomBookingDetails, geoData });
     if (response.data.bookingData.status === "CONFIRMED") {
       const { url } = response.data.stripeSession;
       window.location.replace(url);
@@ -104,7 +95,6 @@ const OrderSummaryPage = () => {
     setIsLoading(true);
     getRoomDetails();
   }, []);
-  console.log({ roomDetails });
   return (
     <div className="order-summary">
       <div className="title">Order Summary</div>

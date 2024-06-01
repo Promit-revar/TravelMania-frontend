@@ -11,10 +11,11 @@ const makeRequest = async({method, body={}, url, headers={ "Content-Type":'appli
     if(response.status === 200){
         return {data:response.data, error: null};
     }
-    else{
-        return {data: null, error: response.data.error};
+    else if(!response.data.success){
+        return {data: null, error: response.data.error}; 
     }
 }catch(err){
+    
     return {data: null, error: 'Something went wrong'};
 }
 }

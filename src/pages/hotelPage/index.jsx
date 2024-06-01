@@ -55,7 +55,6 @@ const HotelPageComponent = () => {
     const { hotelBookingDetails, setHotelBookingDetails } = useContext(HotelBookingContext);
     const [searchParams] = useSearchParams();
     const token = searchParams.get('id');
-    console.log({decoded: jwtDecode(token)});
     let {hotelId, tokenId, productId, checkin, checkout, occupancy}  = jwtDecode(token);
     const [sessionId, setSessionId] = useState(jwtDecode(token).sessionId);
 
@@ -72,7 +71,6 @@ const HotelPageComponent = () => {
     const location ={ Latitude: 7.9246,Longitude: 98.2792 }
     const tomorrow = moment().add(1,'days');
     const dayAftertomorrow = moment().add(2,'days');
-    console.log(checkin, checkout);
     const isMounted = useRef(false);
     const [dateRange, setDateRange] = useState({
         startDate: moment(checkin).format('YYYY-MM-DD'),
@@ -86,7 +84,6 @@ const HotelPageComponent = () => {
     const handleViewAllReviews = () =>{
         setOpenReviewModal(true);
     }
-    console.log({hotelDetails});
     const getNewSession = async() => {
         const getHotelsResponse = await api.getAllHotels({...getHotels,checkin: dateRange.startDate, checkout: dateRange.endDate, occupancy: bookingData});
         // await getHotelDetails();
@@ -122,25 +119,19 @@ const HotelPageComponent = () => {
             }
         }else{
             if(data.error === 'session expired or invalid sessionId'){
-                console.log("wq");
                 await getNewSession();
             }
             setIsError({value: true, error: data.error});
         }
-        console.log(data);
        
         
     }
     const getRoomDetails = async() => {
         const response = await api.getRoomRates({ sessionId, productId, hotelId, tokenId});
-        console.log({response})
-        if(response.data){
-            
+        if(!response.error && response.data.success != false){
             setRoomTypes(response.data.roomRates.perBookingRates);
-            
         }
         else if(response.data.error === 'session expired or invalid sessionId'){
-            console.log("wqqqqqq");
             await getNewSession();
         }
         // else{
@@ -154,7 +145,6 @@ const HotelPageComponent = () => {
         getRoomDetails();
     },[sessionId]);
     const bookHotel = async(roomDetails) => {
-        console.log({roomDetails, bookingData, dateRange});
         const response = await api.getToken({
             sessionId,
             productId,
@@ -162,9 +152,9 @@ const HotelPageComponent = () => {
             checkin: dateRange.startDate,
             checkout: dateRange.endDate,
             occupancy: [...bookingData],
+            geoData: {lat: hotelData.latitude, long: hotelData.longitude},
             tokenId,
         });
-        console.log({response})
         navigate(`/order-summary/?id=${response.data.token}`);
 
     //     setHotelBookingDetails({
@@ -188,7 +178,6 @@ const HotelPageComponent = () => {
         setDateRange({startDate: moment(dates.startDate).format('YYYY-MM-DD'), endDate: moment(dates.endDate).format('YYYY-MM-DD')});
         
     }
-    console.log({roomTypes});
     return (
         <div className="hotel-page">
         <div className="back-button" onClick={()=>navigate('/')}> 
@@ -218,7 +207,7 @@ const HotelPageComponent = () => {
                 </div>
             <ActivitiesComponent />
             <hr />
-            <LocationComponent address={hotelData.address}/>
+            <LocationComponent address={hotelData.address} location={{lat: hotelData.latitude, long: hotelData.longitude}}/>
             <hr />
             <PoilciesComponent Policies={Policies}/>
             <hr />

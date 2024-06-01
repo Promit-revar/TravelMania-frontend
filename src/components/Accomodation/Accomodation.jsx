@@ -28,7 +28,7 @@ const AccomodationComponent = ({amenities, capacity, name, price, openAccomodati
                 </div>
                 <div className="price">
                     <div className="price-value">{price} {currency?currency.toUpperCase():null} </div>
-                    <div className="price-rate">per night</div>
+                    {/* <div className="price-rate">per night</div> */}
                 </div>
                 
             </div>
