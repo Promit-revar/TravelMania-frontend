@@ -18,7 +18,7 @@ const DropdownComponent = ({label, options=[], index, setTitle, title, index2}) 
     setTitle([...titles]);
   }
     return (
-        <div >
+        <div className='drop-down-top'>
         {/* <InputLabel id="demo-simple-select-helper-label">{label}</InputLabel> */}
         <TextField
           className='dropdown'

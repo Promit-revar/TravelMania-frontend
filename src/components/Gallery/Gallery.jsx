@@ -29,7 +29,6 @@ const GalleryComponent = ({handleViewGallery, images}) =>{
     const handleClick = () => {
         handleViewGallery();
     }
-    console.log(images)
     return (
         <div className="gallery" >
            {images && <><div className='mobile-view-gallery'><CarouselView images={images}/></div>

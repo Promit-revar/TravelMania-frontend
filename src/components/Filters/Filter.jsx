@@ -17,7 +17,6 @@ const FilterComponent = ({popularFilters, guestRating, paymentMethods, propertyT
     const [alterPriceRange, setAlterPriceRange] = useState(false);
     const [filterValue, setFilterValue] = useState({...filterInitialState});
     const isMounted = useRef(false);
-    console.log({filterValue});
     const handlePriceRange = (values) => {
         setAlterPriceRange(false);
         setPriceRange(values.target.value);

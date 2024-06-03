@@ -9,7 +9,6 @@ import ErrorHandlingComponent from "../../UI/components/Errors/Error.jsx";
 import Skeleton from "react-loading-skeleton";
 import * as api from "../../api/hotelApis.js";
 const RoomInfoComponent = ({selectedRoom, bookHotel}) => {
-    // console.log({selectedRoom, bookHotel});
     const [isError, setIsError] = useState({value: false, message: ""});
     const { isLoading, setIsLoading } = useContext(LoaderContext);
     const [roomDetails, setRoomDetails] = useState({});
@@ -48,9 +47,11 @@ const RoomInfoComponent = ({selectedRoom, bookHotel}) => {
     }];
     const getRoomDetails = async() => {
         const response = await api.getRoomDetails(selectedRoom);
-        // console.log({response});
         if(response.error){
             setIsError({value:true, message:response.error});
+        }
+        else if(response.data.success === false){
+            setIsError({value: true, message: response.data.error});
         }
         else{
             setRoomDetails(response.data.roomRates.perBookingRates[0]);
@@ -73,7 +74,7 @@ const RoomInfoComponent = ({selectedRoom, bookHotel}) => {
             <Skeleton width="100%" height="20px"/>
             <Skeleton width="100%" height="20px"/> 
             </>}
-            {!isLoading && <><CarouselComponent width="100%" height="300px"/>
+            {!isLoading && !isError.value && <><CarouselComponent width="100%" height="300px"/>
             <div className="title">{roomDetails.roomType}</div>
             <div style={{ fontSize:'14px'}}>Mountain view</div>
             <div className="highlights"><Sparkles fill="#000"/><b>Highlights:</b> &nbsp;&nbsp;Furnished balcony or patio Surounded Air Conditioning Connecting rooms available Individual Rooms available decorated LED TV</div>

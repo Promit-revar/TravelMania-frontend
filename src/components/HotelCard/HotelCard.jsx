@@ -8,7 +8,6 @@ import './HotelCard.css';
 const HotelCardComponent = ({price, ratings, reviews, desc, amenitites, name, imgs, requestParams, hotelSearch}) => {
     const navigate= useNavigate();
     const {hotelDetails, setHotelDetails} = useContext(HotelContext);
-    // console.log(hotelDetails);
     const handleCardClick = async() => {
         const response = await api.getToken({
             sessionId: hotelDetails.params.sessionId,

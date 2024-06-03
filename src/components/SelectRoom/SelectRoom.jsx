@@ -16,7 +16,6 @@ const SelectRoomComponent = ({checkin , checkout, setBookingData, bookingData, h
   // tomorrow.setDate(tomorrow.getDate()+1);
   // const dayAftertomorrow = new Date();
   // dayAftertomorrow.setDate(dayAftertomorrow.getDate()+2);
-  console.log({bookingData,})
   return (
     <div className="schedule-block">
       <div className="select-block">

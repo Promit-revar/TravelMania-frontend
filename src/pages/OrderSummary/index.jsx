@@ -10,12 +10,15 @@ import { useSearchParams, useNavigate } from "react-router-dom";
 import * as api from "../../api/hotelApis.js";
 import { LoaderContext } from "../../Context/loaderContext.jsx";
 import { jwtDecode } from "jwt-decode";
+import ErrorHandlingComponent from "../../UI/components/Errors/Error.jsx";
 import "./index.css";
 
 const OrderSummaryPage = () => {
   const { hotelBookingDetails, setHotelBookingDetails } =
     useContext(HotelBookingContext);
+  const navigate = useNavigate();
   const { isLoading, setIsLoading } = useContext(LoaderContext);
+  const [isError, setIsError] = useState({value: false, error: ""});
   const [roomDetails, setRoomDetails] = useState({});
   const [searchParams] = useSearchParams();
   const token = searchParams.get("id");
@@ -88,15 +91,21 @@ const OrderSummaryPage = () => {
       rateBasisId,
       tokenId,
     });
-    setRoomDetails(response.data.roomRates.perBookingRates[0]);
-    setIsLoading(false);
+    if(!response.data || response.error){
+      // setIsError({value: true, message: "Something went wrong!"});
+      navigate('/');
+    }
+    else{
+      setRoomDetails(response.data.roomRates.perBookingRates[0]);
+      setIsLoading(false);
+    }
   };
   useEffect(() => {
     setIsLoading(true);
     getRoomDetails();
   }, []);
   return (
-    <div className="order-summary">
+   <div className="order-summary">
       <div className="title">Order Summary</div>
       <div className="booking-section">
         <div className="order-form">

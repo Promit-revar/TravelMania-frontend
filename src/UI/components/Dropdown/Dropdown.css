@@ -2,3 +2,8 @@
     margin-top: 20px !important;
     width: 100%;
 }
+@media screen and (max-width: 710px){
+    .drop-down-top{
+        width: 30%;
+    }
+}

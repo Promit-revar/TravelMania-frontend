@@ -63,3 +63,22 @@
 .react-tel-input .form-control {
     width: 100%;
 }
+@media screen and (max-width: 980px){
+    .booking-section{
+        flex-direction: column;
+    }
+    .order-form{
+        width: 100%;
+    }
+    .booking-details{
+        width: 100%;
+    }
+}
+@media screen and (max-width: 710px){
+    .order-form .MuiOutlinedInput-root {
+        width: 100%;
+    }
+    .order-form .drop-down-top{
+        width: 30%;
+    }
+}
