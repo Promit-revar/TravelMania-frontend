@@ -433,8 +433,6 @@ export const getHotels = {
     "longitude": 98.398392,
     "hotelCodes": [
     ],
-    "city_name": "Phuket",
-    "country_name": "Thailand",
     "radius": 20,
     "occupancy": [
       {

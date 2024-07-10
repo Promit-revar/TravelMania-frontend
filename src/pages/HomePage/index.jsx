@@ -21,15 +21,18 @@ const HomePageComponent = () => {
     const tomorrow = moment().add(1,'days');
     const dayAftertomorrow = moment().add(2,'days');
     const [showDateModal , setShowDateModal ] = useState(false);
+    const searchValues = JSON.parse(localStorage.getItem('hotelSearch'));
     const [dateRange, setDateRange] = useState({
-        startDate: tomorrow,
-        endDate: dayAftertomorrow,
+        startDate: searchValues? moment(searchValues.checkin): tomorrow,
+        endDate: searchValues? moment(searchValues.checkout):dayAftertomorrow,
         key: 'selection',
       });
     const [hotelSearch,setHotelSearch] = useState({
         checkin: moment(dateRange.startDate).format('YYYY-MM-DD'),
         checkout: moment(dateRange.endDate).format('YYYY-MM-DD'),
-        occupancy: [
+        "city_name": searchValues? searchValues.city_name:"Phuket",
+        "country_name": searchValues? searchValues.country_name: "Thailand",
+        occupancy: searchValues? searchValues.occupancy: [
             {
               "room_no": 1,
               "adult": 2,
@@ -129,7 +132,7 @@ const HomePageComponent = () => {
     const desc = "Baba Beach Club Natai is a luxury Residential, Beachfront Hotel & Beach Club managed & developed by the team behind the internationally acclaimed estate 'Sri Panwa'."
     return (
         <div className="home-page">
-           <SearchComponent handleDateShowModal={handleDateShowModal} selectedDates={dateRange} setActiveFilter={setActiveFilter} setHotelSearch={setHotelSearch} hotelSearch={hotelSearch}/>
+           <SearchComponent handleDateShowModal={handleDateShowModal} selectedDates={dateRange} setActiveFilter={setActiveFilter} setHotelSearch={setHotelSearch} hotelSearch={hotelSearch} />
            <div className="home-page-body">
                 <div className="home-page-filters">
                     <FilterComponent popularFilters={popularFilters} guestRating={guestRating} paymentMethods={paymentMethods} propertyType={propertyType} mealPlans={mealPlans} AmenitiesList={AmenitiesList} Accessibilities={Accessibilities} activeFilter={activeFilter} setActiveFilter={setActiveFilter} setFilters={filterHotels}/>

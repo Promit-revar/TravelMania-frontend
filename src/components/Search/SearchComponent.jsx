@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import Image from "../../UI/components/Image/Image";
 import Calendar from "../../assets/Calendar.svg";
 import Traveller from "../../assets/Person.svg";
@@ -16,18 +16,17 @@ const SearchComponent = ({
   setHotelSearch,
   hotelSearch,
 }) => {
-  // console.log(selectedDates);
   const { hotelDetails, setHotelDetails } = useContext(HotelContext);
   const [isOpenRoom, setIsOpenRoom] = useState(false);
   const [isOpenLocation, setIsOpenLocation] = useState(false);
-  const [selectLocation, setSelectLocation] = useState({
-    location: "Phuket Province",
-  });
   const [selectRooms, setSelectRooms] = useState({
     rooms: 1,
     travellers: [2],
   });
-
+  const [selectLocation, setSelectLocation] = useState({
+    city: "Phuket Province",
+    country: "Thailand",
+  });
   const handleSelectLocation = (location) => {
     setSelectLocation(location);
     setIsOpenLocation(false);
@@ -38,8 +37,15 @@ const SearchComponent = ({
   const toggleLocationDropdown = () => {
     setIsOpenLocation(!isOpenLocation);
   };
+  useEffect(()=>{
+    const searchValues = JSON.parse(localStorage.getItem('hotelSearch'));
+    if(searchValues){
+      setSelectLocation({city: searchValues.city_name, country: searchValues.country_name});
+      setSelectRooms({rooms: searchValues.occupancy.length, travellers: [searchValues.occupancy.reduce((total, item)=>total+item.adult,0)]});
+    }
+    console.log({searchValues});
+  },[]);
   const handleSearch = () => {
-    console.log({ selectRooms });
     // setHotelDetails({
     //     ...hotelDetails,
     //     reservation: {
@@ -72,13 +78,23 @@ const SearchComponent = ({
             child_age: [0],
           })
     });
-    // console.log({occupancy});
+    
     setHotelSearch({
       ...hotelSearch,
+      city_name: selectLocation.city,
+      country_name: selectLocation.country,
       occupancy,
       checkin: moment(selectedDates.startDate).format("YYYY-MM-DD"),
       checkout: moment(selectedDates.endDate).format("YYYY-MM-DD"),
     });
+    localStorage.setItem('hotelSearch',JSON.stringify({
+      ...hotelSearch,
+      city_name: selectLocation.city,
+      country_name: selectLocation.country,
+      occupancy,
+      checkin: moment(selectedDates.startDate).format("YYYY-MM-DD"),
+      checkout: moment(selectedDates.endDate).format("YYYY-MM-DD"),
+    }));
   };
   return (
     <div className="search" onClick={() => setActiveFilter(0)}>
@@ -89,7 +105,7 @@ const SearchComponent = ({
           </div>
           <div style={{ marginLeft: "5px" }}>
             <div className="select-date-title">Going to</div>
-            <div>{selectLocation.location}</div>
+            <div>{selectLocation.city}, {selectLocation.country}</div>
           </div>
         </div>
         <div className="dropdown-container">
@@ -98,10 +114,24 @@ const SearchComponent = ({
               <ul>
                 <li
                   onClick={() =>
-                    handleSelectLocation({ location: "Phuket Province" })
+                    handleSelectLocation({ city: "Phuket Province", country:"Thailand" })
                   }
                 >
-                  Phuket Province
+                  Phuket Province, Thailand
+                </li>
+                <li
+                  onClick={() =>
+                    handleSelectLocation({ city: "Bangkok", country: "Thailand" })
+                  }
+                >
+                  Bangkok, Thailand
+                </li>
+                <li
+                  onClick={() =>
+                    handleSelectLocation({ city: "Koh Samui", country: "Thailand" })
+                  }
+                >
+                  Koh Samui, Thailand
                 </li>
               </ul>
             </div>
