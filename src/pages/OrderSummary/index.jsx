@@ -38,6 +38,7 @@ const OrderSummaryPage = () => {
   const [email, setEmail] = useState("");
   const [phoneNo, setPhoneNo] = useState("");
   const [bookingRemarks, setBookingRemarks] = useState("");
+  const [bookingDetails, setBookingDetails] = useState({});
   const confirmBooking = async (e) => {
     e.preventDefault();
     const firstNames = [];
@@ -77,12 +78,16 @@ const OrderSummaryPage = () => {
       customerPhone: phoneNo,
       bookingNote: bookingRemarks,
       paxDetails,
+      checkin,
+      checkout,
     };
     const response = await api.bookHotel({ requestData: roomBookingDetails, geoData });
-    if (response.data.bookingData.status === "CONFIRMED") {
+    // if (response.data.bookingData.status === "CONFIRMED") {
       const { url } = response.data.stripeSession;
+      // setBookingDetails(response.bookingData);
       window.location.replace(url);
-    }
+    // }
+
   };
   const getRoomDetails = async () => {
     const response = await api.getRoomDetails({
@@ -104,8 +109,10 @@ const OrderSummaryPage = () => {
     setIsLoading(true);
     getRoomDetails();
   }, []);
+  console.log(searchParams.get("success"))
   return (
    <div className="order-summary">
+    {/* {searchParams.get("success")?<div className="banner success-msg">Hoorah! Booking Successful</div>: <div className="banner failure-msg">Sorry! Booking Failed</div>} */}
       <div className="title">Order Summary</div>
       <div className="booking-section">
         <div className="order-form">

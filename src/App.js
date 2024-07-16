@@ -7,6 +7,7 @@ import { HotelContextProvider } from "./Context/hotelDetailsContext";
 import { LoaderContextProvider } from "./Context/loaderContext";
 import { HotelBookingContext, HotelBookingContextProvider } from "./Context/hotelBookingContext";
 import OrderSummaryPage from "./pages/OrderSummary";
+import BookingSuccess from "./pages/BookingSuccessPage";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="/" element={<HomePageComponent />} />
           <Route path="hotel-details" element={<HotelPageComponent />} />
           <Route path="order-summary" element={<OrderSummaryPage />} />
+          <Route path="booking-confirmation" element={<BookingSuccess />} />
       </Routes>
       </HotelBookingContextProvider>
     </BrowserRouter>

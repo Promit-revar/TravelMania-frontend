@@ -1,0 +1,15 @@
+.banner{
+    display: flex;
+    padding: 10px;
+    justify-content: center;
+    color: #fff;
+    font-size: larger;
+    margin-bottom: 10px;
+    border-radius: 10px;
+}
+.success-msg{
+    background-color: rgb(57, 154, 122);
+}
+.failure-msg{
+    background-color: rgb(255, 99, 71);
+}

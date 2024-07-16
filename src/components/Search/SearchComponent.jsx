@@ -133,6 +133,13 @@ const SearchComponent = ({
                 >
                   Koh Samui, Thailand
                 </li>
+                <li
+                  onClick={() =>
+                    handleSelectLocation({ city: "Maldives", country: "Maldives" })
+                  }
+                >
+                  Maldives, Maldives
+                </li>
               </ul>
             </div>
           )}
