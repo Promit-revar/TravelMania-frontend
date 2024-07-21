@@ -4,7 +4,7 @@ import { ChevronRight } from "lucide-react";
 import Image from "../../UI/components/Image/Image";
 import gmap from '../../assets/gmap.png';
 const LocationComponent = ({address, location}) => {
-    const location_link = `https://maps.google.com/?q=${location.lat},${location.long}`;
+    const location_link = `https://maps.google.com/?q=${location?.lat},${location?.long}`;
     return (
         <div className="location">
             <div className="title"> Where you'll be</div>

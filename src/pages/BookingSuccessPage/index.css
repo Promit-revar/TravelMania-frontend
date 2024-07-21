@@ -13,3 +13,30 @@
 .failure-msg{
     background-color: rgb(255, 99, 71);
 }
+.booking-success{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+.booking-success .order-form{
+    width: 98%;
+}
+.booking-success .booking-section{
+    width: 70%;
+}
+.booking-success .booking-details{
+    margin-top: 20px;
+    max-width: 100vh;
+}
+.room-title{
+    font-size: 18px;
+    font-weight: 600;
+}
+.guest-name{
+    font-size: 18px;
+    font-weight: 400;
+}
+.booking-success .sub-title-1{
+    font-size: 25px;
+    font-size: 600;
+}

@@ -155,7 +155,7 @@ const HotelPageComponent = () => {
             geoData: {lat: hotelData.latitude, long: hotelData.longitude},
             tokenId,
         });
-        navigate(`/order-summary/?id=${response.data.token}`);
+        navigate(`/order-summary/?id=${response.data.token}&hotelName=${hotelData.name}`);
 
     //     setHotelBookingDetails({
     //         ...hotelBookingDetails,

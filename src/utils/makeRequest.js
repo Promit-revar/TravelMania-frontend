@@ -8,7 +8,7 @@ const makeRequest = async({method, body={}, url, headers={ "Content-Type":'appli
         headers: headers,
         ...defaultConfig
     });
-    if(response.status === 200){
+    if(response.status === 200 || response.status === 201){
         return {data:response.data, error: null};
     }
     else if(!response.data.success){

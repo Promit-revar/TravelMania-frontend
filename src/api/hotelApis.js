@@ -47,3 +47,21 @@ export async function getToken(body){
     const response = await makeRequest({method: 'POST', url, body:{...body}});
     return response;
 }
+export async function bookingConfirmation(){
+    const url = BASE_URL+"booking-confirmation";
+    const response = await makeRequest({method: 'GET', url});
+    return response;
+}
+export async function getPDF(body){
+    const url = BASE_URL+"generate-pdf";
+    const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            htmlContent: body,
+        }),
+    });
+    return response;
+}

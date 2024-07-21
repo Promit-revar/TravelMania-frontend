@@ -81,7 +81,7 @@ const OrderSummaryPage = () => {
       checkin,
       checkout,
     };
-    const response = await api.bookHotel({ requestData: roomBookingDetails, geoData });
+    const response = await api.bookHotel({ requestData: roomBookingDetails, geoData, hotelName: searchParams.get("hotelName")});
     // if (response.data.bookingData.status === "CONFIRMED") {
       const { url } = response.data.stripeSession;
       // setBookingDetails(response.bookingData);
@@ -109,7 +109,6 @@ const OrderSummaryPage = () => {
     setIsLoading(true);
     getRoomDetails();
   }, []);
-  console.log(searchParams.get("success"))
   return (
    <div className="order-summary">
     {/* {searchParams.get("success")?<div className="banner success-msg">Hoorah! Booking Successful</div>: <div className="banner failure-msg">Sorry! Booking Failed</div>} */}
