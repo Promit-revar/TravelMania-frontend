@@ -112,8 +112,8 @@ const OrderSummaryPage = () => {
   }, []);
   return (
    <div className="order-summary">
-    {isError && <ErrorHandlingComponent error={isError}/>}
-    {!isError && <>
+    {isError.value && <ErrorHandlingComponent error={isError}/>}
+    {!isError.value && <>
     {/* {searchParams.get("success")?<div className="banner success-msg">Hoorah! Booking Successful</div>: <div className="banner failure-msg">Sorry! Booking Failed</div>} */}
       <div className="title">Order Summary</div>
       <div className="booking-section">
