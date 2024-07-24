@@ -1,23 +1,22 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import CarouselComponent from "../../components/Carousel/Carousel";
 import DropdownComponent from "../../UI/components/Dropdown/Dropdown";
 import PhoneInput from "react-phone-input-2";
 import Button from "../../UI/components/Button/Button";
 import moment from "moment";
-import { HotelBookingContext } from "../../Context/hotelBookingContext";
 import "react-phone-input-2/lib/style.css";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import * as api from "../../api/hotelApis.js";
-import { LoaderContext } from "../../Context/loaderContext.jsx";
 import { jwtDecode } from "jwt-decode";
+import Skeleton from "react-loading-skeleton";
+import { LoaderContext } from "../../Context/loaderContext.jsx";
 import ErrorHandlingComponent from "../../UI/components/Errors/Error.jsx";
 import "./index.css";
 
 const OrderSummaryPage = () => {
-  const { hotelBookingDetails, setHotelBookingDetails } =
-    useContext(HotelBookingContext);
   const navigate = useNavigate();
-  const { isLoading, setIsLoading } = useContext(LoaderContext);
+  const {setIsLoadingContext} = useContext(LoaderContext);
+  const [ isLoading, setIsLoading ] = useState(true);
   const [isError, setIsError] = useState({value: false, error: ""});
   const [roomDetails, setRoomDetails] = useState({});
   const [searchParams] = useSearchParams();
@@ -41,6 +40,7 @@ const OrderSummaryPage = () => {
   const [bookingDetails, setBookingDetails] = useState({});
   const confirmBooking = async (e) => {
     e.preventDefault();
+    setIsLoadingContext(true);
     const firstNames = [];
     const lastNames = [];
     let tempFirstName;
@@ -86,6 +86,7 @@ const OrderSummaryPage = () => {
       const { url } = response.data.stripeSession;
       // setBookingDetails(response.bookingData);
       window.location.replace(url);
+      setIsLoadingContext(false);
     // }
 
   };
@@ -96,8 +97,8 @@ const OrderSummaryPage = () => {
       rateBasisId,
       tokenId,
     });
-    if(!response.data || response.error){
-      // setIsError({value: true, message: "Something went wrong!"});
+    if(!response.data || response.error || response.data.error){
+      setIsError({value: true, message: "Something went wrong!"});
       navigate('/');
     }
     else{
@@ -111,19 +112,23 @@ const OrderSummaryPage = () => {
   }, []);
   return (
    <div className="order-summary">
+    {isError && <ErrorHandlingComponent error={isError}/>}
+    {!isError && <>
     {/* {searchParams.get("success")?<div className="banner success-msg">Hoorah! Booking Successful</div>: <div className="banner failure-msg">Sorry! Booking Failed</div>} */}
       <div className="title">Order Summary</div>
       <div className="booking-section">
         <div className="order-form">
-          <div className="sub-title-1">Who's checking in?</div>
+          {!isLoading && <div className="sub-title-1">Who's checking in?</div>}
+          {isLoading && <Skeleton height={'30px'} width={'300px'}/>}
           <form onSubmit={confirmBooking}>
             {occupancy.map((item, index) => (
               <>
                 <div className="mt-4">
-                  <b>Rooms {item.room_no}:</b> {item.adult} Adults, Non-smoking
+                  {!isLoading && <><b>Rooms {item.room_no}:</b> {item.adult} Adults, Non-smoking</>}
+                  {isLoading && <Skeleton height={'20px'}/>}
                 </div>
                 <div className="mb-2">
-                    {Array(item.adult)
+                    {!isLoading && Array(item.adult)
                       .fill(1)
                       .map((adult, j) => (
                         <div>
@@ -158,22 +163,38 @@ const OrderSummaryPage = () => {
                           </div>
                         </div>
                       ))}
+                      {isLoading && 
+                      Array(2)
+                      .fill(1)
+                      .map((skeleton) => (
+                        <div>
+                        <div className="d-flex flex-row mt-2" style={{ gap: "10px" }}>
+                          <Skeleton height={'30px'} width={'100px'}/>
+                          <Skeleton height={'30px'} width={'300px'}/>
+                          <Skeleton height={'30px'} width={'300px'}/>
+                          </div>
+                        </div>))}
                   
                 </div>
               </>
             ))}
 
             <div className="d-flex flex-column mt-5" style={{ gap: "10px" }}>
-              <input
+              {!isLoading && <input
                 className="form-control"
                 placeholder="email"
                 onChange={(e) => setEmail(e.target.value)}
                 required
                 id="outlined-required"
                 label="email"
-              />
-              <PhoneInput country={"us"} onChange={(e) => setPhoneNo(e)} />
-              <textarea
+              />}{
+                isLoading && <Skeleton height={'30px'} />
+              }
+              {!isLoading && <PhoneInput country={"us"} onChange={(e) => setPhoneNo(e)} />}
+              {
+                isLoading && <Skeleton height={'30px'} />
+              }
+              {!isLoading && <textarea
                 rows={8}
                 className="form-control"
                 defaultValue="Booking Remarks"
@@ -181,69 +202,137 @@ const OrderSummaryPage = () => {
                 required
                 id="outlined-required"
                 label="email"
-              />
+              />}
+              {
+                isLoading && <Skeleton height={'180px'} />
+              }
             </div>
-            <Button label="Confirm" />
+            {!isLoading && <Button label="Confirm" />}
+            {isLoading &&<div className="mt-3"><Skeleton height={'40px'}/></div> }
           </form>
         </div>
         <div className="booking-details">
-          <CarouselComponent width="100%" />
-          <div className="booking-details-content p-3">
-            <div className="title">{searchParams.get("hotelName")}</div>
-            <hr />
-            <div className="booking-details-reviews">
-              <div className="hotel-card-ratings">8</div>
-              <div className="booking-details-reviews-text">
-                <div className="booking-details-reviews-text-title">
-                  Very Good
+              {!isLoading && <CarouselComponent width="100%" />}
+              {isLoading && <Skeleton height={"250px"} />}
+              <div className="booking-details-content p-3">
+                {!isLoading && <div className="title">{searchParams.get("hotelName")}</div>}
+                {isLoading && <Skeleton height={'20px'} />}
+                <hr />
+                <div className="booking-details-reviews">
+                  {!isLoading && (
+                    <>
+                      <div className="hotel-card-ratings">8</div>
+                      <div className="booking-details-reviews-text">
+                        <div className="booking-details-reviews-text-title">
+                          Very Good
+                        </div>
+                        <div className="booking-details-reviews-text-number">
+                          167 reviews
+                        </div>
+                      </div>
+                    </>
+                  )}
+                  {isLoading && <Skeleton height={"40px"} width={"200px"} />}
                 </div>
-                <div className="booking-details-reviews-text-number">
-                  167 reviews
+                <div className="mt-3">
+                  {!isLoading && (
+                    <>
+                      <b>Room:</b>{" "}
+                      {roomDetails.roomType}
+                    </>
+                  )}
+                  {isLoading && <Skeleton height={"20px"} />}
                 </div>
+                <div className="mt-3">
+                  {!isLoading && (
+                    <>
+                      <b>Room Details:</b>{" "}
+                      {roomDetails.description}
+                    </>
+                  )}
+                  {isLoading && <Skeleton height={"20px"} />}
+                </div>
+                <div className="mt-3">
+                  {!isLoading && (
+                    <>
+                      <b>Fare Type:</b>{" "}
+                      {roomDetails.fareType}
+                    </>
+                  )}
+                  {isLoading && <Skeleton height={"20px"} />}
+                </div>
+                <div className="mt-3">
+                  {!isLoading && (
+                    <>
+                      <b>Cancellation Policy:</b>{" "}
+                      {roomDetails.cancellationPolicy}
+                    </>
+                  )}
+                  {isLoading && <Skeleton height={"20px"} />}
+                </div>
+                <div className="mt-3 d-flex flex-column">
+                  <div className="d-flex flex-row justify-content-between">
+                    {!isLoading && <b>Check-in:</b>}
+                    {isLoading && <Skeleton height={"20px"} width={"100px"} />}
+                    {/* bookingDetails.roomBookDetails.checkIn */}
+                    {!isLoading && (
+                      <div>
+                        {moment(
+                          new Date(checkin)
+                        ).format("DD, MMM YYYY")}
+                      </div>
+                    )}
+                    {isLoading && <Skeleton height={"20px"} width={"100px"} />}
+                  </div>
+                  <div className="d-flex flex-row justify-content-between">
+                    {!isLoading && <b>Check-out:</b>}
+                    {isLoading && <Skeleton height={"20px"} width={"100px"} />}
+                    {!isLoading && (
+                      <div>
+                        {moment(
+                          new Date(checkout)
+                        ).format("DD, MMM YYYY")}
+                      </div>
+                    )}
+                    {isLoading && <Skeleton height={"20px"} width={"100px"} />}
+                  </div>
+                </div>
+                <hr />
+                <div className="d-flex flex-row w-100 justify-content-between title">
+                  {!isLoading && <div>{"Total Amount (Paid)"}</div>}
+                  {isLoading && <Skeleton height={"20px"} width={"100px"} />}
+                  {!isLoading && (
+                    <div>
+                      {bookingDetails?.roomBookDetails?.NetPrice}
+                      {bookingDetails?.roomBookDetails?.currency}
+                    </div>
+                  )}
+                  {isLoading && <Skeleton height={"20px"} width={"100px"} />}
+                </div>
+                {!isLoading && <div>{"(inclusive taxes)"}</div>}
+                {isLoading && <Skeleton />}
               </div>
             </div>
-            <div className="mt-3">
-              <b>Room:</b> {roomDetails.roomType}
-            </div>
-            <div className="mt-3">
-              <b>Room Details:</b> {roomDetails.description}
-            </div>
-            <div className="mt-3">
-              <b>Fare Type:</b> {roomDetails.fareType}
-            </div>
-            <div className="mt-3">
-              <b>Cancellation Policy:</b> {roomDetails.cancellationPolicy}
-            </div>
-            <div className="mt-3 d-flex flex-column">
-              <div className="d-flex flex-row justify-content-between">
-                <b>Check-in:</b>
-                <div>{moment(new Date(checkin)).format("DD, MMM YYYY")}</div>
-              </div>
-              <div className="d-flex flex-row justify-content-between">
-                <b>Check-out:</b>
-                <div>{moment(new Date(checkout)).format("DD, MMM YYYY")}</div>
-              </div>
-            </div>
-            <hr />
-          </div>
-        </div>
       </div>
       <div
         className="booking-details p-3 mt-3"
         style={{ alignSelf: "flex-end" }}
       >
-        <div className="title">Price Details</div>
+        {!isLoading && <div className="title">Price Details</div>}
+        {isLoading && <Skeleton height={'30px'} width={'200px'}/>}
         <hr />
-        <div className="mt-2">{roomDetails.description}</div>
-        <div>Taxes & Fees</div>
+        {!isLoading && <><div className="mt-2">{roomDetails.description}</div><div>Taxes & Fees</div></>}
+        {isLoading && <><Skeleton height={'20px'}/><Skeleton height={'20px'}/></>}
+        
         <hr />
         <div className="d-flex flex-row justify-content-between">
-          <b>Total</b>
+          {!isLoading && <><b>Total</b>
           <div>
             {roomDetails.netPrice}&nbsp;<b>{roomDetails.currency}</b>
-          </div>
+          </div></>}
+          {isLoading && <Skeleton height={'20px'} width={'330px'}/>}
         </div>
-      </div>
+      </div></>}
     </div>
   );
 };

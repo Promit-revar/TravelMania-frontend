@@ -7,7 +7,6 @@ import * as api from "../../api/hotelApis.js";
 import FilterComponent from "../../components/Filters/Filter";
 import moment from "moment";
 import { HotelContext } from "../../Context/hotelDetailsContext.jsx";
-import { LoaderContext } from "../../Context/loaderContext.jsx";
 import { AmenitiesList, popularFilters, guestRating, paymentMethods, propertyType, mealPlans, Accessibilities, getHotels} from "../../constants/constants";
 import Pagination from '@mui/material/Pagination';
 import Skeleton from 'react-loading-skeleton'
@@ -16,15 +15,15 @@ import ErrorHandlingComponent from "../../UI/components/Errors/Error.jsx";
 import './index.css';
 const HomePageComponent = () => {
     const {hotelDetails, setHotelDetails} = useContext(HotelContext);
-    const {isLoading, setIsLoading} = useContext(LoaderContext);
+    const [isLoading, setIsLoading] = useState(false);
     const [hotels,setHotels] = useState([]);
     const tomorrow = moment().add(1,'days');
     const dayAftertomorrow = moment().add(2,'days');
     const [showDateModal , setShowDateModal ] = useState(false);
     const searchValues = JSON.parse(localStorage.getItem('hotelSearch'));
     const [dateRange, setDateRange] = useState({
-        startDate: searchValues? moment(searchValues.checkin): tomorrow,
-        endDate: searchValues? moment(searchValues.checkout):dayAftertomorrow,
+        startDate: searchValues && moment(searchValues.checkin).valueOf()>= moment(tomorrow).valueOf() ? moment(searchValues.checkin): tomorrow,
+        endDate: searchValues && moment(searchValues.checkout).valueOf()>= moment(dayAftertomorrow).valueOf()? moment(searchValues.checkout):dayAftertomorrow,
         key: 'selection',
       });
     const [hotelSearch,setHotelSearch] = useState({

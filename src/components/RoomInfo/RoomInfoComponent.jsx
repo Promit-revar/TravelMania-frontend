@@ -1,16 +1,17 @@
-import React,{useEffect, useState, useContext} from "react";
+import React,{useContext, useEffect, useState} from "react";
 import "./RoomInfo.css";
 import CarouselComponent from "../Carousel/Carousel";
 import Button from '../../UI/components/Button/Button';
-import { LoaderContext } from "../../Context/loaderContext.jsx";
 import { Sparkles, Accessibility, Tv2, BedDouble, Bath,  UtensilsCrossed , Wifi, TentTree, Check  } from 'lucide-react';
 import { AmenitiesList } from '../../constants/constants';
 import ErrorHandlingComponent from "../../UI/components/Errors/Error.jsx";
 import Skeleton from "react-loading-skeleton";
+import { LoaderContext } from "../../Context/loaderContext.jsx";
 import * as api from "../../api/hotelApis.js";
 const RoomInfoComponent = ({selectedRoom, bookHotel}) => {
     const [isError, setIsError] = useState({value: false, message: ""});
-    const { isLoading, setIsLoading } = useContext(LoaderContext);
+    const { setIsLoadingContext } = useContext(LoaderContext);
+    const [ isLoading, setIsLoading ]= useState(false);
     const [roomDetails, setRoomDetails] = useState({});
     const roomAmenities = [{
         name: 'Accessibilities',
@@ -63,6 +64,7 @@ const RoomInfoComponent = ({selectedRoom, bookHotel}) => {
         getRoomDetails();
     },[]);
     const handleClick = () => {
+        setIsLoadingContext(true);
         bookHotel({...roomDetails});
     }
     return (

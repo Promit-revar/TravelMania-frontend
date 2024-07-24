@@ -1,9 +1,9 @@
 import React from 'react';
 export const LoaderContext = React.createContext({});
 export const LoaderContextProvider = ({ children }) => {
-    const [isLoading, setIsLoading] = React.useState(false);
+    const [isLoadingContext, setIsLoadingContext] = React.useState(false);
     return (
-        <LoaderContext.Provider value={{ isLoading, setIsLoading }}>
+        <LoaderContext.Provider value={{ isLoadingContext, setIsLoadingContext }}>
         {children}
         </LoaderContext.Provider>
     );

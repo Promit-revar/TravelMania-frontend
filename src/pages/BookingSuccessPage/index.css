@@ -26,7 +26,6 @@
 }
 .booking-success .booking-details{
     margin-top: 20px;
-    max-width: 100vh;
 }
 .room-title{
     font-size: 18px;
@@ -39,4 +38,39 @@
 .booking-success .sub-title-1{
     font-size: 25px;
     font-size: 600;
+}
+.booking-flex{
+    display: flex;
+    flex-direction: row;
+}
+.booking-ref{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+@media screen and (max-width: 980px){
+    .booking-success .booking-section{
+        flex-direction: column;
+    }
+    .booking-success .order-form{
+        width: 100%;
+    }
+    .booking-success .booking-details{
+        width: 100%;
+    }
+    .booking-flex{
+        flex-direction: column;
+    }
+    .booking-success .booking-section{
+        width: 100%;
+    }
+    .booking-success .custom-indicators{
+        display: none;
+    }
+}
+@media screen and (max-width: 710px){
+    .booking-ref{
+        flex-direction: column;
+        gap: 5px;
+    }
 }

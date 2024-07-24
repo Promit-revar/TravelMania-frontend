@@ -3,6 +3,7 @@ import GalleryComponent from "../../components/Gallery/Gallery.jsx"
 import NavList from "../../components/NavigationList/NavList";
 import * as api from "../../api/hotelApis.js";
 import DateRangePickerComponent from "../../UI/components/DateRangePicker/DateRangePicker";
+import { LoaderContext } from "../../Context/loaderContext.jsx";
 import { HotelDetailsNavigationList, AmenitiesList, getHotels } from "../../constants/constants";
 import RoomInfoComponent from "../../components/RoomInfo/RoomInfoComponent.jsx";
 import HotelDescriptionComponent from "../../components/HotelDescription/HotelDescription";
@@ -12,7 +13,6 @@ import ActivitiesComponent from "../../components/Activites/Activites";
 import { ChevronLeft } from 'lucide-react';
 import { jwtDecode } from "jwt-decode";
 import { Carousel } from "react-bootstrap";
-import { HotelContext } from "../../Context/hotelDetailsContext.jsx";
 import LocationComponent from "../../components/Location/Location";
 import PoilciesComponent from "../../components/Policies/Policies";
 import ReviewComponent from "../../components/Reviews/Reviews";
@@ -21,8 +21,6 @@ import { Policies, Reviews } from "../../constants/constants";
 import ModalComponent from "../../UI/components/Modal/Modal";
 import Image from "../../UI/components/Image/Image";
 import ErrorHandlingComponent from "../../UI/components/Errors/Error.jsx";
-import { LoaderContext } from "../../Context/loaderContext.jsx";
-import { HotelBookingContext } from "../../Context/hotelBookingContext.jsx";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import ViewAllReviewsComponent from "../../components/ViewAllReviews/ViewAllReviews";
 import Skeleton from "react-loading-skeleton";
@@ -50,15 +48,14 @@ export const GalleryView = ({images}) =>{
 const HotelPageComponent = () => {
     const navigate = useNavigate();
     //context variables
-    const { isLoading, setIsLoading } = useContext(LoaderContext);
-    const { hotelDetails, setHotelDetails } = useContext(HotelContext);
-    const { hotelBookingDetails, setHotelBookingDetails } = useContext(HotelBookingContext);
+    const {setIsLoadingContext} = useContext(LoaderContext);
     const [searchParams] = useSearchParams();
     const token = searchParams.get('id');
     let {hotelId, tokenId, productId, checkin, checkout, occupancy}  = jwtDecode(token);
     const [sessionId, setSessionId] = useState(jwtDecode(token).sessionId);
 
     //state variables
+    const [isLoading, setIsLoading] = useState(false);
     const [openRoomModal, setOpenRoomModal] = useState(false);
     const [openModal,setOpenModal] = useState(false);
     const [hotelData, setHotelData] = useState({});
@@ -156,6 +153,8 @@ const HotelPageComponent = () => {
             tokenId,
         });
         navigate(`/order-summary/?id=${response.data.token}&hotelName=${hotelData.name}`);
+        setIsLoadingContext(false);
+
 
     //     setHotelBookingDetails({
     //         ...hotelBookingDetails,
